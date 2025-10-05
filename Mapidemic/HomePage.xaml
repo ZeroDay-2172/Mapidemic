@@ -1,76 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
-             x:Class="Mapidemic.HomePage"
-             Title="Home">
+             x:Class="Mapidemic.HomePage">
+
+    <FlyoutPage.ToolbarItems>
+        <ToolbarItem IconImageSource="settings_icon.png"/>
+    </FlyoutPage.ToolbarItems>
 
     <FlyoutPage.Flyout>
-        <ContentPage Title="Menu" BackgroundColor="#0074C0">
-            <StackLayout Margin="0, 100, 0, 0">
-                <Label Text="Menu"
-                       FontSize="50"
-                       TextColor="White"
-                       Margin="0, 0, 0, 100"
-                       HorizontalOptions="CenterAndExpand">
-                </Label>
-                <Grid ColumnDefinitions="*"
-                      VerticalOptions="Start"
-                      HorizontalOptions="FillAndExpand"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                    <Button Grid.Row="0"
-                            FontSize="20"
-                            Text="About Us"
-                            CornerRadius="0"
-                            HeightRequest="100"
-                            HorizontalOptions="Fill"
-                            LineBreakMode="WordWrap"
-                            Clicked="AuButton_Clicked"
-                            BackgroundColor="#0074C0">
-                    </Button>
-                    <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-                    <Button Grid.Row="2"
-                            FontSize="20"
-                            CornerRadius="0"
-                            Text="What We Do"
-                            HeightRequest="100"
-                            HorizontalOptions="Fill"
-                            LineBreakMode="WordWrap"
-                            Clicked="WwdButton_Clicked"
-                            BackgroundColor="#0074C0">
-                    </Button>
-                    <BoxView Grid.Row="3" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-                    <Button Grid.Row="4"
-                            FontSize="20"
-                            CornerRadius="0"
-                            HeightRequest="100"
-                            HorizontalOptions="Fill"
-                            LineBreakMode="WordWrap"
-                            Clicked="CiButton_Clicked"
-                            Text="Contact Information"
-                            BackgroundColor="#0074C0">
-                    </Button>
-                    <BoxView Grid.Row="5" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-                    <Button Grid.Row="6"
-                            FontSize="20"
-                            CornerRadius="0"
-                            HeightRequest="100"
-                            HorizontalOptions="Fill"
-                            LineBreakMode="WordWrap"
-                            Clicked="CdcButton_Clicked"
-                            BackgroundColor="#0074C0"
-                            Text="Centers for Disease Control and Prevention">
-                    </Button>
-                    <BoxView Grid.Row="7" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-                </Grid>
-            </StackLayout>
-        </ContentPage>
-    </FlyoutPage.Flyout>
 
+        <local:MenuPage Title="Menu" />
+
+    </FlyoutPage.Flyout>
+    
     <FlyoutPage.Detail>
         <NavigationPage x:Name="ViewPort" BarBackgroundColor="#0074C0" BarTextColor="White">
             <x:Arguments>
-                <local:NavPage />
+                <local:TrackingPage />
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>

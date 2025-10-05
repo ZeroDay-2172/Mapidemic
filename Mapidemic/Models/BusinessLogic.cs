@@ -18,7 +18,7 @@ public class BusinessLogic
         this.database = database;
 
         /// this function is for testing the settings setup
-		ClearSettings();
+		///ClearSettings();
 		/// comment out this function when not testing
 
         try

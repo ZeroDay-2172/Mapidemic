@@ -107,6 +107,7 @@ public partial class NewUserPage : ContentPage
             _ = MauiProgram.businessLogic.SaveSettings(ThemeToggle.IsToggled, int.Parse(entryText));
             Tracking.IsEnabled = true;
             await PostalCode.FadeTo(0, transitionSpeed);
+            Grid.Remove(PostalCode);
             await Tracking.FadeTo(1, transitionSpeed);
             await Task.Delay(waitingSpeed);
             await Tracking.FadeTo(0, transitionSpeed);

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mapidemic"
+             x:Class="Mapidemic.MenuPage">
+
+    <Grid VerticalOptions="FillAndExpand"
+          BackgroundColor="#0074C0"
+          RowDefinitions="1.5*, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
+
+        <Label Text="Menu"
+               Grid.Row="0"
+               FontSize="50"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               BackgroundColor="#0074C0"/>
+
+        <Button Grid.Row="1"
+                FontSize="20"
+                Text="About us"
+                CornerRadius="0"
+                Clicked="AuButton_Clicked"
+                BackgroundColor="#0074C0"/>
+
+        <BoxView Grid.Row="2" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="3"
+                FontSize="20"
+                CornerRadius="0"
+                Text="Privacy Policy"
+                Clicked="PpButton_Clicked"
+                BackgroundColor="#0074C0"/>
+
+        <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="5"
+                FontSize="20"
+                CornerRadius="0"
+                Text="Contact information"
+                Clicked="CiButton_Clicked"
+                BackgroundColor="#0074C0"/>
+
+        <BoxView Grid.Row="6" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="7"
+                FontSize="20"
+                CornerRadius="0"
+                LineBreakMode="WordWrap"
+                Clicked="CdcButton_Clicked"
+                BackgroundColor="#0074C0"
+                Text="Centers for Disease Control and Prevention"/>
+
+    </Grid>
+
+</ContentPage>
