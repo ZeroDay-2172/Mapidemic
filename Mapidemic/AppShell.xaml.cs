@@ -1,11 +1,9 @@
-﻿// namespace Mapidemic;
+﻿namespace Mapidemic;
 
-// public partial class AppShell : Shell
-// {
-// 	public AppShell()
-// 	{
-// 		InitializeComponent();
-// 	}
-// }
-
-// THIS CLASS IS CURRENTLY UNUSED
+public partial class AppShell : Shell
+{
+	public AppShell()
+	{
+		InitializeComponent();
+	}
+}

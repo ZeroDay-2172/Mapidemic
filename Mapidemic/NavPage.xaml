@@ -5,6 +5,8 @@
              x:Class="Mapidemic.NavPage"
              Title="Home">
 
+        
+
         <FlexLayout Padding="25"
                     Direction="Column"
                     AlignItems="Stretch"

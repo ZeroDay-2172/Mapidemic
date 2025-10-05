@@ -74,6 +74,10 @@
               "target": "Package",
               "version": "[9.0.8, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             }
           },
           "imports": [
@@ -119,6 +123,10 @@
               "target": "Package",
               "version": "[9.0.8, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             }
           },
           "imports": [
@@ -164,6 +172,10 @@
               "target": "Package",
               "version": "[9.0.8, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             }
           },
           "imports": [
@@ -204,6 +216,10 @@
             "Microsoft.Maui.Controls": {
               "target": "Package",
               "version": "[9.0.82, )"
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             }
           },
           "imports": [

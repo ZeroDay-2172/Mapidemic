@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
+using Mapidemic.Models;
 
 namespace Mapidemic;
 
 public static class MauiProgram
 {
+	public static BusinessLogic businessLogic = new BusinessLogic(new Database());
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();

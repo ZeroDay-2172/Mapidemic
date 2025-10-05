@@ -58,6 +58,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.NavPage.xaml
 build_metadata.AdditionalFiles.TargetPath = NavPage.xaml
 build_metadata.AdditionalFiles.RelativePath = NavPage.xaml
 
+[C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/NewUserPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.NewUserPage.xaml
+build_metadata.AdditionalFiles.TargetPath = NewUserPage.xaml
+build_metadata.AdditionalFiles.RelativePath = NewUserPage.xaml
+
 [C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.Resources.Styles.Colors.xaml
