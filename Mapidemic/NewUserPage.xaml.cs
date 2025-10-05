@@ -2,7 +2,7 @@ namespace Mapidemic;
 
 /// <summary>
 ///  suppressing the warning caused by:
-/// [Application.Current!.MainPage = new PostalCodePage(unitSetting, ThemeToggle.IsToggled);]
+/// [Application.Current!.MainPage = new HomePage();]
 /// </summary>
 #pragma warning disable CS0618
 

@@ -4,9 +4,10 @@ namespace Mapidemic.Models;
 
 public class BusinessLogic
 {
-    private const string uiSettingsPath = "ui_settings.json";
-    private Database database;
+    private Settings? settings;
+    private readonly Database database;
     private const int postalCodeLength = 5;
+    private const string uiSettingsPath = "ui_settings.json";
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -15,6 +16,53 @@ public class BusinessLogic
     public BusinessLogic(Database database)
     {
         this.database = database;
+
+        /// this function is for testing the settings setup
+		ClearSettings();
+		/// comment out this function when not testing
+
+        try
+        {
+            string jsonSettings = File.ReadAllText(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
+            settings = JsonSerializer.Deserialize<Settings>(jsonSettings)!;
+        }
+        catch (Exception ex)
+        {
+            /// null if settings file cannot be read in
+            /// or does not exist
+            settings = null;
+        }
+    }
+
+    /// <summary>
+	/// A helper function that deletes the user's local
+	/// ui_settings.json file for developer testing
+	/// </summary>
+	private void ClearSettings()
+	{
+		File.Delete(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
+	}
+
+    /// <summary>
+	/// A function that creates a new ui_settings.json
+	/// file in the instance that the file is not present or
+	/// has been emptied
+	/// </summary>
+	public void CreateSettingsFile()
+    {
+        string destinationPath = Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath);
+        var input = FileSystem.OpenAppPackageFileAsync(uiSettingsPath);
+        var output = File.Create(destinationPath);
+        input.Result.CopyToAsync(output);
+    }
+
+    /// <summary>
+    /// A function that returns the local Settings
+    /// </summary>
+    /// <returns>The local settings</returns>
+    public Settings ReadSettings()
+    {
+        return settings!;
     }
 
     /// <summary>
@@ -34,6 +82,7 @@ public class BusinessLogic
             string jsonSettings = JsonSerializer.Serialize(new Settings(enumValue, postalCode), options);
             string settingsFile = Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath);
             File.WriteAllText(settingsFile, jsonSettings);
+            settings = new Settings(enumValue, postalCode);
             return true;
         }
         catch (Exception ex)
