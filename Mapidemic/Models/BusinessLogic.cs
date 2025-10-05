@@ -25,13 +25,13 @@ public class BusinessLogic
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
-    public async Task<bool> SaveSettings(string unitSetting, bool themeEnum, int postalCode)
+    public async Task<bool> SaveSettings(bool themeEnum, int postalCode)
     {
         try
         {
             AppTheme enumValue = themeEnum ? AppTheme.Dark : AppTheme.Light;
             JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonSettings = JsonSerializer.Serialize(new Settings(unitSetting, enumValue, postalCode), options);
+            string jsonSettings = JsonSerializer.Serialize(new Settings(enumValue, postalCode), options);
             string settingsFile = Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath);
             File.WriteAllText(settingsFile, jsonSettings);
             return true;

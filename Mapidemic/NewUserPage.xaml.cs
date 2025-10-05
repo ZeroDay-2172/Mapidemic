@@ -40,29 +40,8 @@ public partial class NewUserPage : ContentPage
         await Setup.FadeTo(1, transitionSpeed);
         await Task.Delay(waitingSpeed);
         await Setup.FadeTo(0, transitionSpeed);
-        Unit.IsEnabled = true;
-        Grid.Remove(Setup);
-        /// setting the Picker text to white for visability
-        if (Application.Current?.RequestedTheme == AppTheme.Dark)
-        {
-            UnitPicker.TextColor = Colors.White;
-        }
-        await Unit.FadeTo(1, transitionSpeed);
-    }
-
-    /// <summary>
-    /// An EH function that takes the user's choice
-    /// from the picker and passes it to the ThemePage
-    /// after fading out
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    public async void OnChoicePicked(object sender, EventArgs e)
-    {
-        UnitPicker.IsEnabled = false;
-        await Unit.FadeTo(0, transitionSpeed);
         Theme.IsEnabled = true;
-        Grid.Remove(Unit);
+        Grid.Remove(Setup);
         /// ensuring the switch matches the user's theme
         switch (Application.Current?.RequestedTheme)
         {
@@ -125,8 +104,12 @@ public partial class NewUserPage : ContentPage
             EnterButton.IsEnabled = false;
             PostalCodeEntry.IsEnabled = false;
             /// discarding the return task -- for testing purposes only
-            _ = MauiProgram.businessLogic.SaveSettings((string)UnitPicker.SelectedItem, ThemeToggle.IsToggled, int.Parse(entryText));
+            _ = MauiProgram.businessLogic.SaveSettings(ThemeToggle.IsToggled, int.Parse(entryText));
+            Tracking.IsEnabled = true;
             await PostalCode.FadeTo(0, transitionSpeed);
+            await Tracking.FadeTo(1, transitionSpeed);
+            await Task.Delay(waitingSpeed);
+            await Tracking.FadeTo(0, transitionSpeed);
             Application.Current!.MainPage = new HomePage();
         }
         else

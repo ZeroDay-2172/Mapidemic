@@ -7,6 +7,19 @@
         <Grid VerticalOptions="Center" x:Name="Grid">
 
             <VerticalStackLayout Opacity="0"
+                                 x:Name="Tracking"
+                                 IsEnabled="false"
+                                 VerticalOptions="Center">
+
+                <Label FontSize="30"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Text="All set! Let's start tracking"/>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Opacity="0"
                                  Spacing="10"
                                  IsEnabled="false"
                                  x:Name="PostalCode"
@@ -58,38 +71,6 @@
                         BackgroundColor="#0074C0">
 
                 </Button>
-
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Opacity="0"
-                                 x:Name="Unit"
-                                 IsEnabled="false"
-                                 VerticalOptions="Center">
-
-                <Label FontSize="30"
-                       FontAttributes="Bold"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"
-                       Text="Miles or Kilometers?"/>
-
-                <Picker x:Name="UnitPicker"
-                        Title="Choose an option"
-                        HorizontalOptions="Center"
-                        HorizontalTextAlignment="Center"
-                        SelectedIndexChanged="OnChoicePicked">
-
-                    <Picker.ItemsSource>
-
-                        <x:Array Type="{x:Type x:String}">
-
-                            <x:String>Miles</x:String>
-                            <x:String>Kilometers</x:String>
-
-                        </x:Array>
-
-                    </Picker.ItemsSource>
-
-                </Picker>
 
             </VerticalStackLayout>
 
