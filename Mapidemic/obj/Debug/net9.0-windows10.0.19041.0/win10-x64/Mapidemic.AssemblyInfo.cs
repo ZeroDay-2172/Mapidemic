@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c93584c45447f560ba1352ae8764a80b09c3bdcf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+043ac657c5142c576f0fdd34ef7c287d7fcd1b75")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
