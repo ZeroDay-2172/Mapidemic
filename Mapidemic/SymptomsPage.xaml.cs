@@ -4,9 +4,10 @@ namespace Mapidemic;
 
 public partial class SymptomsPage : ContentPage
 {
-    private ObservableCollection<string> symptoms;
+    private ObservableCollection<string> symptomList;
     public SymptomsPage()
     {
         InitializeComponent();
+        symptomList = MauiProgram.businessLogic.GetSymptomsList();
     }
 }

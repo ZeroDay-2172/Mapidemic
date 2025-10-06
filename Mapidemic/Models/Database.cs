@@ -1,4 +1,5 @@
 namespace Mapidemic.Models;
+using System.Collections.ObjectModel;
 
 public class Database
 {
@@ -28,5 +29,11 @@ public class Database
         /// response content will be '[]' if invalid postal code
         var response = await supabaseClient.From<PostalCode>().Where(x => x.Code == postalCode).Get();
         return response?.Content?.Length != 2;
+    }
+
+    public async Task<List<Symptom>> GetSymptomsList()
+    {
+        var response = await supabaseClient.From<Symptom>().Where(x => true).Get();
+        return response.Models;
     }
 }

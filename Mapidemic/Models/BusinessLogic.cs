@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Text.Json;
 
 namespace Mapidemic.Models;
@@ -39,9 +40,9 @@ public class BusinessLogic
 	/// ui_settings.json file for developer testing
 	/// </summary>
 	private void ClearSettings()
-	{
-		File.Delete(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
-	}
+    {
+        File.Delete(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
+    }
 
     /// <summary>
 	/// A function that creates a new ui_settings.json
@@ -117,5 +118,10 @@ public class BusinessLogic
             }
         }
         return validPostalCode;
+    }
+
+    public async Task<ObservableCollection<string>> GetSymptomsList()
+    {
+        return database.getSymptomsList();
     }
 }
