@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mapidemic"
+             x:Class="Mapidemic.MapNavPage"
+             Title="Home">
+
+        
+
+        <FlexLayout Padding="25"
+                    Direction="Column"
+                    AlignItems="Stretch"
+                    JustifyContent="SpaceBetween"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+
+
+                <maps:Map x:Name="MapControl"
+                        Grid.Row="0"
+                        MapType="Street"
+                        IsShowingUser="true" />
+
+                <!--
+                <Button FontSize="20"
+                        CornerRadius="0"
+                        HeightRequest="250"
+                        Text="Illness Tracker"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill"
+                        LineBreakMode="WordWrap"
+                        BackgroundColor="#0074C0">
+                </Button>
+                -->
+
+                <!--
+                <Button FontSize="20"
+                        CornerRadius="0"
+                        HeightRequest="250"
+                        Text="Report Illness"
+                        HorizontalOptions="Fill"
+                        LineBreakMode="WordWrap"
+                        VerticalOptions="Center"
+                        BackgroundColor="#0074C0">
+                </Button>
+                -->
+
+                <!--
+                <Button FontSize="20"
+                        CornerRadius="0"
+                        HeightRequest="250"
+                        Text="Symptom Checker"
+                        VerticalOptions="End"
+                        HorizontalOptions="Fill"
+                        LineBreakMode="WordWrap"
+                        BackgroundColor="#0074C0">
+                </Button>
+                -->
+        </FlexLayout>
+
+</ContentPage>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mapidemic"
+             x:Class="Mapidemic.MapPage"
+             Title="Home">
+
+
+
+        <Grid Padding="25"
+                        RowSpacing="0"
+                        ColumnSpacing="0">
+
+                <maps:Map x:Name="MapControl"
+                                Grid.Row="0"
+                                MapType="Street"
+                                IsShowingUser="true"/>
+                                
+                <Button Text="Report"
+                                Clicked="OnReportIllnessClicked"
+                                Padding="14,8"
+                                CornerRadius="8"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                Margin="16,16,0,0"
+                                BackgroundColor="#FF4136"
+                                TextColor="White"/>
+        </Grid>
+
+</ContentPage>
