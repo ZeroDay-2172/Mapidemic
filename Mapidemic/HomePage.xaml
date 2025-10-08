@@ -5,7 +5,8 @@
              x:Class="Mapidemic.HomePage">
 
     <FlyoutPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png"/>
+        <ToolbarItem IconImageSource="settings_icon.png" />
+        <ToolbarItem Text="SymptomsPage" Clicked="OnClickedSymptoms"/>
     </FlyoutPage.ToolbarItems>
 
     <FlyoutPage.Flyout>

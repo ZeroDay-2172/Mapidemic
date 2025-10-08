@@ -22,4 +22,13 @@ public partial class HomePage : FlyoutPage
 	{
 		return ViewPort;
 	}
+
+	public async void OnClickedSymptoms(object sender, EventArgs args)
+	{
+		NavigationPage symptomsPage = new NavigationPage(new SymptomsPage());
+		symptomsPage.BarTextColor = Color.FromArgb("#FFFFFF");
+		symptomsPage.BarBackgroundColor = Color.FromArgb("#0074C0");
+		await ViewPort.PushAsync(symptomsPage);
+		IsPresented = false;
+	}
 }

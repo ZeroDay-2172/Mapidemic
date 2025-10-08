@@ -31,9 +31,9 @@ public class Database
         return response?.Content?.Length != 2;
     }
 
-    public async Task<List<Symptom>> GetSymptomsList()
+    public async Task<ObservableCollection<Symptom>> GetSymptomsList()
     {
-        var response = await supabaseClient.From<Symptom>().Where(x => true).Get();
-        return response.Models;
+        var response = await supabaseClient.From<Symptom>().Get();
+        return new ObservableCollection<Symptom>(response.Models);
     }
 }

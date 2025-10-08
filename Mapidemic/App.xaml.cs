@@ -26,7 +26,7 @@ public partial class App : Application
 		if (settings != null)
 		{
 			Current!.UserAppTheme = settings.Theme;
-			return new Window(new HomePage());
+			return new Window(new SymptomsPage());
 		}
 		else
 		{

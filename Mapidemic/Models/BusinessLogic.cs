@@ -120,8 +120,8 @@ public class BusinessLogic
         return validPostalCode;
     }
 
-    public async Task<ObservableCollection<string>> GetSymptomsList()
+    public async Task<ObservableCollection<Symptom>> GetSymptomsList()
     {
-        return database.getSymptomsList();
+        return database.GetSymptomsList().Result;
     }
 }
