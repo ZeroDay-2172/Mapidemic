@@ -1,12 +1,13 @@
-using Supabase.Postgrest.Models;
-using Supabase.Postgrest.Attributes;
+namespace Mapidemic.Models;
 
-namespace Mapidemic.Models
+public class Symptom
 {
-    [Table("symptoms")]
-    public class Symptom : BaseModel
+    public string? Name { get; set; }
+    public bool IsChecked { get; set; }
+
+    public Symptom(string name)
     {
-        [PrimaryKey("symptom", false)]
-        public string? Name { get; set; }
+        Name = name;
+        IsChecked = false;
     }
 }

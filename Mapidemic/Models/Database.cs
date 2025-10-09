@@ -31,9 +31,22 @@ public class Database
         return response?.Content?.Length != 2;
     }
 
-    public async Task<ObservableCollection<Symptom>> GetSymptomsList()
+    /// <summary>
+    /// A function that returns all symptoms that
+    /// appear in the database
+    /// </summary>
+    /// <returns>An observable collection of all symptoms</returns>
+    public async Task<ObservableCollection<string>> GetSymptomsList()
     {
-        var response = await supabaseClient.From<Symptom>().Get();
-        return new ObservableCollection<Symptom>(response.Models);
+        HashSet<string> symptoms = new HashSet<string>();
+        var response = await supabaseClient.From<Illness>().Select("symptoms").Get();
+        foreach (Illness illnessSymptoms in response.Models)
+        {
+            foreach (string symptom in illnessSymptoms.Symptoms!)
+            {
+                symptoms.Add(symptom);
+            }
+        }
+        return new ObservableCollection<string>(symptoms.ToList());
     }
 }

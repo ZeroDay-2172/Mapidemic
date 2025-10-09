@@ -9,6 +9,7 @@ public class BusinessLogic
     private readonly Database database;
     private const int postalCodeLength = 5;
     private const string uiSettingsPath = "ui_settings.json";
+    public ObservableCollection<Symptom> SymptomList { get; set; }
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -17,10 +18,12 @@ public class BusinessLogic
     public BusinessLogic(Database database)
     {
         this.database = database;
+        SymptomList = new ObservableCollection<Symptom>();
+        LoadSymptomsListAsync();
 
         /// this function is for testing the settings setup
-		///ClearSettings();
-		/// comment out this function when not testing
+        ///ClearSettings();
+        /// comment out this function when not testing
 
         try
         {
@@ -32,6 +35,18 @@ public class BusinessLogic
             /// null if settings file cannot be read in
             /// or does not exist
             settings = null;
+        }
+    }
+
+    /// <summary>
+    /// A function that loads the local
+    /// list of symptoms from the database
+    /// </summary>
+    private async void LoadSymptomsListAsync()
+    {
+        foreach (string symptom in await database.GetSymptomsList())
+        {
+            SymptomList.Add(new Symptom(symptom));
         }
     }
 
@@ -118,10 +133,5 @@ public class BusinessLogic
             }
         }
         return validPostalCode;
-    }
-
-    public async Task<ObservableCollection<Symptom>> GetSymptomsList()
-    {
-        return database.GetSymptomsList().Result;
     }
 }

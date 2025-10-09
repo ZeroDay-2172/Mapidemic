@@ -33454,20 +33454,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\arthu\\.nuget\\packages\\": {}
+    "C:\\Users\\Arthur\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arthu\\OneDrive\\Documents\\Software Engineering\\Mapidemic\\Mapidemic\\Mapidemic.csproj",
+      "projectUniqueName": "C:\\Users\\Arthur\\Software Dev\\Computer Science Classwork\\Software Engineering\\Mapidemic\\Mapidemic\\Mapidemic.csproj",
       "projectName": "Mapidemic",
-      "projectPath": "C:\\Users\\arthu\\OneDrive\\Documents\\Software Engineering\\Mapidemic\\Mapidemic\\Mapidemic.csproj",
-      "packagesPath": "C:\\Users\\arthu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arthu\\OneDrive\\Documents\\Software Engineering\\Mapidemic\\Mapidemic\\obj\\",
+      "projectPath": "C:\\Users\\Arthur\\Software Dev\\Computer Science Classwork\\Software Engineering\\Mapidemic\\Mapidemic\\Mapidemic.csproj",
+      "packagesPath": "C:\\Users\\Arthur\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Arthur\\Software Dev\\Computer Science Classwork\\Software Engineering\\Mapidemic\\Mapidemic\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "configFilePaths": [
-        "C:\\Users\\arthu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Arthur\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0-android",
@@ -33543,6 +33543,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.9, 9.0.9]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.Android": {
             "privateAssets": "all"
@@ -33586,6 +33592,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.9, 9.0.9]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.iOS": {
             "privateAssets": "all"
@@ -33630,6 +33642,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.9, 9.0.9]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.MacCatalyst": {
             "privateAssets": "all"

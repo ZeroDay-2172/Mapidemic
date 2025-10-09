@@ -23,9 +23,16 @@ public partial class HomePage : FlyoutPage
 		return ViewPort;
 	}
 
+	/// <summary>
+	/// A function that loads the symptom checker
+	/// feature of the app
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
 	public async void OnClickedSymptoms(object sender, EventArgs args)
 	{
 		NavigationPage symptomsPage = new NavigationPage(new SymptomsPage());
+		
 		symptomsPage.BarTextColor = Color.FromArgb("#FFFFFF");
 		symptomsPage.BarBackgroundColor = Color.FromArgb("#0074C0");
 		await ViewPort.PushAsync(symptomsPage);

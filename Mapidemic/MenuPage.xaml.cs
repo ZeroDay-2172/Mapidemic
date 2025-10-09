@@ -27,6 +27,17 @@ public partial class MenuPage : ContentPage
 	}
 
 	/// <summary>
+	/// A function that displays the symptoms page
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
+	public void ScButton_Clicked(object sender, EventArgs args)
+	{
+		viewport = new NavigationPage(new SymptomsPage());
+		PrepareViewport();
+	}
+
+	/// <summary>
 	/// A function that displays the about us page
 	/// </summary>
 	/// <param name="sender"></param>

@@ -3,11 +3,23 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:local="clr-namespace:Mapidemic"
                 xmlns:models="clr-namespace:Mapidemic.Models"
+                x:DataType="models:BusinessLogic"
                 x:Class="Mapidemic.SymptomsPage">
     
-    <VerticalStackLayout>
+    <Grid ColumnDefinitions="1*"
+          RowDefinitions="1*, Auto, 8*, 1*">
 
-        <CollectionView x:Name="SymptomsCV"
+        <Label Grid.Row="0"
+               FontSize="30"
+               FontAttributes="Bold"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Select your symptoms"/>
+
+        <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <CollectionView Grid.Row="2"
+                        x:Name="SymptomsCV"
                         SelectionMode="None"
                         ItemsSource="{Binding SymptomList}">
 
@@ -15,14 +27,29 @@
 
                 <DataTemplate x:DataType="models:Symptom">
 
-                    <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto, Auto">
+                    <Grid RowDefinitions="*"
+                          HeightRequest="75"
+                          ColumnDefinitions="1*, 4*">
 
-                        <CheckBox Grid.Column="0" />
+                        <CheckBox Grid.Column="0"
+                                  Color="#0074C0"
+                                  VerticalOptions="Fill"
+                                  HorizontalOptions="Fill" 
+                                  IsChecked="{Binding IsChecked}"/>
 
-                        <Label Grid.Column="1"
+                        <Label FontSize="25"
+                               Grid.Column="1"
                                Text="{Binding Name}"
-                               HorizontalOptions="Center"/>
+                               VerticalOptions="Fill"
+                               LineBreakMode="WordWrap"
+                               HorizontalOptions="Fill"
+                               VerticalTextAlignment="Center">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSymptomTapped"/>
+                            </Label.GestureRecognizers>
+
+                        </Label>
 
                     </Grid>
 
@@ -32,10 +59,15 @@
 
         </CollectionView>
 
-        <Button Padding="10"
+        <Button Grid.Row="3"
+                FontSize="30"
+                CornerRadius="0"
                 Text="Enter symptoms"
+                Clicked="OnEnterClicked"
+                BackgroundColor="#0074C0"
+                VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand" />
 
-    </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>
