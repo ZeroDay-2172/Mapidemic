@@ -244,6 +244,39 @@ public class BusinessLogic
         if (searching)
         {
             SymptomAnalysis.Add(new AnalyzedIllness(value, key));
+    public async Task<List<Illnesses>> GetIllnessesList()
+    {
+        return await database.GetIllnessesList();
+    }
+
+    /// <summary>
+    /// A function that accepts illness report details
+    /// and submits them to the database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="postalCode"></param>
+    /// <param name="illness"></param>
+    /// <param name="reportDate"></param>
+    /// <returns>true if report was a success, false if otherwise</returns>
+    public async Task<bool> ReportIllness(Guid id, int postalCode, string illness, DateTimeOffset reportDate)
+    {
+        var report = new IllnessReport // Create a new illness report object
+        {
+            Id = id,
+            PostalCode = postalCode,
+            IllnessType = illness,
+            ReportDate = reportDate
+        };
+
+        var response = await database.supabaseClient.From<IllnessReport>().Insert(report); // Insert the report into the database
+
+        if (response.ResponseMessage!.IsSuccessStatusCode) // Check if the response indicates success
+        {
+            return true; // Return true if the insertion was successful
+        }
+        else
+        {
+            return false; // Return false if the insertion failed (Might be a bug, while creating this, it still went through)
         }
     }
 }

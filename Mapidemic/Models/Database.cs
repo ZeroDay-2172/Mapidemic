@@ -48,4 +48,14 @@ public class Database
     {
         return (await supabaseClient.From<Illness>().Get()).Models;
     }
+
+    /// <summary>
+    /// A function that gets a list of illnesses from the database
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<Illnesses>> GetIllnessesList()
+    {
+        var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        return response.Models;
+    }
 }
