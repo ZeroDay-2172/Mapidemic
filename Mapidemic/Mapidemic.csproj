@@ -67,6 +67,10 @@
 		<PackageReference Include="Microsoft.Maui.Graphics" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 		<PackageReference Include="Supabase" Version="1.1.1" />
+		<PackageReference Include="Syncfusion.Maui.Expander" Version="31.1.23" />
+		<PackageReference Include="Syncfusion.Maui.Gauges" Version="31.1.23" />
+		<PackageReference Include="Syncfusion.Maui.ProgressBar" Version="31.1.23" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.7" />
 	</ItemGroup>
 
 </Project>

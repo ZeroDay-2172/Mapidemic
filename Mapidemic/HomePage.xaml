@@ -2,11 +2,8 @@
 <FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
+             xmlns:models="clr-namespace:Mapidemic.Models"
              x:Class="Mapidemic.HomePage">
-
-    <FlyoutPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png"/>
-    </FlyoutPage.ToolbarItems>
 
     <FlyoutPage.Flyout>
 
@@ -15,7 +12,7 @@
     </FlyoutPage.Flyout>
     
     <FlyoutPage.Detail>
-        <NavigationPage x:Name="ViewPort" BarBackgroundColor="#0074C0" BarTextColor="White">
+        <NavigationPage x:Name="ViewPort" BarBackgroundColor="#0074C0" BarTextColor="White" Title="Mapidemic">
             <x:Arguments>
                 <local:TrackingPage />
             </x:Arguments>
