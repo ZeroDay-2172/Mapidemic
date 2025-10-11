@@ -78,6 +78,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -127,6 +143,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -176,6 +208,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -220,6 +268,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [

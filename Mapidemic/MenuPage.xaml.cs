@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 namespace Mapidemic;
 
 public partial class MenuPage : ContentPage
@@ -31,7 +33,7 @@ public partial class MenuPage : ContentPage
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	public void ScButton_Clicked(object sender, EventArgs args)
+	public async void ScButton_Clicked(object sender, EventArgs args)
 	{
 		viewport = new NavigationPage(new SymptomsPage());
 		PrepareViewport();
@@ -66,6 +68,18 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public void CiButton_Clicked(object sender, EventArgs args)
 	{
+		viewport = new NavigationPage(new ContactInformation());
+		PrepareViewport();
+	}
+
+	/// <summary>
+	/// A function that displays the settings page
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
+	public void SettingsButton_Clicked(object sender, EventArgs args)
+	{
+		/// THIS NEEDS TO BE CHANGED TO A SETTINGS PAGE
 		viewport = new NavigationPage(new ContactInformation());
 		PrepareViewport();
 	}

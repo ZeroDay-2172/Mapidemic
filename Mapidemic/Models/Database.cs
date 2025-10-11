@@ -14,8 +14,6 @@ public class Database
     {
         supabaseClient = new Supabase.Client(supabaseUrl, supabaseKey);
         supabaseClient.InitializeAsync();
-        // burning the first query for speed up
-        supabaseClient.From<PostalCode>().Where(x => x.Code == 00601).Get();
     }
 
     /// <summary>
@@ -26,9 +24,9 @@ public class Database
     /// <returns>true if valid postal code, false if not</returns>
     public async Task<bool> ValidatePostalCode(int postalCode)
     {
-        /// response content will be '[]' if invalid postal code
+        /// the list returned will contain the corresponding postal code, or nothing
         var response = await supabaseClient.From<PostalCode>().Where(x => x.Code == postalCode).Get();
-        return response?.Content?.Length != 2;
+        return response?.Models?.Count == 1;
     }
 
     /// <summary>
@@ -36,17 +34,18 @@ public class Database
     /// appear in the database
     /// </summary>
     /// <returns>An observable collection of all symptoms</returns>
-    public async Task<ObservableCollection<string>> GetSymptomsList()
+    public async Task<List<Illness>> GetSymptomsList()
     {
-        HashSet<string> symptoms = new HashSet<string>();
-        var response = await supabaseClient.From<Illness>().Select("symptoms").Get();
-        foreach (Illness illnessSymptoms in response.Models)
-        {
-            foreach (string symptom in illnessSymptoms.Symptoms!)
-            {
-                symptoms.Add(symptom);
-            }
-        }
-        return new ObservableCollection<string>(symptoms.ToList());
+        return (await supabaseClient.From<Illness>().Select("symptoms").Get()).Models;
+    }
+
+    /// <summary>
+    /// A function that return all the illnesses
+    /// that appear in the database
+    /// </summary>
+    /// <returns>A list of all illnesses</returns>
+    public async Task<List<Illness>> GetIllnessList()
+    {
+        return (await supabaseClient.From<Illness>().Get()).Models;
     }
 }

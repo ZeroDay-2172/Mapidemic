@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "f2J3taLIXvg=",
+  "dgSpecHash": "b6XB59aFRFA=",
   "success": true,
   "projectFilePath": "C:\\Users\\Arthur\\Software Dev\\Computer Science Classwork\\Software Engineering\\Mapidemic\\Mapidemic\\Mapidemic.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,12 @@
     "C:\\Users\\Arthur\\.nuget\\packages\\supabase.postgrest\\4.0.3\\supabase.postgrest.4.0.3.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\supabase.realtime\\7.0.2\\supabase.realtime.7.0.2.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\supabase.storage\\2.0.2\\supabase.storage.2.0.2.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.licensing\\31.1.23\\syncfusion.licensing.31.1.23.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.maui.core\\31.1.23\\syncfusion.maui.core.31.1.23.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.maui.expander\\31.1.23\\syncfusion.maui.expander.31.1.23.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.maui.gauges\\31.1.23\\syncfusion.maui.gauges.31.1.23.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.maui.progressbar\\31.1.23\\syncfusion.maui.progressbar.31.1.23.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\syncfusion.maui.toolkit\\1.0.7\\syncfusion.maui.toolkit.1.0.7.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.5.1\\system.identitymodel.tokens.jwt.7.5.1.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\system.reactive\\6.0.0\\system.reactive.6.0.0.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\system.threading.channels\\8.0.0\\system.threading.channels.8.0.0.nupkg.sha512",

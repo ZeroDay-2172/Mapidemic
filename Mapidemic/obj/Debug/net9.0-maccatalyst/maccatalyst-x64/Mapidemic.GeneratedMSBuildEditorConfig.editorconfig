@@ -48,6 +48,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.HomePage.xaml
 build_metadata.AdditionalFiles.TargetPath = HomePage.xaml
 build_metadata.AdditionalFiles.RelativePath = HomePage.xaml
 
+[C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/LoadingPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.LoadingPage.xaml
+build_metadata.AdditionalFiles.TargetPath = LoadingPage.xaml
+build_metadata.AdditionalFiles.RelativePath = LoadingPage.xaml
+
 [C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/MenuPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.MenuPage.xaml
@@ -77,6 +83,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/ResultsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.ResultsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = ResultsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = ResultsPage.xaml
 
 [C:/Users/Arthur/Software Dev/Computer Science Classwork/Software Engineering/Mapidemic/Mapidemic/SymptomsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

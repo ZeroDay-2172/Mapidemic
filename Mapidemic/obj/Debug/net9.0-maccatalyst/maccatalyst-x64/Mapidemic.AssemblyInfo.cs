@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a71734c193ad67f7f92093740024d93ea3d5e395")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+d6d19bf84c2d9126122e59697fdbde7a850239db")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mapidemic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

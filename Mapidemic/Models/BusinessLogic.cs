@@ -10,6 +10,8 @@ public class BusinessLogic
     private const int postalCodeLength = 5;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
+    public ObservableCollection<AnalyzedIllness> SymptomAnalysis { get; set; }
+    public AnalyzedIllness LikelyIllness { get; set; }
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -19,10 +21,10 @@ public class BusinessLogic
     {
         this.database = database;
         SymptomList = new ObservableCollection<Symptom>();
-        LoadSymptomsListAsync();
+        LoadSymptomsList();
 
         /// this function is for testing the settings setup
-        ///ClearSettings();
+        // ClearSettings();
         /// comment out this function when not testing
 
         try
@@ -30,7 +32,7 @@ public class BusinessLogic
             string jsonSettings = File.ReadAllText(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
             settings = JsonSerializer.Deserialize<Settings>(jsonSettings)!;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             /// null if settings file cannot be read in
             /// or does not exist
@@ -42,9 +44,17 @@ public class BusinessLogic
     /// A function that loads the local
     /// list of symptoms from the database
     /// </summary>
-    private async void LoadSymptomsListAsync()
+    private async void LoadSymptomsList()
     {
-        foreach (string symptom in await database.GetSymptomsList())
+        HashSet<string> symptoms = new HashSet<string>();
+        foreach (Illness illness in await database.GetSymptomsList())
+        {
+            foreach (string symptom in illness.Symptoms!)
+            {
+                symptoms.Add(symptom);
+            }
+        }
+        foreach (string symptom in symptoms)
         {
             SymptomList.Add(new Symptom(symptom));
         }
@@ -101,7 +111,7 @@ public class BusinessLogic
             settings = new Settings(enumValue, postalCode);
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return false;
         }
@@ -133,5 +143,107 @@ public class BusinessLogic
             }
         }
         return validPostalCode;
+    }
+
+    /// <summary>
+    /// A function that validates that at least
+    /// one checkbox has been used on the symptom
+    /// checker page
+    /// </summary>
+    /// <returns>True if at least one, false if none</returns>
+    public async Task<bool> ValidateCheckboxUsed()
+    {
+        int index = 0;
+        while (index < SymptomList.Count)
+        {
+            if (SymptomList[index].IsChecked)
+            {
+                return true;
+            }
+            index++;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// A function that uses a basic probability formula
+    /// to determine how likely it is that a user has a specified
+    /// illness based on their symptoms
+    /// </summary>
+    /// <returns>True if analysis complete, false if not</returns>
+    public async void RunSymptomAnalysis()
+    {
+        SymptomAnalysis = new ObservableCollection<AnalyzedIllness>();
+        HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
+        List<Illness> illnesses = await database.GetIllnessList();
+        foreach (Illness illness in illnesses)
+        {
+            int matchingSymptoms = 0;
+            int extraUserSymptoms = 0;
+            int extraIllnessSymptoms;
+            HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!);
+            foreach (Symptom symptom in userSymptoms)
+            {
+                if (illnessSymptoms.Contains(symptom.Name!))
+                {
+                    matchingSymptoms++;
+                }
+                else
+                {
+                    extraUserSymptoms++;
+                }
+            }
+            extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms;
+            ProcessInsertionSort(((double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms)) * 100, illness);
+        }
+        LikelyIllness = SymptomAnalysis.First();
+        SymptomAnalysis.RemoveAt(0);
+    }
+
+    /// <summary>
+    /// A helper function that creates a set
+    /// of all symptoms the user is experiencing
+    /// and resets them in the observable collection
+    /// for the next symptom check
+    /// </summary>
+    /// <returns>A set of all the user symptoms</returns>
+    private HashSet<Symptom> ProcessCheckedSymptoms()
+    {
+        HashSet<Symptom> checkedSymptoms = new HashSet<Symptom>();
+        foreach (Symptom symptom in SymptomList)
+        {
+            if (symptom.IsChecked)
+            {
+                checkedSymptoms.Add(symptom);
+                symptom.IsChecked = false;
+            }
+        }
+        return checkedSymptoms;
+    }
+    
+    /// <summary>
+    /// A function that performs an
+    /// insertion sort for the observable
+    /// collection
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    private void ProcessInsertionSort(double key, Illness value)
+    {
+        int index = 0;
+        bool searching = true;
+        while (searching && index < SymptomAnalysis.Count)
+        {
+            if (key >= SymptomAnalysis[index].Probability)
+            {
+                searching = false;
+                SymptomAnalysis.Insert(index, new AnalyzedIllness(value, key));
+            }
+            index++;
+        }
+        if (searching)
+        {
+            SymptomAnalysis.Add(new AnalyzedIllness(value, key));
+        }
     }
 }

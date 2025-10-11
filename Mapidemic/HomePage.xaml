@@ -5,11 +5,6 @@
              xmlns:models="clr-namespace:Mapidemic.Models"
              x:Class="Mapidemic.HomePage">
 
-    <FlyoutPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png" />
-        <!-- <ToolbarItem x:Name="Checker" Text="SymptomsPage" Clicked="OnClickedSymptoms"/> -->
-    </FlyoutPage.ToolbarItems>
-
     <FlyoutPage.Flyout>
 
         <local:MenuPage Title="Menu" />
@@ -17,7 +12,7 @@
     </FlyoutPage.Flyout>
     
     <FlyoutPage.Detail>
-        <NavigationPage x:Name="ViewPort" BarBackgroundColor="#0074C0" BarTextColor="White">
+        <NavigationPage x:Name="ViewPort" BarBackgroundColor="#0074C0" BarTextColor="White" Title="Mapidemic">
             <x:Arguments>
                 <local:TrackingPage />
             </x:Arguments>
