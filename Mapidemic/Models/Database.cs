@@ -29,4 +29,14 @@ public class Database
         var response = await supabaseClient.From<PostalCode>().Where(x => x.Code == postalCode).Get();
         return response?.Content?.Length != 2;
     }
+
+    /// <summary>
+    /// A function that gets a list of illnesses from the database
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<Illnesses>> GetIllnessesList()
+    {
+        var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        return response.Models;
+    }
 }
