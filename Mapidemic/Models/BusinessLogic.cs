@@ -8,6 +8,7 @@ public class BusinessLogic
     private Settings? settings;
     private readonly Database database;
     private const int postalCodeLength = 5;
+    private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
     public ObservableCollection<AnalyzedIllness> SymptomAnalysis { get; set; }
@@ -42,7 +43,8 @@ public class BusinessLogic
 
     /// <summary>
     /// A function that loads the local
-    /// list of symptoms from the database
+    /// list of symptoms from the database,
+    /// sorts them, and adds them to a collection
     /// </summary>
     private async void LoadSymptomsList()
     {
@@ -56,7 +58,22 @@ public class BusinessLogic
         }
         foreach (string symptom in symptoms)
         {
-            SymptomList.Add(new Symptom(symptom));
+            int index = 0;
+            bool searching = true;
+            while (searching && index < SymptomList.Count)
+            {
+                int diff = symptom.CompareTo(SymptomList[index].Name);
+                if (diff < 0)
+                {
+                    searching = false;
+                    SymptomList.Insert(index, new Symptom(symptom));
+                }
+                index++;
+            }
+            if (searching)
+            {
+                SymptomList.Add(new Symptom(symptom));
+            }
         }
     }
 
@@ -181,6 +198,7 @@ public class BusinessLogic
             int matchingSymptoms = 0;
             int extraUserSymptoms = 0;
             int extraIllnessSymptoms;
+            double finalProbability;
             HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!);
             foreach (Symptom symptom in userSymptoms)
             {
@@ -194,7 +212,11 @@ public class BusinessLogic
                 }
             }
             extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms;
-            ProcessInsertionSort(((double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms)) * 100, illness);
+            finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
+            if (finalProbability != 0)
+            {
+                ProcessIllnessInsertionSort(finalProbability, illness);
+            }
         }
         LikelyIllness = SymptomAnalysis.First();
         SymptomAnalysis.RemoveAt(0);
@@ -220,7 +242,7 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
+
     /// <summary>
     /// A function that performs an
     /// insertion sort for the observable
@@ -228,7 +250,7 @@ public class BusinessLogic
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    private void ProcessInsertionSort(double key, Illness value)
+    private void ProcessIllnessInsertionSort(double key, Illness value)
     {
         int index = 0;
         bool searching = true;
@@ -244,6 +266,9 @@ public class BusinessLogic
         if (searching)
         {
             SymptomAnalysis.Add(new AnalyzedIllness(value, key));
+        }
+    }
+
     public async Task<List<Illnesses>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
