@@ -11,10 +11,6 @@
         <!-- <local:[INSERT REPORT CONTENT PAGE] Title="Report" /> -->
 
         <!-- PLACEHOLDER PAGES TO BE DELETED -->
-        <ContentPage Title="Map"/>
-
-        <ContentPage Title="Graph"/>
-
         <ContentPage Title="Report"/>
 
 </TabbedPage>

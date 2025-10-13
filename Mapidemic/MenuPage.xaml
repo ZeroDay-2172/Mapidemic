@@ -52,16 +52,6 @@
 
         <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>
 
-        <Button Grid.Row="9"
-                FontSize="20"
-                Text="Settings"
-                CornerRadius="0"
-                LineBreakMode="WordWrap"
-                Clicked="SettingsButton_Clicked"
-                BackgroundColor="#0074C0"/>
-
-        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-
         <Button Grid.Row="11"
                 FontSize="20"
                 CornerRadius="0"

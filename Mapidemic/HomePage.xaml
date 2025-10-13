@@ -5,13 +5,10 @@
              xmlns:models="clr-namespace:Mapidemic.Models"
              x:Class="Mapidemic.HomePage">
 
-<<<<<<< HEAD
     <FlyoutPage.ToolbarItems>
         <ToolbarItem x:Name="SettingsIcon" Clicked="SettingsButton_Clicked" IconImageSource="settings_icon.png"/>
     </FlyoutPage.ToolbarItems>
 
-=======
->>>>>>> main
     <FlyoutPage.Flyout>
 
         <local:MenuPage Title="Menu" x:Name="menuPage"/>
