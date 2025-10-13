@@ -1,0 +1,103 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net9.0-android
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Mapidemic
+build_property.ProjectDir = C:\Users\conno\Desktop\Tim-Berners-Lee\Mapidemic\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/AboutUs.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.AboutUs.xaml
+build_metadata.AdditionalFiles.TargetPath = AboutUs.xaml
+build_metadata.AdditionalFiles.RelativePath = AboutUs.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/ContactInformation.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.ContactInformation.xaml
+build_metadata.AdditionalFiles.TargetPath = ContactInformation.xaml
+build_metadata.AdditionalFiles.RelativePath = ContactInformation.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/GraphPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.GraphPage.xaml
+build_metadata.AdditionalFiles.TargetPath = GraphPage.xaml
+build_metadata.AdditionalFiles.RelativePath = GraphPage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/HomePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.HomePage.xaml
+build_metadata.AdditionalFiles.TargetPath = HomePage.xaml
+build_metadata.AdditionalFiles.RelativePath = HomePage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/LoadingScreen.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.LoadingScreen.xaml
+build_metadata.AdditionalFiles.TargetPath = LoadingScreen.xaml
+build_metadata.AdditionalFiles.RelativePath = LoadingScreen.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/MenuPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.MenuPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MenuPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MenuPage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/NewUserPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.NewUserPage.xaml
+build_metadata.AdditionalFiles.TargetPath = NewUserPage.xaml
+build_metadata.AdditionalFiles.RelativePath = NewUserPage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/PrivacyPolicyPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.PrivacyPolicyPage.xaml
+build_metadata.AdditionalFiles.TargetPath = PrivacyPolicyPage.xaml
+build_metadata.AdditionalFiles.RelativePath = PrivacyPolicyPage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = SettingsPage.xaml
+
+[C:/Users/conno/Desktop/Tim-Berners-Lee/Mapidemic/TrackingPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Mapidemic.TrackingPage.xaml
+build_metadata.AdditionalFiles.TargetPath = TrackingPage.xaml
+build_metadata.AdditionalFiles.RelativePath = TrackingPage.xaml

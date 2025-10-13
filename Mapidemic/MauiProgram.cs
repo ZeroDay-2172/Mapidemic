@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Mapidemic.Models;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using Microcharts.Maui;
 
 namespace Mapidemic;
 
@@ -11,6 +13,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseSkiaSharp()
+			.UseMicrocharts()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

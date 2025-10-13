@@ -5,12 +5,12 @@
              x:Class="Mapidemic.HomePage">
 
     <FlyoutPage.ToolbarItems>
-        <ToolbarItem IconImageSource="settings_icon.png"/>
+        <ToolbarItem x:Name="SettingsIcon" Clicked="SettingsButton_Clicked" IconImageSource="settings_icon.png"/>
     </FlyoutPage.ToolbarItems>
 
     <FlyoutPage.Flyout>
 
-        <local:MenuPage Title="Menu" />
+        <local:MenuPage Title="Menu" x:Name="menuPage"/>
 
     </FlyoutPage.Flyout>
     

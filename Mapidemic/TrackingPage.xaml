@@ -10,7 +10,9 @@
 
         <!-- PLACEHOLDER PAGES TO BE DELETED -->
         <ContentPage Title="Map"/>
-        <ContentPage Title="Graph"/>
+
+        <local:GraphPage Title="Graph"/>
+
         <ContentPage Title="Report"/>
 
 </TabbedPage>
