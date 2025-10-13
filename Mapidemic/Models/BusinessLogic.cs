@@ -48,7 +48,7 @@ public class BusinessLogic
     /// </summary>
     private async void LoadSymptomsList()
     {
-        HashSet<string> symptoms = new HashSet<string>();
+        SortedSet<string> symptoms = new SortedSet<string>(); ;
         foreach (Illness illness in await database.GetSymptomsList())
         {
             foreach (string symptom in illness.Symptoms!)
@@ -58,22 +58,7 @@ public class BusinessLogic
         }
         foreach (string symptom in symptoms)
         {
-            int index = 0;
-            bool searching = true;
-            while (searching && index < SymptomList.Count)
-            {
-                int diff = symptom.CompareTo(SymptomList[index].Name);
-                if (diff < 0)
-                {
-                    searching = false;
-                    SymptomList.Insert(index, new Symptom(symptom));
-                }
-                index++;
-            }
-            if (searching)
-            {
-                SymptomList.Add(new Symptom(symptom));
-            }
+            SymptomList.Add(new Symptom(symptom));
         }
     }
 
