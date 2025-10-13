@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                xmlns:models="clr-namespace:Mapidemic.Models"
+                xmlns:progressBar="clr-namespace:Syncfusion.Maui.ProgressBar;assembly=Syncfusion.Maui.ProgressBar"
+                x:Class="Mapidemic.LoadingPage"
+                Title="Loading">
+
+       <Grid Margin="50, 0"
+             ColumnDefinitions="*"
+             RowDefinitions="1*, 1*, 1*">
+
+             <VerticalStackLayout Grid.Row="0"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center">
+
+                     <progressBar:SfLinearProgressBar Margin="50, 0"
+                                                      Progress="100"
+                                                      TrackHeight="25"
+                                                      x:Name="DataBar"
+                                                      ProgressHeight="25"
+                                                      TrackCornerRadius="5"
+                                                      ProgressCornerRadius="5"
+                                                      AnimationDuration="1000"
+                                                      ProgressFill="#0074C0"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                      ProgressCompleted="DataGathered"
+                                                      AnimationEasing="{x:Static Easing.CubicInOut}"/>
+
+                     <Label FontSize="20"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            Text="Gathering data"
+                            HorizontalOptions="Center"/>
+
+             </VerticalStackLayout>
+
+              <VerticalStackLayout Grid.Row="1"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center">
+
+                     <progressBar:SfLinearProgressBar Opacity="0"
+                                                      Progress="0"
+                                                      Margin="50, 0"
+                                                      TrackHeight="25"
+                                                      ProgressHeight="25"
+                                                      x:Name="AnalyzingBar"
+                                                      TrackCornerRadius="5"
+                                                      ProgressCornerRadius="5"
+                                                      AnimationDuration="3000"
+                                                      ProgressFill="#0074C0"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                      ProgressCompleted="AnalyzingComplete"
+                                                      AnimationEasing="{x:Static Easing.CubicInOut}"/>
+
+                     <Label Opacity="0"
+                            FontSize="20"
+                            x:Name="Analyzing"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            Text="Analyzing symptoms"
+                            HorizontalOptions="Center"/>
+
+             </VerticalStackLayout>
+
+             <VerticalStackLayout Grid.Row="2"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center">
+
+                     <progressBar:SfLinearProgressBar Opacity="0"
+                                                      Progress="0"
+                                                      Margin="50, 0"
+                                                      TrackHeight="25"
+                                                      ProgressHeight="25"
+                                                      x:Name="MatchingBar"
+                                                      TrackCornerRadius="5"
+                                                      ProgressCornerRadius="5"
+                                                      AnimationDuration="1000"
+                                                      ProgressFill="#0074C0"
+                                                      VerticalOptions="Center"
+                                                      HorizontalOptions="Center"
+                                                      ProgressCompleted="LoadingComplete"
+                                                      AnimationEasing="{x:Static Easing.CubicInOut}"/>
+
+                     <Label Opacity="0"
+                            FontSize="20"
+                            x:Name="Matching"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            Text="Finding the best match"/>
+
+             </VerticalStackLayout>
+
+       </Grid>
+
+</ContentPage>

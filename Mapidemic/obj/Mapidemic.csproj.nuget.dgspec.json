@@ -73,6 +73,18 @@
               "target": "Package",
               "version": "[9.0.82, )"
             },
+            "Microsoft.Maui.Controls.Maps": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Graphics": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -86,6 +98,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -124,6 +152,18 @@
               "target": "Package",
               "version": "[9.0.82, )"
             },
+            "Microsoft.Maui.Controls.Maps": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Graphics": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -137,6 +177,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -175,6 +231,18 @@
               "target": "Package",
               "version": "[9.0.82, )"
             },
+            "Microsoft.Maui.Controls.Maps": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Graphics": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -188,6 +256,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -227,6 +311,18 @@
               "target": "Package",
               "version": "[9.0.82, )"
             },
+            "Microsoft.Maui.Controls.Maps": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Essentials": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
+            "Microsoft.Maui.Graphics": {
+              "target": "Package",
+              "version": "[9.0.82, )"
+            },
             "SkiaSharp.Views.Maui.Controls": {
               "target": "Package",
               "version": "[3.119.1, )"
@@ -234,6 +330,22 @@
             "Supabase": {
               "target": "Package",
               "version": "[1.1.1, )"
+            },
+            "Syncfusion.Maui.Expander": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Gauges": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.ProgressBar": {
+              "target": "Package",
+              "version": "[31.1.23, )"
+            },
+            "Syncfusion.Maui.Toolkit": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [

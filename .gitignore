@@ -1,0 +1,82 @@
+### Build outputs
+**/bin/
+**/obj/
+bin/
+obj/
+*.binlog
+msbuild.log
+
+### IDE cruft (Visual Studio / VS for Mac)
+.vs/
+*.user
+*.suo
+*.rsuser
+*.userprefs
+*.sln.docstates
+
+### VS Code (ignore the folder, keep useful project files)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### JetBrains Rider
+.idea/
+*.iml
+
+### OS junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+### NuGet
+*.nupkg
+*.snupkg
+packages/
+# local caches (don’t commit your machine’s cache)
+.nuget/packages/
+
+### Logs / temp / diagnostics
+*.log
+*.tlog
+*.dmp
+*.tmp
+~$*
+
+### MAUI / mobile artifacts
+# App bundles produced by builds
+*.apk
+*.aab
+*.apks
+*.ipa
+# Local Android signing keys (NEVER commit)
+*.keystore
+*.jks
+# App Center, etc.
+appcenter-config.json
+
+### Config & secrets (keep real secrets out of git)
+*.local.json
+appsettings.Development.json
+secrets.json
+*.env
+.env.*
+
+### Databases
+*.db
+*.db-shm
+*.db-wal
+
+### Test/coverage
+TestResult*/
+coverage/
+*.coverage
+*.coveragexml
+
+### Optional: web/node (if you add tooling)
+node_modules/
+dist/

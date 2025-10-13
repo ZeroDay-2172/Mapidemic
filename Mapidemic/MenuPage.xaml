@@ -6,7 +6,7 @@
 
     <Grid VerticalOptions="FillAndExpand"
           BackgroundColor="#0074C0"
-          RowDefinitions="1.5*, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
+          RowDefinitions="2*, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
 
         <Label Text="Menu"
                Grid.Row="0"
@@ -18,18 +18,18 @@
 
         <Button Grid.Row="1"
                 FontSize="20"
-                Text="About us"
                 CornerRadius="0"
-                Clicked="AuButton_Clicked"
+                Text="Symptom Checker"
+                Clicked="ScButton_Clicked"
                 BackgroundColor="#0074C0"/>
 
         <BoxView Grid.Row="2" HeightRequest="1" BackgroundColor="#696969"></BoxView>
 
         <Button Grid.Row="3"
                 FontSize="20"
+                Text="About us"
                 CornerRadius="0"
-                Text="Privacy Policy"
-                Clicked="PpButton_Clicked"
+                Clicked="AuButton_Clicked"
                 BackgroundColor="#0074C0"/>
 
         <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="#696969"></BoxView>
@@ -37,13 +37,32 @@
         <Button Grid.Row="5"
                 FontSize="20"
                 CornerRadius="0"
-                Text="Contact information"
-                Clicked="CiButton_Clicked"
+                Text="Privacy Policy"
+                Clicked="PpButton_Clicked"
                 BackgroundColor="#0074C0"/>
 
         <BoxView Grid.Row="6" HeightRequest="1" BackgroundColor="#696969"></BoxView>
 
         <Button Grid.Row="7"
+                FontSize="20"
+                CornerRadius="0"
+                Text="Contact information"
+                Clicked="CiButton_Clicked"
+                BackgroundColor="#0074C0"/>
+
+        <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="9"
+                FontSize="20"
+                Text="Settings"
+                CornerRadius="0"
+                LineBreakMode="WordWrap"
+                Clicked="SettingsButton_Clicked"
+                BackgroundColor="#0074C0"/>
+
+        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="11"
                 FontSize="20"
                 CornerRadius="0"
                 LineBreakMode="WordWrap"
