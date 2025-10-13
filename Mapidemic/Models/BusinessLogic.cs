@@ -11,7 +11,7 @@ public class BusinessLogic
     private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
-    public ObservableCollection<AnalyzedIllness> SymptomAnalysis { get; set; }
+    public SortedSet<AnalyzedIllness> SymptomAnalysis { get; set; }
     public AnalyzedIllness LikelyIllness { get; set; }
 
     /// <summary>
@@ -172,10 +172,9 @@ public class BusinessLogic
     /// to determine how likely it is that a user has a specified
     /// illness based on their symptoms
     /// </summary>
-    /// <returns>True if analysis complete, false if not</returns>
     public async void RunSymptomAnalysis()
     {
-        SymptomAnalysis = new ObservableCollection<AnalyzedIllness>();
+        SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
         List<Illness> illnesses = await database.GetIllnessList();
         foreach (Illness illness in illnesses)
@@ -200,11 +199,11 @@ public class BusinessLogic
             finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
             if (finalProbability != 0)
             {
-                ProcessIllnessInsertionSort(finalProbability, illness);
+                SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
             }
         }
         LikelyIllness = SymptomAnalysis.First();
-        SymptomAnalysis.RemoveAt(0);
+        SymptomAnalysis.Remove(LikelyIllness);
     }
 
     /// <summary>
@@ -226,32 +225,6 @@ public class BusinessLogic
             }
         }
         return checkedSymptoms;
-    }
-
-    /// <summary>
-    /// A function that performs an
-    /// insertion sort for the observable
-    /// collection
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
-    private void ProcessIllnessInsertionSort(double key, Illness value)
-    {
-        int index = 0;
-        bool searching = true;
-        while (searching && index < SymptomAnalysis.Count)
-        {
-            if (key >= SymptomAnalysis[index].Probability)
-            {
-                searching = false;
-                SymptomAnalysis.Insert(index, new AnalyzedIllness(value, key));
-            }
-            index++;
-        }
-        if (searching)
-        {
-            SymptomAnalysis.Add(new AnalyzedIllness(value, key));
-        }
     }
 
     public async Task<List<Illnesses>> GetIllnessesList()
