@@ -3,8 +3,40 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:local="clr-namespace:Mapidemic"
                 x:Class="Mapidemic.ContactInformation"
-                Title="Contact Information">
+                Title="Contact Information"
+                BackgroundColor="LightCyan">
     
-    <Label Text="INSERT TEXT HERE AT A LATER DATE"/>
-
+    <ScrollView>
+        <Grid Padding="15" RowSpacing="12" RowDefinitions="Auto, Auto, Auto, Auto, Auto">
+            <Label Grid.Row="0" Text="Contact Us" FontSize="28" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Frame Grid.Row="1" Padding="10" CornerRadius="16" HasShadow="True" Margin="0,8" >
+                <VerticalStackLayout Spacing = "2">
+                    <Label Text="Alex Griep" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Name of Contact Source (e.g. Email,Website)" FontSize="14" TextColor="#666666" />
+                    <Label Text="Email/URL goes here" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Row="2" Padding="16" CornerRadius="16" HasShadow="True" Margin="0,8" >
+                <VerticalStackLayout Spacing = "2">
+                    <Label Text="Arthur Waldman" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Name of Contact Source (e.g. Email, Website)" FontSize="14" TextColor="#666666" />
+                    <Label Text="Email/URL goes here" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Row="3" Padding="16" CornerRadius="16" HasShadow="True" Margin="0,8">
+                <VerticalStackLayout Spacing = "2">
+                    <Label Text="Connor McGuire" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Name of Contact Source (e.g. Email, Website)" FontSize="14" TextColor="#666666" />
+                    <Label Text="Email/URL goes here" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Grid.Row="4" Padding="16" CornerRadius="16" HasShadow="True" Margin="0,8">
+                <VerticalStackLayout Spacing = "2">
+                    <Label Text="Neng Yang" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="Name of Contact Source (e.g. Email, Website)" FontSize="14" TextColor="#666666" />
+                    <Label Text="Email/URL goes here" FontSize="14" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+    </ScrollView>
 </ContentPage>

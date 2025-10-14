@@ -60,6 +60,17 @@ public partial class MenuPage : ContentPage
 	}
 
 	/// <summary>
+	/// A function that displays the contact information page
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
+	public void IwcButton_Clicked(object sender, EventArgs args)
+	{
+		viewport = new NavigationPage(new InformationWeCollect());
+		PrepareViewport();
+	}
+
+	/// <summary>
 	/// A function that directs the user to the
 	/// website of the CDC
 	/// </summary>
