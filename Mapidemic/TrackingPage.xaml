@@ -7,11 +7,10 @@
             x:Class="Mapidemic.TrackingPage">
 
         <local:MapPage Title="Map" /> <!-- Map Page -->
-        <!-- <local:[INSERT GRAPH CONTENT PAGE] Title="Graph" /> -->
+        <local:GraphPage Title="Graph"/> <!-- Graph Page -->
         <!-- <local:[INSERT REPORT CONTENT PAGE] Title="Report" /> -->
 
         <!-- PLACEHOLDER PAGES TO BE DELETED -->
-        <ContentPage Title="Graph"/>
         <ContentPage Title="Report"/>
 
 </TabbedPage>
