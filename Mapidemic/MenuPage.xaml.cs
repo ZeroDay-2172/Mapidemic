@@ -1,8 +1,12 @@
+using Mapidemic.Models;
+using System.Runtime.CompilerServices;
+
 namespace Mapidemic;
 
 public partial class MenuPage : ContentPage
 {
     private NavigationPage? viewport;
+
 	private const string cdcLink = "https://www.cdc.gov/";
 
     /// <summary>
@@ -24,6 +28,17 @@ public partial class MenuPage : ContentPage
 		HomePage? homePage = this.Parent as HomePage;
 		await homePage!.GetViewport().PushAsync(viewport);
 		homePage.IsPresented = false;
+	}
+
+	/// <summary>
+	/// A function that displays the symptoms page
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="args"></param>
+	public async void ScButton_Clicked(object sender, EventArgs args)
+	{
+		viewport = new NavigationPage(new SymptomsPage());
+		PrepareViewport();
 	}
 
 	/// <summary>
@@ -68,6 +83,23 @@ public partial class MenuPage : ContentPage
 	{
 		viewport = new NavigationPage(new InformationWeCollect());
 		PrepareViewport();
+	}
+	
+	/// A function that displays the settings page
+	/// Note: Needs to be public for settingsPage to work!
+	/// </summary>
+	/// <param name="openSettings">If settings should be opened</param>
+	/// <param></param>
+	public void SettingsPageHandler(out bool settingsOpen)
+	{
+		settingsOpen = false;
+
+		if (settingsOpen == false)
+		{
+			viewport = new NavigationPage(new SettingsPage());
+			PrepareViewport();
+			settingsOpen = true;
+		}
 	}
 
 	/// <summary>

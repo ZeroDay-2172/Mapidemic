@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                x:Class="Mapidemic.LoadingScreen"
+                Title="Loading. . .">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Loading . . ." x:Name="loadingLabel" Grid.Row="2" Grid.Column="1" HorizontalTextAlignment="Center" FontSize="25"/>
+        <ProgressBar Progress="0.0" ProgressColor="Red" x:Name="loadingBar" WidthRequest="300" Grid.Row="2" Grid.Column="1"/>
+    </Grid>
+
+</ContentPage>
