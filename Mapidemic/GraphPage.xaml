@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mapidemic"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             x:Class="Mapidemic.GraphPage">
+
+    <!--- Note that the graph is only for display, and not dynamic -->
+    <VerticalStackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Eventually the selection will affect the graph -->
+            <Label Text="Recent Trends for:" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
+            <Picker Title="Select Illness" WidthRequest="200" HorizontalOptions="Start" Margin="20" Grid.Row="0" Grid.Column="1">
+                <Picker.Items>
+                    <x:String>Common Cold</x:String>
+                    <x:String>Covid-19</x:String>
+                    <x:String>Influenza</x:String>
+                </Picker.Items>
+            </Picker>
+        </Grid>
+
+        <microcharts:ChartView x:Name="chartView" HeightRequest="300" HorizontalOptions="FillAndExpand" Margin="0, 50, 0, 50"/>
+
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Possibly be able to pick National, or from your zip code -->
+            <Label Text="Local Trends" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+            <Switch OnColor="Blue" Grid.Row="0" Grid.Column="1"/>
+        </Grid>
+    </VerticalStackLayout>
+    
+
+</ContentPage>

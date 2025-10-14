@@ -1,3 +1,4 @@
+using Mapidemic.Models;
 using System.Runtime.CompilerServices;
 
 namespace Mapidemic;
@@ -5,6 +6,7 @@ namespace Mapidemic;
 public partial class MenuPage : ContentPage
 {
     private NavigationPage? viewport;
+
 	private const string cdcLink = "https://www.cdc.gov/";
 
     /// <summary>
@@ -74,14 +76,20 @@ public partial class MenuPage : ContentPage
 
 	/// <summary>
 	/// A function that displays the settings page
+	/// Note: Needs to be public for settingsPage to work!
 	/// </summary>
-	/// <param name="sender"></param>
-	/// <param name="args"></param>
-	public void SettingsButton_Clicked(object sender, EventArgs args)
+	/// <param name="openSettings">If settings should be opened</param>
+	/// <param></param>
+	public void SettingsPageHandler(out bool settingsOpen)
 	{
-		/// THIS NEEDS TO BE CHANGED TO A SETTINGS PAGE
-		viewport = new NavigationPage(new ContactInformation());
-		PrepareViewport();
+		settingsOpen = false;
+
+		if (settingsOpen == false)
+		{
+			viewport = new NavigationPage(new SettingsPage());
+			PrepareViewport();
+			settingsOpen = true;
+		}
 	}
 
 	/// <summary>

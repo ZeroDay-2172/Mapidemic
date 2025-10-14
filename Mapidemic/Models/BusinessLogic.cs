@@ -8,9 +8,10 @@ public class BusinessLogic
     private Settings? settings;
     private readonly Database database;
     private const int postalCodeLength = 5;
+    private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
-    public ObservableCollection<AnalyzedIllness> SymptomAnalysis { get; set; }
+    public SortedSet<AnalyzedIllness> SymptomAnalysis { get; set; }
     public AnalyzedIllness LikelyIllness { get; set; }
 
     /// <summary>
@@ -42,11 +43,12 @@ public class BusinessLogic
 
     /// <summary>
     /// A function that loads the local
-    /// list of symptoms from the database
+    /// list of symptoms from the database,
+    /// sorts them, and adds them to a collection
     /// </summary>
     private async void LoadSymptomsList()
     {
-        HashSet<string> symptoms = new HashSet<string>();
+        SortedSet<string> symptoms = new SortedSet<string>(); ;
         foreach (Illness illness in await database.GetSymptomsList())
         {
             foreach (string symptom in illness.Symptoms!)
@@ -170,10 +172,9 @@ public class BusinessLogic
     /// to determine how likely it is that a user has a specified
     /// illness based on their symptoms
     /// </summary>
-    /// <returns>True if analysis complete, false if not</returns>
     public async void RunSymptomAnalysis()
     {
-        SymptomAnalysis = new ObservableCollection<AnalyzedIllness>();
+        SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
         List<Illness> illnesses = await database.GetIllnessList();
         foreach (Illness illness in illnesses)
@@ -181,6 +182,7 @@ public class BusinessLogic
             int matchingSymptoms = 0;
             int extraUserSymptoms = 0;
             int extraIllnessSymptoms;
+            double finalProbability;
             HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!);
             foreach (Symptom symptom in userSymptoms)
             {
@@ -194,10 +196,14 @@ public class BusinessLogic
                 }
             }
             extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms;
-            ProcessInsertionSort(((double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms)) * 100, illness);
+            finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
+            if (finalProbability != 0)
+            {
+                SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
+            }
         }
         LikelyIllness = SymptomAnalysis.First();
-        SymptomAnalysis.RemoveAt(0);
+        SymptomAnalysis.Remove(LikelyIllness);
     }
 
     /// <summary>

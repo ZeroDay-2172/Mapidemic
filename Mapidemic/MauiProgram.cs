@@ -1,6 +1,8 @@
 ﻿using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Extensions.Logging;
 using Mapidemic.Models;
+using SkiaSharp.Views.Maui.Controls.Hosting;
+using Microcharts.Maui;
 using Syncfusion.Licensing;
 
 namespace Mapidemic;
@@ -15,6 +17,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseSkiaSharp()
+			.UseMicrocharts()
 			.ConfigureSyncfusionCore()
 			.ConfigureFonts(fonts =>
 			{
