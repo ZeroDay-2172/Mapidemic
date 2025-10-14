@@ -32,8 +32,9 @@ public partial class ReportIllnessPage : ContentPage
     {
         try
         {
+            Busy(true, "Loading illnesses..."); // Show the busy indicator
             var listing = await BusinessLogic.GetIllnessesList(); // Get the list of illnesses from the business logic layer
-            illnesses.Clear(); // Clear the existing illnesses
+            illnesses.Clear();
             foreach (var listitem in listing)
             {
                 if (listitem.Illness != null)
@@ -42,8 +43,9 @@ public partial class ReportIllnessPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to load illnesses: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Failed to load illnesses: {ex.Message}", "OK"); // Show an error message if loading fails
         }
+        finally { Busy(false); }// Hide the busy indicator
     }
 
     /// <summary>
@@ -53,34 +55,43 @@ public partial class ReportIllnessPage : ContentPage
     /// <param name="e"></param>
     private async void OnReportButtonClicked(object sender, EventArgs e)
     {
-        if (IllnessPicker.SelectedItem == null)
-        {
-            await DisplayAlert("Error", "Please select an illness.", "OK"); // If the user hasn't selected an illness, show an error message
-            return;
-        }
-        string? selectedIllness = IllnessPicker.SelectedItem.ToString(); // Otherwise, get the selected illness
+        IllnessError.IsVisible = IllnessPicker.SelectedItem == null; // Ensure an illness is selected
+        ZipError.IsVisible = string.IsNullOrWhiteSpace(PostalCodeEntry.Text) || PostalCodeEntry.Text.Length != 5; // Basic ZIP code validation
+        if (IllnessError.IsVisible || ZipError.IsVisible)
+            return; // Validation failed, do not proceed
 
-        string postalCodeText = PostalCodeEntry.Text; // Get the postal code from the entry
-        if (!await BusinessLogic.ValidatePostalCode(postalCodeText))
-        {
-            await DisplayAlert("Error", "Please enter a valid postal code.", "OK"); // If the postal code is invalid, show an error message
-            return;
-        }
+        var selectedIllness = IllnessPicker.SelectedItem?.ToString();
+        var postalCodeText = PostalCodeEntry.Text?.Trim();
 
-        int postalCode = int.Parse(postalCodeText); // Parse the postal code to an integer
-        Guid reportId = Guid.NewGuid(); // Generate a new GUID for the report
-        DateTimeOffset reportDate = DateTimeOffset.UtcNow; // Get the current date and time in UTC
-        bool success = await BusinessLogic.ReportIllness(reportId, postalCode, selectedIllness!, reportDate); // Report the illness using the business logic layer
-        if (success)
+        Busy(true, "Reporting Illness..."); // Show the busy indicator
+
+        try
         {
-            await DisplayAlert("Success", "Illness reported successfully.", "OK"); // If the report was successful, show a success message
-            IllnessPicker.SelectedItem = null;
-            PostalCodeEntry.Text = string.Empty; // Clear the input fields
-        }
-        else
+            if (!await BusinessLogic.ValidatePostalCode(postalCodeText)) 
+            {
+                ZipError.IsVisible = true;
+                Busy(false, "Invalid ZIP Code.");
+                return; // Invalid postal code, do not proceed
+            }
+
+            Busy(false);
+            await Navigation.PushAsync(new ConfirmIllnessPage(selectedIllness, postalCodeText, BusinessLogic)); // Navigate to the confirmation page
+        } catch (Exception ex)
         {
-            await DisplayAlert("Error", "Failed to report illness. Please try again.", "OK"); // If the report failed, show an error message (This should not happen in normal circumstances and might still go through)
+            Busy(false);
+            await DisplayAlert("Error", $"Failed to report illness: {ex.Message}", "OK"); // Show an error message if reporting fails
         }
+    }
+
+    /// <summary>
+    /// Show or hide the busy indicator and update the status message
+    /// </summary>
+    /// <param name="on">True to show the busy indicator, false to hide it</param>
+    /// <param name="msg">Optional status message to display</param>
+    private void Busy(bool on, string? msg = null)
+    {
+        BusyIndicator.IsRunning = BusyIndicator.IsVisible = on;
+        StatusLabel.Text = on ? msg : "";
     }
 
 }
