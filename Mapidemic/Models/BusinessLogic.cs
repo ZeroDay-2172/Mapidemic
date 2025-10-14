@@ -57,7 +57,7 @@ public class BusinessLogic
         foreach (string symptom in symptoms)
         {
             SymptomList.Add(new Symptom(symptom));
-        }
+        } // For some reason, the git merge we did on 10/11/2025 removed the two curly braces here. Odd, but it works now. Keep an eye on this in the future.
     }
 
     /// <summary>
@@ -220,7 +220,7 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
+
     /// <summary>
     /// A function that performs an
     /// insertion sort for the observable
@@ -244,6 +244,9 @@ public class BusinessLogic
         if (searching)
         {
             SymptomAnalysis.Add(new AnalyzedIllness(value, key));
+        }
+    }
+    
     public async Task<List<Illnesses>> GetIllnessesList()
     {
         return await database.GetIllnessesList();

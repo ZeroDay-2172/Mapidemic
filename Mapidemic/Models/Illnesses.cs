@@ -12,9 +12,9 @@ public class Illnesses : BaseModel
     [Column("symptoms")]
     public string[]? Symptoms { get; set; }
 
-    [Column("contagious_period (hours)")]
+    [Column("contagious_period_hours")]
     public int? ContagiousPeriod { get; set; }
 
-    [Column("recovery_period (hours)")]
+    [Column("recovery_period_hours")]
     public int? RecoveryPeriod { get; set; }
 }
