@@ -1,10 +1,68 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?> 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:local="clr-namespace:Mapidemic"
-                x:Class="Mapidemic.PrivacyPolicyPage"
-                Title="Privacy Policy">
-    
-    <Label Text="INSERT TEXT HERE AT A LATER DATE"/>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mapidemic.PrivacyPolicyPage"
+             Title="Privacy Policy"
+             BackgroundColor="LightBlue">
 
+    <ScrollView>
+        <Grid Padding="15" RowSpacing="5"
+          RowDefinitions="Auto,Auto,Auto,Auto">
+
+            <!-- Introduction -->
+            <Border Grid.Row="0"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClickedOnIntro" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="+" FontSize="24" TextColor="White" VerticalTextAlignment="Center" />
+                <Label Grid.Column="1" 
+                    Text="1. Introduction" 
+                    FontAttributes="Bold" 
+                    FontSize="18" 
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Content for Introduction -->
+            <Grid Grid.Row="1" x:Name="IntroContent" IsVisible="False"
+                    Padding="14" BackgroundColor="#EEF4FF">
+                <Label Text="Explain the Privacy Policy."
+                    LineBreakMode="WordWrap"/>
+            </Grid>
+
+            <!-- Reason -->
+            <Border Grid.Row="2"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClickedOnReason" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="+" 
+                    FontSize="24" 
+                    TextColor="White" 
+                    VerticalTextAlignment="Center" />
+                <Label Grid.Column="1" 
+                    Text="2. Reason" 
+                    FontAttributes="Bold" 
+                    FontSize="18" 
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Content for Reason -->
+            <Grid Grid.Row="3" x:Name="ReasonContent" IsVisible="False"
+                    Padding="14" BackgroundColor="#EEF4FF">
+                <Label Text="Explain why we collect data."
+                    LineBreakMode="WordWrap"/>
+            </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>
