@@ -226,32 +226,6 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-
-    /// <summary>
-    /// A function that performs an
-    /// insertion sort for the observable
-    /// collection
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
-    private void ProcessInsertionSort(double key, Illness value)
-    {
-        int index = 0;
-        bool searching = true;
-        while (searching && index < SymptomAnalysis.Count)
-        {
-            if (key >= SymptomAnalysis[index].Probability)
-            {
-                searching = false;
-                SymptomAnalysis.Insert(index, new AnalyzedIllness(value, key));
-            }
-            index++;
-        }
-        if (searching)
-        {
-            SymptomAnalysis.Add(new AnalyzedIllness(value, key));
-        }
-    }
     
     public async Task<List<Illnesses>> GetIllnessesList()
     {

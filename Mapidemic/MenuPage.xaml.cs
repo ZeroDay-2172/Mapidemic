@@ -80,16 +80,22 @@ public partial class MenuPage : ContentPage
 	/// </summary>
 	/// <param name="openSettings">If settings should be opened</param>
 	/// <param></param>
-	public void SettingsPageHandler(out bool settingsOpen)
+	public async void SettingsPageHandler() // TODO: Hide settings icon when already on settings page
 	{
-		settingsOpen = false;
-
-		if (settingsOpen == false)
+		var homePage = this.Parent as HomePage;
+		if (homePage == null) // If not in a HomePage
 		{
-			viewport = new NavigationPage(new SettingsPage());
-			PrepareViewport();
-			settingsOpen = true;
+			return;
 		}
+		var nav = homePage.GetViewport(); // NavigationPage
+
+		var stack = nav.Navigation?.NavigationStack;
+		if (stack != null && stack.Count > 0 && stack[stack.Count - 1] is SettingsPage) // Already on settings page
+		{
+			return;
+		}
+		await nav.PushAsync(new SettingsPage()); // Push settings page
+		homePage.IsPresented = false; // Close the menu
 	}
 
 	/// <summary>
