@@ -20,10 +20,10 @@
                     <Label Text="Dark Mode" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
                     <Switch IsToggled="false" OnColor="Blue" Toggled="OnDarkModeToggled" Grid.Row="0" Grid.Column="1" x:Name="DarkModeSwitch"/>
 
-                    <Label Text="Default Zip Code" FontSize="18" Padding="20" Grid.Row="1" Grid.Column="0"/>
-                    <Entry x:Name="ZipCodeEnt" FontSize="18" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Start" HorizontalTextAlignment="Center"/>
+                    <Label Text="Postal Code" FontSize="18" Padding="20" Grid.Row="1" Grid.Column="0"/>
+                    <Entry x:Name="PostalCodeEnt" FontSize="18" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Start" HorizontalTextAlignment="Center"/>
 
-                    <Button Text="Save Settings" Clicked="SaveButton_Clicked" x:Name="ZipCodeButton" Grid.Row="2" Grid.Column="1"/>
+                    <Button Text="Save Settings" Clicked="SaveButton_Clicked" x:Name="PostalCodeButton" Grid.Row="2" Grid.Column="1"/>
                 </Grid>
             </StackLayout>
 
