@@ -3,8 +3,7 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:local="clr-namespace:Mapidemic"
                 x:Class="Mapidemic.AboutUs"
-                Title="Meet the Team"
-                BackgroundColor="LightCyan">
+                Title="Meet the Team">
     
     <Grid RowDefinitions="*" Padding ="15" >
         
@@ -14,6 +13,7 @@
                     <Button Grid.Row="0" Text="Alex Griep"
                         FontSize="16" 
                         BackgroundColor="#0066CC"
+                        TextColor="White"
                         Clicked ="ShowInfo" 
                         CommandParameter="{x:Reference AlexGriep}"
                         VerticalOptions="FillAndExpand"
@@ -22,6 +22,7 @@
                     <Button Grid.Row="1" Text="Arthur Waldman"
                         FontSize="16"
                         BackgroundColor="#0066CC"
+                        TextColor="White"
                         Clicked ="ShowInfo" 
                         CommandParameter="{x:Reference ArthurWaldman}" 
                         VerticalOptions="FillAndExpand"
@@ -30,6 +31,7 @@
                     <Button Grid.Row="2" Text="Connor McGuire"
                         FontSize="16" 
                         BackgroundColor="#0066CC"
+                        TextColor="White"
                         Clicked ="ShowInfo" 
                         CommandParameter="{x:Reference ConnorMcGuire}" 
                         VerticalOptions="FillAndExpand"
@@ -38,6 +40,7 @@
                     <Button Grid.Row="3" Text="Neng Yang"
                         FontSize="16" 
                         BackgroundColor="#0066CC"
+                        TextColor="White"
                         Clicked ="ShowInfo" 
                         CommandParameter="{x:Reference NengYang}" 
                         VerticalOptions="FillAndExpand"
@@ -46,7 +49,7 @@
             </Grid>
 
             <Grid Grid.Column="1" >
-                <Frame x:Name="AlexGriep" IsVisible="False" Padding="16" HasShadow="True" CornerRadius="16">
+                <Frame x:Name="AlexGriep" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Alex Griep" FontSize="22" FontAttributes="Bold"/>
                         <Label Text="Major" FontSize="18"/>
@@ -60,7 +63,7 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame x:Name="ArthurWaldman" IsVisible="False" Padding="16" HasShadow="True" CornerRadius="16">
+                <Frame x:Name="ArthurWaldman" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Arthur Waldman" FontSize="22" FontAttributes="Bold"/>
                     <Label Text="Major" FontSize="18"/>
@@ -73,7 +76,7 @@
                 </VerticalStackLayout>
                 </Frame>
 
-                <Frame x:Name="ConnorMcGuire" IsVisible="False" Padding="16" HasShadow="True" CornerRadius="16">
+                <Frame x:Name="ConnorMcGuire" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Connor McGuire" FontSize="22" FontAttributes="Bold"/>
                     <Label Text="Major" FontSize="18"/>
@@ -86,7 +89,7 @@
                 </VerticalStackLayout>
                 </Frame>
 
-                <Frame x:Name="NengYang" IsVisible="False" Padding="16" HasShadow="True" CornerRadius="16">
+                <Frame x:Name="NengYang" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="Neng Yang" FontSize="22" FontAttributes="Bold"/>
                     <Label Text="Major" FontSize="18"/>

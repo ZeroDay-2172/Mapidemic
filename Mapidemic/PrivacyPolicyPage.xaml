@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mapidemic.PrivacyPolicyPage"
-             Title="Privacy Policy"
-             BackgroundColor="LightBlue">
+             Title="Privacy Policy">
 
     <ScrollView>
         <Grid Padding="15" RowSpacing="5"
@@ -30,7 +29,7 @@
 
             <!-- Content for Introduction -->
             <Grid Grid.Row="1" x:Name="IntroContent" IsVisible="False"
-                    Padding="14" BackgroundColor="#EEF4FF">
+                    Padding="14" BackgroundColor="transparent">
                 <Label Text="Explain the Privacy Policy."
                     LineBreakMode="WordWrap"/>
             </Grid>
@@ -59,7 +58,7 @@
 
             <!-- Content for Reason -->
             <Grid Grid.Row="3" x:Name="ReasonContent" IsVisible="False"
-                    Padding="14" BackgroundColor="#EEF4FF">
+                    Padding="14" BackgroundColor="transparent">
                 <Label Text="Explain why we collect data."
                     LineBreakMode="WordWrap"/>
             </Grid>
