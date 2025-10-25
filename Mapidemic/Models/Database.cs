@@ -1,5 +1,7 @@
 namespace Mapidemic.Models;
 using System.Collections.ObjectModel;
+using Supabase.Postgrest;
+using AndroidX.Emoji2.Text.FlatBuffer;
 
 public class Database
 {
@@ -57,5 +59,38 @@ public class Database
     {
         var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
         return response.Models;
+    }
+
+    /// <summary>
+    /// Returns the count of rows (reports) of an illness in the provided zip code, on the specific day.
+    /// </summary>
+    /// <param name="illnessName">Name of illness to find data on</param>
+    /// <param name="date">Date of the report(s) to consider</param>
+    /// <param name="postalCode">Specifies what area the report took place, -1 if national reports</param>
+    /// <returns></returns>
+    public async Task<int> getNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
+    {
+        var startOfDay = date.UtcDateTime.Date;
+        var endOfDay = startOfDay.AddDays(1);
+
+        // Show local reports
+        if (postalCode != -1)
+        {
+            return await supabaseClient
+                         .From<IllnessReport>()
+                         .Where(x => x.PostalCode == postalCode)
+                         .Where(x => x.IllnessType == illnessName)
+                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                         .Count(Supabase.Postgrest.Constants.CountType.Exact);
+        }
+        // Show national reports
+        else
+        {
+            return await supabaseClient
+                         .From<IllnessReport>()
+                         .Where(x => x.IllnessType == illnessName)
+                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                         .Count(Supabase.Postgrest.Constants.CountType.Exact);
+        }
     }
 }

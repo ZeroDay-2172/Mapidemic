@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
+             BindingContext="ChartModel"
              x:Class="Mapidemic.GraphPage">
 
     <!--- Note that the graph is only for display, and not dynamic -->
@@ -18,19 +20,53 @@
 
             <!-- Eventually the selection will affect the graph -->
             <Label Text="Recent Trends for:" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
-            <Picker Title="Select Illness" WidthRequest="200" HorizontalOptions="Start" Margin="20" Grid.Row="0" Grid.Column="1">
+            <Picker Title="Select Illness" WidthRequest="200" HorizontalOptions="Start" Margin="20" Grid.Row="0" Grid.Column="1" x:Name="illnessPicker" SelectedIndexChanged="illnessChosen_handler">
                 <Picker.Items>
+                    <x:String>Bronchitis</x:String>
+                    <x:String>Chickenpox</x:String>
                     <x:String>Common Cold</x:String>
-                    <x:String>Covid-19</x:String>
+                    <x:String>COVID-19</x:String>
+                    <x:String>E. Coli</x:String>
                     <x:String>Influenza</x:String>
+                    <x:String>Listeria</x:String>
+                    <x:String>Measles</x:String>
+                    <x:String>Pneumonia</x:String>
+                    <x:String>Salmonella</x:String>
+                    <x:String>Strep Throat</x:String>
+                    <x:String>Whooping Cough</x:String>
                 </Picker.Items>
             </Picker>
         </Grid>
 
-        <microcharts:ChartView x:Name="chartView" HeightRequest="300" HorizontalOptions="FillAndExpand" Margin="0, 50, 0, 50"/>
+        <!-- Old Graph below -->
+        <!-- <microcharts:ChartView x:Name="chartView" HeightRequest="300" HorizontalOptions="FillAndExpand" Margin="0, 50, 0, 50"/> -->
+
+        <chart:SfCartesianChart x:Name="dataChart">
+            <chart:SfCartesianChart.XAxes>
+                <chart:CategoryAxis>
+                    <chart:CategoryAxis.Title>
+                        <chart:ChartAxisTitle Text="Date"/>
+                    </chart:CategoryAxis.Title>
+                </chart:CategoryAxis>
+            </chart:SfCartesianChart.XAxes>
+            <chart:SfCartesianChart.YAxes>
+                <chart:NumericalAxis>
+                    <chart:NumericalAxis.Title>
+                        <chart:ChartAxisTitle Text="# of cases"/>
+                    </chart:NumericalAxis.Title>
+                </chart:NumericalAxis>
+            </chart:SfCartesianChart.YAxes>
+
+            <chart:ColumnSeries x:Name="column"
+                                ItemsSource="{Binding data}" 
+                                XBindingPath="dateString"
+                                YBindingPath="value"/>
+        </chart:SfCartesianChart>
+
 
         <Grid Padding="20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -39,8 +75,10 @@
             </Grid.ColumnDefinitions>
 
             <!-- Possibly be able to pick National, or from your zip code -->
-            <Label Text="Local Trends" FontSize="18" Grid.Row="0" Grid.Column="0"/>
-            <Switch OnColor="Blue" Grid.Row="0" Grid.Column="1"/>
+            <Label Text="National / Local Trends" FontSize="18" Grid.Row="0" Grid.Column="0"/>
+            <Switch OnColor="Blue" Grid.Row="0" Grid.Column="1" Toggled="localitySwitch_toggled"/>
+
+            <Button Text="Load Data" Clicked="refreshButtonClicked" Grid.Row="1" Grid.Column="0" Margin="20" HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>
     

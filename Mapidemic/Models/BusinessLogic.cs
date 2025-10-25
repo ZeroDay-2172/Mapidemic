@@ -262,4 +262,20 @@ public class BusinessLogic
             return false; // Return false if the insertion failed (Might be a bug, while creating this, it still went through)
         }
     }
+
+    /// <summary>
+    /// Function calls database to return number of cases of specific illness on
+    /// given day either locally or nationally.
+    /// </summary>
+    /// <param name="selectedIllness">name of illness</param>
+    /// <param name="date">date to get data for</param>
+    /// <param name="localTrends">local to zip code (true), or national (false)</param>
+    /// <returns></returns>
+    public async Task<int> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
+    {
+        if (localTrends == true)
+            return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
+        else
+            return await database.getNumberOfReports(selectedIllness, date, -1);
+    }
 }
