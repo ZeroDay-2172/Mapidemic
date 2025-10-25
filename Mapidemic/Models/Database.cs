@@ -1,6 +1,6 @@
 namespace Mapidemic.Models;
 using System.Collections.ObjectModel;
-
+using System.Formats.Asn1;
 public class Database
 {
     private const string supabaseUrl = "https://aeqrpazberlimssdzviz.supabase.co";
@@ -56,6 +56,12 @@ public class Database
     public async Task<List<Illnesses>> GetIllnessesList()
     {
         var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        return response.Models;
+    }
+
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCountsAsync()
+    {
+        var response = await supabaseClient.From<ZipIllnessCounts>().Select("*").Get();
         return response.Models;
     }
 }

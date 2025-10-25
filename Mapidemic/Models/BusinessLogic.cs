@@ -97,7 +97,7 @@ public class BusinessLogic
     /// A function that accepts settings changes and saves
     /// then to the device's local settings file
     /// </summary>
-    /// <param name="unitSetting"></param>
+    /// <param name="unitSetting"></param> Where is this used? - Alex
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
@@ -226,10 +226,23 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
+
+    /// <summary>
+    /// A function that return all the illnesses
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<Illnesses>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
+    }
+
+    /// <summary>
+    /// A function that return all the zip illness counts
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCountsAsync()
+    {
+        return await database.GetZipIllnessCountsAsync();
     }
 
     /// <summary>
