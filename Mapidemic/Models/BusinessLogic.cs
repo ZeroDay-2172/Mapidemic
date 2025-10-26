@@ -240,9 +240,14 @@ public class BusinessLogic
     /// A function that return all the zip illness counts
     /// </summary>
     /// <returns></returns>
-    public async Task<List<ZipIllnessCounts>> GetZipIllnessCountsAsync()
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
     {
-        return await database.GetZipIllnessCountsAsync();
+        return await database.GetZipIllnessCounts();
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        return await database.GetPostalCodeCentroids(postalCode);
     }
 
     /// <summary>

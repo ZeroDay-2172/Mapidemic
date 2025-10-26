@@ -1,55 +1,37 @@
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Graphics;
-using System.Linq;
-using System.Collections.Generic;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Threading;
-using Mapidemic.Models;
 namespace Mapidemic;
 
 public partial class MapPage : ContentPage
 {
-    private readonly List<Circle> _heatmapCircles = new(); // Keep track of rendered heatmap circles so we can clear/update them
-    private static readonly Dictionary<int, Location> _zipCenterCache = new(); // Cache ZIP -> geocoded center to reduce geocoding calls and rate limits
-    private readonly SemaphoreSlim _renderLock = new(1, 1); // Lock for synchronizing map rendering
-    private bool _refreshScheduled; // Flag to indicate if a refresh is already scheduled
+    private readonly List<Circle> _heatmapCircles = new();
+    private static readonly Dictionary<int, Location> _zipCenterCache = new();
+    private readonly SemaphoreSlim _renderLock = new(1, 1); // Semaphore is here to save the day, preventing concurrent renders
+    private bool _refreshScheduled;
 
     public MapPage() => InitializeComponent();
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await EnsureLocationPermissionAsync(); // When the page appears, ensure permissions and center map
-        await CenterOnUserLocationAsync();
-        await RenderReportHeatmapAsync(); // Render the heatmap when the page appears
+        await EnsureLocationPermission();
+        await CenterOnUserPostalCode();
+        await RenderReportHeatmap();
 
         WeakReferenceMessenger.Default.Register<object, string>(this, "IllnessReportedZip", async (sender, zip) =>
         {
-            if (_refreshScheduled) // If a refresh is already scheduled, ignore new reports
-                return;
-
-            _refreshScheduled = true;
-            await Task.Delay(2000); // Wait 2 seconds before refreshing
-            await _renderLock.WaitAsync(); // Acquire the lock to ensure only one render at a time
-            try
-            {
-                await RenderReportHeatmapAsync(); // Re-render the heatmap
-            }
-            finally
-            {
-                _refreshScheduled = false; // Reset the flag
-                _renderLock.Release(); // Release the lock
-            }
-        }); // The code above took me forever to get right and my only hope is that it's so bad, I never have to handle threading again
+            await ThrottleRefreshRate();
+        });
     }
 
+    /// <summary>
+    /// Clean up messenger registrations when the page disappears.
+    /// </summary>
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        WeakReferenceMessenger.Default.UnregisterAll(this); // Unregister messenger when page disappears
+        WeakReferenceMessenger.Default.UnregisterAll(this); // If this isn't here, the app will crash because we can't re-register messengers
     }
 
 
@@ -58,15 +40,15 @@ public partial class MapPage : ContentPage
     /// </summary>
     void OnReportIllnessClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new ReportIllnessPage()); // Navigate to the report illness page
+        Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
     }
 
     /// <summary>
     /// Ensure the app has location permissions; if not, request them.
     /// </summary>
-    async Task EnsureLocationPermissionAsync()
+    async Task EnsureLocationPermission()
     {
-        var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(); // A simple check for iOS is needed for it to work
+        var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(); // Might move this down to CenterOnUserPostalCode
         if (status != PermissionStatus.Granted)
         {
             status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
@@ -79,48 +61,57 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
-    /// Center the map on the user's location.
+    /// Center the map on the user's postal code.
     /// </summary>
-    async Task CenterOnUserLocationAsync() // This needs to be changed but for some reason, I can't get the zip from the settings, so I'm centering on location instead
+    async Task CenterOnUserPostalCode()
     {
-        try
+        var settings = MauiProgram.businessLogic.ReadSettings();
+        int? postalCode = settings.PostalCode;
+        if (postalCode != null)
         {
-            var location = await Geolocation.GetLastKnownLocationAsync();
-            if (location != null)
+            var locations = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
+            if (locations != null && locations.Count > 0)
             {
-                var userPosition = new Location(location.Latitude, location.Longitude);
-                MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(userPosition, Distance.FromMiles(1)));
+                var location = locations[0];
+                var center = new Location(location.Latitude, location.Longitude); // Gathers the map on internal centroids given by Census.gov, wacky postal codes have odd centroids that will never be 100% accurate. Downside of user privacy.
+                MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
             }
         }
-        catch (Exception ex)
+        else
         {
-            await DisplayAlert("Error", $"Unable to get location: {ex.Message}", "OK");
+            var location = await Geolocation.Default.GetLastKnownLocationAsync(); // If for some reason postal code isn't set, fall back to device location. Look into adding a default location for the most private of users.
+            if (location != null)
+            {
+                var center = new Location(location.Latitude, location.Longitude);
+                MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
+            }
         }
+
     }
 
     /// <summary>
     /// Render color-coded circles by ZIP code, based on count of illness reports.
     /// Yellow = minimal, Red = more, Black = severe. Fixed radius to preserve privacy.
     /// </summary>
-    private async Task RenderReportHeatmapAsync()
+    private async Task RenderReportHeatmap()
     {
         try
         {
-            foreach (var c in _heatmapCircles)
+            foreach (var c in _heatmapCircles) // Looks into it's local cache 
             {
-                MapControl.MapElements.Remove(c); // Clear existing circles
+                MapControl.MapElements.Remove(c); // Removes all existing circles, to prepare for re-rendering
             }
-            _heatmapCircles.Clear();
+            _heatmapCircles.Clear(); // Clears the local cache of heatmap circles
 
-            var counts = await MauiProgram.businessLogic.GetZipIllnessCountsAsync(); // Fetch illness report counts by ZIP code
+            var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
             if (counts == null || counts.Count == 0)
             {
-                return;
+                return; // No data to render!
             }
 
-            var grouped = counts // Group by ZIP code and sum total counts across illness types
+            var grouped = counts
                 .GroupBy(r => r.PostalCode)
-                .Select(g => new { Zip = g.Key, Count = g.Sum(x => x.TotalCount) }) // I spent an hour here, wondering why my circles weren't updating
+                .Select(g => new { Zip = g.Key, Count = g.Sum(x => x.TotalCount) }) // Groups by postal code and sums the counts
                 .ToList();
 
             foreach (var item in grouped)
@@ -128,22 +119,21 @@ public partial class MapPage : ContentPage
 
                 if (!_zipCenterCache.TryGetValue(item.Zip, out var center)) // Check cache first
                 {
-                    var zipText = item.Zip.ToString("D5"); // Ensure ZIP code is 5 digits
-                    var loc = (await Geocoding.Default.GetLocationsAsync(zipText))?.FirstOrDefault(); // Geocode ZIP code
-                    if (loc == null) // If geocoding fails, skip this ZIP
+                    var location = (await MauiProgram.businessLogic.GetPostalCodeCentroids(item.Zip)).FirstOrDefault(); // Fetch centroid from database if not in cache
+                    if (location == null)
                         continue;
-                    center = new Location(loc.Latitude, loc.Longitude); // Create location from geocoded result
+                    center = new Location(location.Latitude, location.Longitude);
                     _zipCenterCache[item.Zip] = center;
                 }
 
-                var style = GetStyleForCount(item.Count); // Determine color and radius based on count
+                var style = GetStyleForCount(item.Count);
                 await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
 
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK"); // If for any reason rendering fails, show an alert
+            await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK"); // Display an alert if rendering fails
         }
     }
 
@@ -182,5 +172,29 @@ public partial class MapPage : ContentPage
 
         MapControl.MapElements.Add(circle);
         _heatmapCircles.Add(circle);
+    }
+
+    /// <summary>
+    /// Throttle the refresh rate of the heatmap rendering to avoid excessive updates.
+    /// SemaphoreSlim is used to prevent concurrent renders from happening over and over.
+    /// What this does is ensure that if multiple requests to refresh the heatmap come in rapid succession,
+    /// only one render operation is performed after a short delay, reducing unnecessary processing and improving performance
+    /// </summary>
+    private async Task ThrottleRefreshRate()
+    {
+        if (_refreshScheduled)
+            return;
+        _refreshScheduled = true;
+        await Task.Delay(2000);
+        await _renderLock.WaitAsync();
+        try
+        {
+            await RenderReportHeatmap();
+        }
+        finally
+        {
+            _refreshScheduled = false;
+            _renderLock.Release();
+        }
     }
 }

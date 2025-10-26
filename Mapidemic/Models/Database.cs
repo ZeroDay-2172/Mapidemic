@@ -59,9 +59,15 @@ public class Database
         return response.Models;
     }
 
-    public async Task<List<ZipIllnessCounts>> GetZipIllnessCountsAsync()
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
     {
         var response = await supabaseClient.From<ZipIllnessCounts>().Select("*").Get();
+        return response.Models;
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        var response = await supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get();
         return response.Models;
     }
 }
