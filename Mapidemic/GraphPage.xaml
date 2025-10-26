@@ -7,7 +7,6 @@
              BindingContext="ChartModel"
              x:Class="Mapidemic.GraphPage">
 
-    <!--- Note that the graph is only for display, and not dynamic -->
     <VerticalStackLayout>
         <Grid>
             <Grid.RowDefinitions>
@@ -18,7 +17,6 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Eventually the selection will affect the graph -->
             <Label Text="Recent Trends for:" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
             <Picker Title="Select Illness" 
                     WidthRequest="200" 
@@ -30,24 +28,9 @@
                     ItemsSource="{Binding illnessList}" 
                     ItemDisplayBinding="{Binding Name}">
                 <Picker.Items>
-                    <!-- <x:String>Bronchitis</x:String>
-                    <x:String>Chickenpox</x:String>
-                    <x:String>Common Cold</x:String>
-                    <x:String>COVID-19</x:String>
-                    <x:String>E. Coli</x:String>
-                    <x:String>Influenza</x:String>
-                    <x:String>Listeria</x:String>
-                    <x:String>Measles</x:String>
-                    <x:String>Pneumonia</x:String>
-                    <x:String>Salmonella</x:String>
-                    <x:String>Strep Throat</x:String>
-                    <x:String>Whooping Cough</x:String> -->
                 </Picker.Items>
             </Picker>
         </Grid>
-
-        <!-- Old Graph below -->
-        <!-- <microcharts:ChartView x:Name="chartView" HeightRequest="300" HorizontalOptions="FillAndExpand" Margin="0, 50, 0, 50"/> -->
 
         <chart:SfCartesianChart x:Name="dataChart">
             <chart:SfCartesianChart.XAxes>

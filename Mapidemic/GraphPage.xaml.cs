@@ -13,7 +13,6 @@ namespace Mapidemic;
 
 public partial class GraphPage : ContentPage
 {
-
     private string selectedIllness = "";
     private bool localTrends = false;
     private ObservableCollection<Illness> illnessCollection;
@@ -23,21 +22,7 @@ public partial class GraphPage : ContentPage
         InitializeComponent();
 
         SetIllnessesList();
-
     }
-    
-    /// <summary>
-    /// Set y axis number labels to integers
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    // private void YAxis_LabelCreated(object sender, ChartAxisLabelEventArgs e)
-    // {
-    //     if (double.TryParse(e.Label, out double value))
-    //     {
-    //         e.Label = ((int)Math.Round(value)).ToString();
-    //     }
-    // }
 
     /// <summary>
     /// Sets the illnesses in the picker
