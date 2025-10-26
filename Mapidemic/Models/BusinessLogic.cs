@@ -264,6 +264,15 @@ public class BusinessLogic
     }
 
     /// <summary>
+    /// Gets list of all illnesses from database
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<Illness>> GetIllnessList()
+    {
+        return await database.GetIllnessList();
+    }
+
+    /// <summary>
     /// Function calls database to return number of cases of specific illness on
     /// given day either locally or nationally.
     /// </summary>

@@ -4,12 +4,10 @@ using Microcharts;
 using SkiaSharp;
 using Microcharts.Maui;
 using Syncfusion;
-using Android.Media.Metrics;
 using Mapidemic.Models;
 using Syncfusion.Maui.Toolkit.Charts;
-using Android.Views;
 using System.Diagnostics;
-using Android.Media;
+using System.Collections.ObjectModel;
 
 namespace Mapidemic;
 
@@ -18,60 +16,50 @@ public partial class GraphPage : ContentPage
 
     private string selectedIllness = "";
     private bool localTrends = false;
+    private ObservableCollection<Illness> illnessCollection;
 
     public GraphPage()
     {
         InitializeComponent();
+
+        SetIllnessesList();
+
+    }
+    
+    /// <summary>
+    /// Set y axis number labels to integers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    // private void YAxis_LabelCreated(object sender, ChartAxisLabelEventArgs e)
+    // {
+    //     if (double.TryParse(e.Label, out double value))
+    //     {
+    //         e.Label = ((int)Math.Round(value)).ToString();
+    //     }
+    // }
+
+    /// <summary>
+    /// Sets the illnesses in the picker
+    /// </summary>
+    public async void SetIllnessesList()
+    {
+        illnessCollection = new ObservableCollection<Illness>(await MauiProgram.businessLogic.GetIllnessList());
+        illnessPicker.ItemsSource = illnessCollection;
     }
 
+    /// <summary>
+    /// Event handler for when an illness is selected
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
     public async void illnessChosen_handler(Object sender, EventArgs args)
     {
         Picker illnessPicker = (Picker)sender;
 
         // Based on choice, set selectedIllness;
         int index = illnessPicker.SelectedIndex;
-        switch (index)
-        {
-            case 0:
-                selectedIllness = "Bronchitis";
-                break;
-            case 1:
-                selectedIllness = "Chickenpox";
-                break;
-            case 2:
-                selectedIllness = "Common Cold";
-                break;
-            case 3:
-                selectedIllness = "COVID-19";
-                break;
-            case 4:
-                selectedIllness = "E. Coli";
-                break;
-            case 5:
-                selectedIllness = "Influenza";
-                break;
-            case 6:
-                selectedIllness = "Listeria";
-                break;
-            case 7:
-                selectedIllness = "Measles";
-                break;
-            case 8:
-                selectedIllness = "Pneumonia";
-                break;
-            case 9:
-                selectedIllness = "Salmonella";
-                break;
-            case 10:
-                selectedIllness = "Strep Throat";
-                break;
-            case 11:
-                selectedIllness = "Whooping Cough";
-                break;
-            default:
-                selectedIllness = "";
-                break;
-        }
+        selectedIllness = illnessCollection[index].Name!;
     }
 
     /// <summary>

@@ -1,7 +1,6 @@
 namespace Mapidemic.Models;
 using System.Collections.ObjectModel;
 using Supabase.Postgrest;
-using AndroidX.Emoji2.Text.FlatBuffer;
 
 public class Database
 {
