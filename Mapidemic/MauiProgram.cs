@@ -4,6 +4,7 @@ using Mapidemic.Models;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using Microcharts.Maui;
 using Syncfusion.Licensing;
+using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace Mapidemic;
 
@@ -20,6 +21,7 @@ public static class MauiProgram
 			.UseSkiaSharp()
 			.UseMicrocharts()
 			.ConfigureSyncfusionCore()
+			.ConfigureSyncfusionToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
