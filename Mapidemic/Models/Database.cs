@@ -60,4 +60,17 @@ public class Database
         var response = await supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get();
         return response.Models;
     }
+
+    /// <summary>
+    /// A function that returns a list of illness reports
+    /// based on the postal code
+    /// </summary>
+    /// <returns>A list of illnesses for the postal code</returns>
+    public async Task<List<IllnessReport>> GenerateReport(int postalCode, int daysPicked)
+    {
+        var days = DateTimeOffset.UtcNow.AddDays(-daysPicked);
+
+        var response = await supabaseClient.From<IllnessReport>().Where(x => x.PostalCode == postalCode && x.ReportDate >= days).Get();
+        return response.Models;
+    }
 }

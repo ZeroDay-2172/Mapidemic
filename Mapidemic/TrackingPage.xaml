@@ -8,9 +8,6 @@
 
         <local:MapPage Title="Map" /> <!-- Map Page -->
         <local:GraphPage Title="Graph"/> <!-- Graph Page -->
-        <!-- <local:[INSERT REPORT CONTENT PAGE] Title="Report" /> -->
-
-        <!-- PLACEHOLDER PAGES TO BE DELETED -->
-        <ContentPage Title="Report"/>
+        <local:ReportPage Title="Report" /> <!-- Report page -->
 
 </TabbedPage>

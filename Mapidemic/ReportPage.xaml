@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                x:Class="Mapidemic.ReportPage"
+                Title="Report Page">
+    
+    <ScrollView>
+        <Grid RowDefinitions="*,Auto">
+            <Grid
+                Grid.Row="0"
+                Padding="15"
+                Margin="0,10,0,10"
+                ColumnDefinitions="*,Auto,Auto"
+                RowDefinitions="Auto"
+                ColumnSpacing="8">
+
+            <!-- Entry (left) -->
+            <Entry x:Name="ZipEntry"
+                    Grid.Column="0"
+                    Placeholder="Enter ZIP code (e.g., 54901)"
+                    Keyboard="Numeric"
+                    ReturnType="Search"
+                    ClearButtonVisibility="WhileEditing"
+                    Completed="Entered_Search" />
+
+            <!-- Days picker (middle) -->
+            <Picker x:Name="DaysPicked"
+                    Grid.Column="1"
+                    Title="Past days"
+                    WidthRequest="80"
+                    SelectedIndex="0">
+                <Picker.Items>
+                <x:String>7</x:String>
+                <x:String>14</x:String>
+                <x:String>30</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Search button (right) -->
+            <Button x:Name="SearchButton"
+                    Grid.Column="2"
+                    Text="Search"
+                    Clicked="Clicked_Search" />
+            </Grid>
+
+            <Grid 
+                Grid.Row="1" 
+                Padding="15" 
+                RowSpacing="5"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,
+            Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                
+                <!-- Bronchitis -->
+                <Border 
+                    Grid.Row="0"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Bronchitis" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <HorizontalStackLayout
+                        BindableLayout.ItemsSource="{Binding SymptomHeaderItems}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label
+                                    Text="{Binding}"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </Grid>
+                </Border>
+
+                <!-- Content for Bronchitis -->
+                <Grid 
+                    Grid.Row="1" 
+                    x:Name="BronchitisContent" 
+                    IsVisible="False"
+                    Padding="14">
+                    <Label 
+                        x:Name="BronchitisLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Chickenpox -->
+                <Border 
+                    Grid.Row="2"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Chickenpox" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Chickenpox" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Chickenpox-->
+                <Grid 
+                    Grid.Row="3" 
+                    x:Name="ChickenpoxContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="ChickenpoxLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Common Cold -->
+                <Border 
+                    Grid.Row="4"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_CommonCold" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Common Cold" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Common Cold -->
+                <Grid 
+                    Grid.Row="5" 
+                    x:Name="CommonColdContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="CommonColdLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- COVID-19 -->
+                <Border 
+                    Grid.Row="6"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Covid" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label 
+                        Grid.Column="1" 
+                        Text="COVID-19" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for COVID-19 -->
+                <Grid 
+                    Grid.Row="7" 
+                    x:Name="CovidContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="CovidLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- E Coli -->
+                <Border 
+                    Grid.Row="8"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_E_Coli" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="E. Coli" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for E Coli -->
+                <Grid 
+                    Grid.Row="9" 
+                    x:Name="EColiContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label x:Name="EColiLabel" Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Influenza -->
+                <Border 
+                    Grid.Row="10"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Influenza" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Influenza" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Influenza -->
+                <Grid 
+                    Grid.Row="11" 
+                    x:Name="InfluenzaContent" 
+                    IsVisible="False"
+                    Padding="14" >
+
+                    <Label 
+                        x:Name="InfluenzaLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Listeria -->
+                <Border 
+                    Grid.Row="12"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Listeria" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Listeria" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Illness 2 -->
+                <Grid 
+                    Grid.Row="13" 
+                    x:Name="ListeriaContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="ListeriaLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Measles -->
+                <Border 
+                    Grid.Row="14"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Measles" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Measles" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Measles -->
+                <Grid 
+                    Grid.Row="15" 
+                    x:Name="MeaslesContent" 
+                    IsVisible="False"
+                    Padding="14" >
+
+                    <Label 
+                        x:Name="MeaslesLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Pneumonia -->
+                <Border 
+                    Grid.Row="16"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Pneumonia" />
+                    </Border.GestureRecognizers>
+
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Pneumonia " 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Pneumonia -->
+                <Grid 
+                    Grid.Row="17" 
+                    x:Name="PneumoniaContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="PneumoniaLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Salmonella -->
+                <Border 
+                    Grid.Row="18"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Salmonella" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Salmonella" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Salmonella -->
+                <Grid 
+                    Grid.Row="19" 
+                    x:Name="SalmonellaContent" 
+                    IsVisible="False"
+                    Padding="14" >
+
+                    <Label 
+                        x:Name="SalmonellaLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Strep Throat -->
+                <Border 
+                    Grid.Row="20"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_StrepThroat" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Strep Throat" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Strep Throat -->
+                <Grid 
+                    Grid.Row="21" 
+                    x:Name="StrepThroatContent" 
+                    IsVisible="False"
+                    Padding="14" >
+                    <Label 
+                        x:Name="StrepThroatLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+
+                <!-- Whooping Cough -->
+                <Border 
+                    Grid.Row="22"
+                    Padding="14"
+                    BackgroundColor="#0066CC"
+                    HorizontalOptions="FillAndExpand">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clicked_Cough" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
+                    <Label
+                        Text="Whooping Cough" 
+                        FontAttributes="Bold" 
+                        FontSize="18" 
+                        TextColor="White"
+                        VerticalTextAlignment="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Content for Whooping Cough -->
+                <Grid 
+                    Grid.Row="23" 
+                    x:Name="CoughContent" 
+                    IsVisible="False"
+                    Padding="14" >
+
+                    <Label 
+                        x:Name="CoughLabel" 
+                        Text="No results found."
+                        LineBreakMode="WordWrap"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>
