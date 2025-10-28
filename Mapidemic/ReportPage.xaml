@@ -61,13 +61,20 @@
                         <TapGestureRecognizer Tapped="Clicked_Bronchitis" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
-                    <Label
-                        Text="Bronchitis" 
-                        FontAttributes="Bold" 
-                        FontSize="18" 
-                        TextColor="White"
-                        VerticalTextAlignment="Center" />
-                    </Grid>
+                    <HorizontalStackLayout
+                        BindableLayout.ItemsSource="{Binding SymptomHeaderItems}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label
+                                    Text="{Binding}"
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                </Grid>
                 </Border>
 
                 <!-- Content for Bronchitis -->

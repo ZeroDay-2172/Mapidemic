@@ -7,17 +7,51 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Supabase;
 using Mapidemic.Models;
+using System.Collections.ObjectModel;
 
 public partial class ReportPage : ContentPage
 {
 
     private readonly Dictionary<string, int> _illnesses = new();
     private Dictionary<string, Label> _labelByIllness;
+    public ObservableCollection<string> SymptomHeaderItems { get; } = new();
+
 
     public ReportPage()
     {
         InitializeComponent();
+        BindingContext = this;
         InitIllnessLabelMap();
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await LoadSymptomsHeaderAsync(); // fills the header, alphabetically
+    }
+
+    private async Task LoadSymptomsHeaderAsync()
+    {
+        // Pull symptoms from your DB and show them alphabetically
+        var set = new SortedSet<string>(StringComparer.CurrentCultureIgnoreCase);
+
+        var illnesses = await MauiProgram.businessLogic.GetIllnessesList(); // your method
+        if (illnesses != null)
+        {
+            foreach (var ill in illnesses)
+            {
+                if (ill?.Symptoms == null) continue;
+                foreach (var s in ill.Symptoms)
+                {
+                    if (!string.IsNullOrWhiteSpace(s))
+                        set.Add(s);
+                }
+            }
+        }
+
+        SymptomHeaderItems.Clear();
+        foreach (var s in set)
+            SymptomHeaderItems.Add(s);
     }
 
     /// <summary>

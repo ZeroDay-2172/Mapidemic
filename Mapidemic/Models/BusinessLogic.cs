@@ -285,10 +285,10 @@ public class BusinessLogic
             {
                 counts[r.IllnessType] = n + 1;
             }
-            // else
-            // {
-            //     counts[r.IllnessType] = 1;
-            // }
+            else
+            {
+                counts[r.IllnessType] = 1;
+            }
         }
         return counts;
     }
