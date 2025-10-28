@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:Mapidemic"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
-             BindingContext="ChartModel"
              x:Class="Mapidemic.GraphPage">
 
     <VerticalStackLayout Margin="0,0,20,0">
@@ -17,16 +16,21 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Recent Trends for:" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
-            <Picker Title="Select Illness" 
-                    WidthRequest="200" 
-                    HorizontalOptions="Start" 
-                    Margin="20" Grid.Row="0" 
-                    Grid.Column="1" 
-                    x:Name="illnessPicker" 
+            <Label Text="Recent Trends for:"
+                    FontSize="18"
+                    Padding="20"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+            <Picker Title="Select Illness"
+                    WidthRequest="200"
+                    HorizontalOptions="Start"
+                    Margin="20"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    x:Name="illnessPicker"
                     SelectedIndexChanged="illnessChosen_handler"
-                    ItemsSource="{Binding illnessCollection}" 
-                    ItemDisplayBinding="{Binding Illness}">
+                    ItemsSource="{Binding IllnessCollection}"
+                    ItemDisplayBinding="{Binding Name}">
                 <Picker.Items>
                 </Picker.Items>
             </Picker>
@@ -49,7 +53,7 @@
             </chart:SfCartesianChart.YAxes>
 
             <chart:ColumnSeries x:Name="column"
-                                ItemsSource="{Binding data}" 
+                                ItemsSource="{Binding data}"
                                 XBindingPath="dateString"
                                 YBindingPath="value"/>
         </chart:SfCartesianChart>
@@ -66,12 +70,23 @@
             </Grid.ColumnDefinitions>
 
             <!-- Possibly be able to pick National, or from your zip code -->
-            <Label Text="National / Local Trends" FontSize="18" Grid.Row="0" Grid.Column="0"/>
-            <Switch OnColor="Blue" Grid.Row="0" Grid.Column="1" Toggled="localitySwitch_toggled"/>
+            <Label Text="National / Local Trends"
+                    FontSize="18"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
+            <Switch OnColor="Blue"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Toggled="localitySwitch_toggled"/>
 
-            <Button Text="Load Data" Clicked="refreshButtonClicked" Grid.Row="1" Grid.Column="0" Margin="20" HorizontalOptions="Center"/>
+            <Button Text="Load Data"
+                    Clicked="refreshButtonClicked"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="20"
+                    HorizontalOptions="Center"/>
         </Grid>
     </VerticalStackLayout>
-    
+
 
 </ContentPage>

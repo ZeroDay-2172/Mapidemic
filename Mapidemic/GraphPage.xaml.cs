@@ -15,22 +15,32 @@ public partial class GraphPage : ContentPage
 {
     private string selectedIllness = "";
     private bool localTrends = false;
-    private ObservableCollection<Illnesses> illnessCollection;
+    public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
     public GraphPage()
     {
         InitializeComponent();
+        illnessPicker.BindingContext = this;
+    }
 
-        SetIllnessesList();
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await LoadIllnesses();
     }
 
     /// <summary>
     /// Sets the illnesses in the picker
     /// </summary>
-    public async void SetIllnessesList()
+    public async Task LoadIllnesses()
     {
-        illnessCollection = new ObservableCollection<Illnesses>(await MauiProgram.businessLogic.GetIllnessesList());
-        illnessPicker.ItemsSource = illnessCollection;
+        var illnesses = await MauiProgram.businessLogic.GetIllnessesList();
+        IllnessCollection.Clear();
+        foreach (var illness in illnesses)
+        {
+            IllnessCollection.Add(illness);
+        }
     }
 
     /// <summary>
@@ -44,7 +54,10 @@ public partial class GraphPage : ContentPage
 
         // Based on choice, set selectedIllness;
         int index = illnessPicker.SelectedIndex;
-        selectedIllness = illnessCollection[index].Illness!;
+        if (index >= 0 && IllnessCollection != null && index < IllnessCollection.Count)
+        {
+            selectedIllness = IllnessCollection[index].Name ?? string.Empty;
+        }
     }
 
     /// <summary>
