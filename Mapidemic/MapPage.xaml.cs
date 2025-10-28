@@ -16,7 +16,8 @@ public partial class MapPage : ContentPage
 
         WeakReferenceMessenger.Default.Register<object, string>(this, "IllnessReportedZip", async (sender, zip) =>
         {
-            try {
+            try
+            {
                 await ThrottleRefreshRate(); // Throttle the refresh rate to avoid excessive updates
             }
             catch (Exception ex)
@@ -99,6 +100,48 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
+    /// Get the centroid location for a given ZIP code, using cache if available.
+    /// If not in cache, fetch from database or geocode as a fallback.
+    /// </summary>
+    /// <param name="zip"></param>
+    /// <returns>Accurate or Approximate location for the ZIP code, null if not found</returns>
+    private async Task<Location?> GetCentroidForZip(int zip)
+    {
+        if (_zipCenterCache.TryGetValue(zip, out var cachedLocation)) // Step 1: Check cache first
+        {
+            return cachedLocation;
+        }
+
+        var centroid = (await MauiProgram.businessLogic.GetPostalCodeCentroids(zip)).FirstOrDefault(); // Step 2: Fetch from database
+        if (centroid != null)
+        {
+            var location = new Location(centroid.Latitude, centroid.Longitude);
+            _zipCenterCache[zip] = location;
+            return location;
+        }
+
+        try // Step 3: Fallback to geocoding service
+        {
+            string postalCode = zip.ToString("D5");
+            var locations = await Geocoding.Default.GetLocationsAsync(postalCode);
+            var location = locations?.FirstOrDefault();
+            if (location != null)
+            {
+                var loc = new Location(location.Latitude, location.Longitude);
+                _zipCenterCache[zip] = loc;
+                return loc;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error geocoding postal code {zip}: {ex.Message}");
+        }
+
+        System.Diagnostics.Debug.WriteLine($"Warning: No centroid found for postal code {zip}."); // Step 4: Total failure
+        return null;
+    }
+
+    /// <summary>
     /// Render color-coded circles by ZIP code, based on count of illness reports.
     /// Yellow = minimal, Red = more, Black = severe. Fixed radius to preserve privacy.
     /// </summary>
@@ -126,13 +169,10 @@ public partial class MapPage : ContentPage
             foreach (var item in grouped)
             {
 
-                if (!_zipCenterCache.TryGetValue(item.Zip, out var center)) // Check cache first
+                var center = await GetCentroidForZip(item.Zip); // Get the centroid for the ZIP code
+                if (center == null)
                 {
-                    var location = (await MauiProgram.businessLogic.GetPostalCodeCentroids(item.Zip)).FirstOrDefault(); // Fetch centroid from database if not in cache
-                    if (location == null)
-                        continue;
-                    center = new Location(location.Latitude, location.Longitude);
-                    _zipCenterCache[item.Zip] = center;
+                    continue; // Skip if no centroid found
                 }
 
                 var style = GetStyleForCount(item.Count);
