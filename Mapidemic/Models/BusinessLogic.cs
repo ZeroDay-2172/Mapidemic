@@ -97,7 +97,7 @@ public class BusinessLogic
     /// A function that accepts settings changes and saves
     /// then to the device's local settings file
     /// </summary>
-    /// <param name="unitSetting"></param>
+    /// <param name="unitSetting"></param> Where is this used? - Alex
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
@@ -176,7 +176,7 @@ public class BusinessLogic
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
-        List<Illness> illnesses = await database.GetIllnessList();
+        List<Illness> illnesses = await database.GetIllnessesList();
         foreach (Illness illness in illnesses)
         {
             int matchingSymptoms = 0;
@@ -226,10 +226,28 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
-    public async Task<List<Illnesses>> GetIllnessesList()
+
+    /// <summary>
+    /// A function that return all the illnesses
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<Illness>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
+    }
+
+    /// <summary>
+    /// A function that return all the zip illness counts
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
+    {
+        return await database.GetZipIllnessCounts();
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        return await database.GetPostalCodeCentroids(postalCode);
     }
 
     /// <summary>

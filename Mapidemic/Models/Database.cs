@@ -1,6 +1,7 @@
 namespace Mapidemic.Models;
 using System.Collections.ObjectModel;
 using Supabase.Postgrest;
+using System.Formats.Asn1;
 
 public class Database
 {
@@ -41,22 +42,24 @@ public class Database
     }
 
     /// <summary>
-    /// A function that return all the illnesses
-    /// that appear in the database
-    /// </summary>
-    /// <returns>A list of all illnesses</returns>
-    public async Task<List<Illness>> GetIllnessList()
-    {
-        return (await supabaseClient.From<Illness>().Get()).Models;
-    }
-
-    /// <summary>
     /// A function that gets a list of illnesses from the database
     /// </summary>
     /// <returns></returns>
-    public async Task<List<Illnesses>> GetIllnessesList()
+    public async Task<List<Illness>> GetIllnessesList()
     {
-        var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        var response = await supabaseClient.From<Illness>().Where(x => x.Name != null).Get();
+        return response.Models;
+    }
+
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
+    {
+        var response = await supabaseClient.From<ZipIllnessCounts>().Select("*").Get();
+        return response.Models;
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        var response = await supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get();
         return response.Models;
     }
 
