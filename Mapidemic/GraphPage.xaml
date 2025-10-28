@@ -25,8 +25,8 @@
                     Grid.Column="1" 
                     x:Name="illnessPicker" 
                     SelectedIndexChanged="illnessChosen_handler"
-                    ItemsSource="{Binding illnessList}" 
-                    ItemDisplayBinding="{Binding Name}">
+                    ItemsSource="{Binding illnessCollection}" 
+                    ItemDisplayBinding="{Binding Illness}">
                 <Picker.Items>
                 </Picker.Items>
             </Picker>

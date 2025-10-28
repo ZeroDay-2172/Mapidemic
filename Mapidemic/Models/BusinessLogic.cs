@@ -227,6 +227,10 @@ public class BusinessLogic
         return checkedSymptoms;
     }
     
+    /// <summary>
+    /// Returns a list of all illnesses from the database
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<Illnesses>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
@@ -261,15 +265,6 @@ public class BusinessLogic
         {
             return false; // Return false if the insertion failed (Might be a bug, while creating this, it still went through)
         }
-    }
-
-    /// <summary>
-    /// Gets list of all illnesses from database
-    /// </summary>
-    /// <returns></returns>
-    public async Task<List<Illness>> GetIllnessList()
-    {
-        return await database.GetIllnessList();
     }
 
     /// <summary>
