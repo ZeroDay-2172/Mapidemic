@@ -10,7 +10,21 @@ public partial class MapPage : ContentPage
     private readonly SemaphoreSlim _renderLock = new(1, 1); // Semaphore is here to save the day, preventing concurrent renders
     private bool _refreshScheduled;
 
-    public MapPage() => InitializeComponent();
+    public MapPage()
+    {
+        InitializeComponent();
+
+        WeakReferenceMessenger.Default.Register<object, string>(this, "IllnessReportedZip", async (sender, zip) =>
+        {
+            try {
+                await ThrottleRefreshRate(); // Throttle the refresh rate to avoid excessive updates
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Unable to refresh heatmap: {ex.Message}", "OK"); // Display an alert if refreshing fails
+            }
+        });
+    }
 
     protected override async void OnAppearing()
     {
@@ -18,11 +32,6 @@ public partial class MapPage : ContentPage
         await EnsureLocationPermission();
         await CenterOnUserPostalCode();
         await RenderReportHeatmap();
-
-        WeakReferenceMessenger.Default.Register<object, string>(this, "IllnessReportedZip", async (sender, zip) =>
-        {
-            await ThrottleRefreshRate();
-        });
     }
 
     /// <summary>
@@ -178,7 +187,8 @@ public partial class MapPage : ContentPage
     /// Throttle the refresh rate of the heatmap rendering to avoid excessive updates.
     /// SemaphoreSlim is used to prevent concurrent renders from happening over and over.
     /// What this does is ensure that if multiple requests to refresh the heatmap come in rapid succession,
-    /// only one render operation is performed after a short delay, reducing unnecessary processing and improving performance
+    /// only one render operation is performed after a short delay, reducing unnecessary processing and improving performance.
+    /// This method will only run after a report has been received.
     /// </summary>
     private async Task ThrottleRefreshRate()
     {
