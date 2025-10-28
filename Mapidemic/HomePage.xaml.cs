@@ -38,8 +38,7 @@ public partial class HomePage : FlyoutPage
 	/// <param name="args"></param>
 	public void SettingsButton_Clicked(object sender, EventArgs args)
 	{
-		if (settingsOpen == false)
-			this.menuPage.SettingsPageHandler(out settingsOpen);
+		this.menuPage.SettingsPageHandler();
 	}
 
 	/// <summary>

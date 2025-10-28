@@ -1,8 +1,4 @@
 //Author(s): Connor McGuire
-
-using System.Threading.Tasks;
-using Mapidemic.Models;
-
 namespace Mapidemic;
 
 public partial class SettingsPage : ContentPage
@@ -13,8 +9,15 @@ public partial class SettingsPage : ContentPage
     {
         InitializeComponent();
 
-        //Display current zip code
-        ZipCodeEnt.Text = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        //Display current postal code
+        string postalCode = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        switch(postalCode.Length)
+        {
+            case 3: PostalCodeEnt.Text = $"00{postalCode}"; break;
+            case 4: PostalCodeEnt.Text = $"0{postalCode}"; break;
+            default: PostalCodeEnt.Text = postalCode; break;
+        }
+        
 
         if (Application.Current?.RequestedTheme == AppTheme.Dark)
             DarkModeSwitch.IsToggled = true;
@@ -43,22 +46,22 @@ public partial class SettingsPage : ContentPage
     /// <param name="args"></param>
     public async void SaveButton_Clicked(Object sender, EventArgs args)
     {
-        bool zipValid = await MauiProgram.businessLogic.ValidatePostalCode(ZipCodeEnt.Text);
-        if (zipValid)
+        bool postalValid = await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text);
+        if (postalValid)
         {
-            bool saveSuccess = await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(ZipCodeEnt.Text));
+            bool saveSuccess = await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(PostalCodeEnt.Text));
 
             if (saveSuccess)
             {
                 SetDarkMode();
-                MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(ZipCodeEnt.Text);
+                MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(PostalCodeEnt.Text);
                 await DisplayAlert("Success!", "Settings have been saved!", "OK");
             }
             else
                 await DisplayAlert("Error", "Could not save settings...", "OK");
         }
         else
-            await DisplayAlert("Error", "Please enter valid zip code", "OK");
+            await DisplayAlert("Error", "Please enter postal zip code", "OK");
     }
 
     /// <summary>

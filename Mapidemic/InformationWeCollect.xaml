@@ -3,8 +3,7 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:local="clr-namespace:Mapidemic"
                 x:Class="Mapidemic.InformationWeCollect"
-                Title="Information We Collect"
-                BackgroundColor="#FF0099FF">
+                Title="Information We Collect">
     
     <Grid VerticalOptions="FillAndExpand"
           RowDefinitions="Auto, Auto, Auto">
