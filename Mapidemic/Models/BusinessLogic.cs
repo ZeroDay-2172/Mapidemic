@@ -262,4 +262,34 @@ public class BusinessLogic
             return false; // Return false if the insertion failed (Might be a bug, while creating this, it still went through)
         }
     }
+
+    /// <summary>
+    /// A function that generates illness count
+    /// for a postal code over the past days
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <param name="daysPicked"></param>
+    /// <returns>a dictionary containing all illness based on the postal code</returns>
+    public async Task<Dictionary<string, int>> GenerateReport(int postalCode, int daysPicked)
+    {
+        // Fetch from the database
+        var report = await database.GenerateReport(postalCode, daysPicked);
+
+        // Createa a new count per illness
+        var counts = new Dictionary<string, int>();
+
+        // Add counts for each reported illness
+        foreach (var r in report)
+        {
+            if (counts.TryGetValue(r.IllnessType, out var n))
+            {
+                counts[r.IllnessType] = n + 1;
+            }
+            // else
+            // {
+            //     counts[r.IllnessType] = 1;
+            // }
+        }
+        return counts;
+    }
 }
