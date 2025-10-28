@@ -9,7 +9,7 @@ using Supabase;
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
 
-public partial class ReportPage : ContentPage
+public partial class StatsPage : ContentPage
 {
 
     private readonly Dictionary<string, int> _illnesses = new();
@@ -17,7 +17,7 @@ public partial class ReportPage : ContentPage
     public ObservableCollection<string> SymptomHeaderItems { get; } = new();
 
 
-    public ReportPage()
+    public StatsPage()
     {
         InitializeComponent();
         BindingContext = this;
