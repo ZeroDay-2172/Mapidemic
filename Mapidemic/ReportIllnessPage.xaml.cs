@@ -37,8 +37,8 @@ public partial class ReportIllnessPage : ContentPage
             illnesses.Clear();
             foreach (var listitem in listing)
             {
-                if (listitem.Illness != null)
-                    illnesses.Add(listitem.Illness); // Add each illness to the observable collection
+                if (listitem.Name != null)
+                    illnesses.Add(listitem.Name); // Add each illness to the observable collection
             }
         }
         catch (Exception ex)

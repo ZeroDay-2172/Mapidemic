@@ -176,7 +176,7 @@ public class BusinessLogic
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
-        List<Illness> illnesses = await database.GetIllnessList();
+        List<Illness> illnesses = await database.GetIllnessesList();
         foreach (Illness illness in illnesses)
         {
             int matchingSymptoms = 0;
@@ -231,7 +231,7 @@ public class BusinessLogic
     /// A function that return all the illnesses
     /// </summary>
     /// <returns></returns>
-    public async Task<List<Illnesses>> GetIllnessesList()
+    public async Task<List<Illness>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
     }

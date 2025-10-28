@@ -40,22 +40,12 @@ public class Database
     }
 
     /// <summary>
-    /// A function that return all the illnesses
-    /// that appear in the database
-    /// </summary>
-    /// <returns>A list of all illnesses</returns>
-    public async Task<List<Illness>> GetIllnessList()
-    {
-        return (await supabaseClient.From<Illness>().Get()).Models;
-    }
-
-    /// <summary>
     /// A function that gets a list of illnesses from the database
     /// </summary>
     /// <returns></returns>
-    public async Task<List<Illnesses>> GetIllnessesList()
+    public async Task<List<Illness>> GetIllnessesList()
     {
-        var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        var response = await supabaseClient.From<Illness>().Where(x => x.Name != null).Get();
         return response.Models;
     }
 
