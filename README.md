@@ -1,3 +1,10 @@
+Sprint 2 changes:
+- Added color coded circles to the map showing illness density in each postal code :smile: :smile: :smile:
+- Graphing functionality added to display histogram of illness data, both locally and nationally :smile: :smile: :smile:
+- Report functionality added to display illness data in plain English :smile: :smile: :smile:
+- Updated menu pages that conform to the users requested app theme :smile:
+- Updated settings page to display the correct postal code as the entry default text :smile:
+
 # Mapidemic
 Mapidemic is a .NET MAUI mobile application that helps communities understand how illness is spreading in their area — in real time, anonymously, and without creepy tracking.
 
