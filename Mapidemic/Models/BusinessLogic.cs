@@ -97,7 +97,7 @@ public class BusinessLogic
     /// A function that accepts settings changes and saves
     /// then to the device's local settings file
     /// </summary>
-    /// <param name="unitSetting"></param>
+    /// <param name="unitSetting"></param> Where is this used? - Alex
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
@@ -176,7 +176,7 @@ public class BusinessLogic
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
-        List<Illness> illnesses = await database.GetIllnessList();
+        List<Illness> illnesses = await database.GetIllnessesList();
         foreach (Illness illness in illnesses)
         {
             int matchingSymptoms = 0;
@@ -226,14 +226,28 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
+
     /// <summary>
-    /// Returns a list of all illnesses from the database
+    /// A function that return all the illnesses
     /// </summary>
     /// <returns></returns>
-    public async Task<List<Illnesses>> GetIllnessesList()
+    public async Task<List<Illness>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
+    }
+
+    /// <summary>
+    /// A function that return all the zip illness counts
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
+    {
+        return await database.GetZipIllnessCounts();
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        return await database.GetPostalCodeCentroids(postalCode);
     }
 
     /// <summary>
@@ -268,6 +282,7 @@ public class BusinessLogic
     }
 
     /// <summary>
+<<<<<<< HEAD
     /// Function calls database to return number of cases of specific illness on
     /// given day either locally or nationally.
     /// </summary>
@@ -281,5 +296,34 @@ public class BusinessLogic
             return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
         else
             return await database.getNumberOfReports(selectedIllness, date, -1);
+=======
+    /// A function that generates illness count
+    /// for a postal code over the past days
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <param name="daysPicked"></param>
+    /// <returns>a dictionary containing all illness based on the postal code</returns>
+    public async Task<Dictionary<string, int>> GenerateReport(int postalCode, int daysPicked)
+    {
+        // Fetch from the database
+        var report = await database.GenerateReport(postalCode, daysPicked);
+
+        // Createa a new count per illness
+        var counts = new Dictionary<string, int>();
+
+        // Add counts for each reported illness
+        foreach (var r in report)
+        {
+            if (counts.TryGetValue(r.IllnessType, out var n))
+            {
+                counts[r.IllnessType] = n + 1;
+            }
+            else
+            {
+                counts[r.IllnessType] = 1;
+            }
+        }
+        return counts;
+>>>>>>> main
     }
 }
