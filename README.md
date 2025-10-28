@@ -1,8 +1,46 @@
-# Tim-Berners-Lee
-Fall 2025 - Software Engineering
+# Mapidemic
+Mapidemic is a .NET MAUI mobile application that helps communities understand how illness is spreading in their area — in real time, anonymously, and without creepy tracking.
 
-## Authors
-- Alex Griep
-- Connor McGuire
-- Arthur Waldman
-- Neng Yang
+Users can:
+- Report what they're sick with (e.g. flu, strep, etc.)
+- Specify their ZIP code (not their exact address)
+- See a live illness heatmap showing concentration of reported cases in nearby areas
+
+Our goal is simple: give people early awareness of local outbreaks so they can make better decisions (mask up, maybe skip that crowded event, sanitize the cart handle, etc.) before they get hit.
+
+## Table of Contents
+- [Problem We're Solving](#problem-were-solving)
+- [Core Features](#core-features)
+- [How It Works](#how-it-works)
+- [Privacy and Safety](#privacy-and-safety)
+- [Setup / Running Locally](#setup-/-running-locally)
+- [Planned / Future Work](#planned-/-future-work)
+- [Contributors](#contributors)
+- [License](#license)
+
+## Problem We're Solving
+People only find out "there's something going around" when:
+- Half the office calls in sick, or
+- Their kid's school emails them 4 days too late.
+There's no fast, community-level view of what's spreading _right now_ in your area unless public health authorities announce it, and that's usually delayed and high-level ("flu levels are statewide").
+
+Mapidemic solves that by letting regular people self-report illness symptoms/diagnoses and instantly visualizing that data geographically. You get hyperlocal awareness with low friction:
+- Local, not national.
+- Current, not last month.
+- Anonymous, not invasive.
+
+## Core Features
+### 1. Heatmap / Outbreak View
+
+The map shows color-coded "bubbles" at ZIP-level to indicate report density:
+- Yellow → a few reports
+- Orange → moderate activity
+- Red → heavy activity
+- Black → severe activity
+
+Circles are drawn with a fixed radius (miles). We never render a tiny pinpoint. Multiple reports in the same ZIP turn that ZIP's bubble more severe.
+
+### 2. Report Illness
+
+User's select an illness from a searchable list, entering their ZIP code before submission. The app will validate the ZIP and submit the report to our backend. We do **not** store names, emails, device IDs, or precise GPS at submission.
+
