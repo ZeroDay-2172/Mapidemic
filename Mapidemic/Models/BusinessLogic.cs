@@ -282,7 +282,6 @@ public class BusinessLogic
     }
 
     /// <summary>
-<<<<<<< HEAD
     /// Function calls database to return number of cases of specific illness on
     /// given day either locally or nationally.
     /// </summary>
@@ -290,13 +289,16 @@ public class BusinessLogic
     /// <param name="date">date to get data for</param>
     /// <param name="localTrends">local to zip code (true), or national (false)</param>
     /// <returns></returns>
+    /// </summary>
     public async Task<int> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
     {
         if (localTrends == true)
             return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
         else
             return await database.getNumberOfReports(selectedIllness, date, -1);
-=======
+    }
+
+    /// <summary>
     /// A function that generates illness count
     /// for a postal code over the past days
     /// </summary>
@@ -324,6 +326,5 @@ public class BusinessLogic
             }
         }
         return counts;
->>>>>>> main
     }
 }
