@@ -1,6 +1,3 @@
-using Mapidemic.Models;
-using System.Runtime.CompilerServices;
-
 namespace Mapidemic;
 
 public partial class MenuPage : ContentPage
@@ -37,6 +34,7 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public async void ScButton_Clicked(object sender, EventArgs args)
 	{
+		MauiProgram.businessLogic.LoadSymptomsList();
 		viewport = new NavigationPage(new SymptomsPage());
 		PrepareViewport();
 	}

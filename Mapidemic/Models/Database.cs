@@ -1,9 +1,6 @@
-namespace Mapidemic.Models;
-using System.Collections.ObjectModel;
-using Supabase.Postgrest;
+using Supabase;
 
-using System.Formats.Asn1;
-using System.Formats.Asn1;
+namespace Mapidemic.Models;
 
 public class Database
 {
@@ -18,6 +15,33 @@ public class Database
     {
         supabaseClient = new Supabase.Client(supabaseUrl, supabaseKey);
         supabaseClient.InitializeAsync();
+    }
+
+    /// <summary>
+    /// A function that tests the database connection
+    /// </summary>
+    /// <returns>True is connection valid, false if not</returns>
+    public async Task<bool> TestConnection()
+    {
+        try // attempting a query
+        {
+            var query = supabaseClient.From<PostalCode>().Where(x => x.Code == 601).Get();
+            var completedQuery = await Task.WhenAny(query, Task.Delay(TimeSpan.FromSeconds(5)));
+            if (completedQuery == query)
+            {
+                var result = await query;
+                return result.Model!.Code == 601;
+            }
+            {
+                throw new Exception();
+            }
+
+            // return (await supabaseClient.From<PostalCode>().Where(x => x.Code == 601).Get(cts.Token)).Model!.Code == 601;
+        }
+        catch (Exception) // returning false if query failed
+        {
+            return false;
+        }
     }
 
     /// <summary>

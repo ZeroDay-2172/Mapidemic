@@ -28,10 +28,7 @@ public partial class NewUserPage : ContentPage
     /// <param name="e"></param>
     private async void OnPageLoaded(object sender, EventArgs e)
     {
-        await Task.Delay(transitionSpeed);
-        await Blank.FadeTo(0, transitionSpeed);
         Welcome.IsEnabled = true;
-        Grid.Remove(Blank);
         await Welcome.FadeTo(1, transitionSpeed);
         await Task.Delay(waitingSpeed);
         await Welcome.FadeTo(0, transitionSpeed);
@@ -42,14 +39,14 @@ public partial class NewUserPage : ContentPage
         await Setup.FadeTo(0, transitionSpeed);
         Theme.IsEnabled = true;
         Grid.Remove(Setup);
-        /// ensuring the switch matches the user's theme
+        // ensuring the switch matches the user's theme
         switch (Application.Current?.RequestedTheme)
         {
             case AppTheme.Light: ThemeToggle.IsToggled = false; break;
             case AppTheme.Dark: ThemeToggle.IsToggled = true; break;
             default: break;
         }
-        /// attaching an EH to act when the switch is toggled
+        // attaching an EH to act when the switch is toggled
         ThemeToggle.Toggled += OnThemeToggled!;
         await Theme.FadeTo(1, transitionSpeed);
     }
@@ -79,7 +76,7 @@ public partial class NewUserPage : ContentPage
         await Theme.FadeTo(0, transitionSpeed);
         PostalCode.IsEnabled = true;
         Grid.Remove(Theme);
-        /// setting the Entry placeholder to white for visability
+        // setting the Entry placeholder to white for visability
         if (Application.Current?.RequestedTheme == AppTheme.Dark)
         {
             PostalCodeEntry.PlaceholderColor = Colors.White;
@@ -99,11 +96,11 @@ public partial class NewUserPage : ContentPage
     public async void OnEnterClicked(object sender, EventArgs e)
     {
         string entryText = PostalCodeEntry.Text;
-        if (await MauiProgram.businessLogic.ValidatePostalCode(entryText))
+        if (await MauiProgram.businessLogic!.ValidatePostalCode(entryText))
         {
             EnterButton.IsEnabled = false;
             PostalCodeEntry.IsEnabled = false;
-            /// discarding the return task -- for testing purposes only
+            // discarding the return task -- for testing purposes only
             _ = MauiProgram.businessLogic.SaveSettings(ThemeToggle.IsToggled, int.Parse(entryText));
             Tracking.IsEnabled = true;
             await PostalCode.FadeTo(0, transitionSpeed);

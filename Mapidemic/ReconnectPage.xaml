@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                x:Class="Mapidemic.ReconnectPage"
+                Title="Connection Error">
+    
+    <VerticalStackLayout Padding="10"
+                         VerticalOptions="Center">
+
+        <Label FontSize="30"
+               Padding="0, 0, 0, 30"
+               FontAttributes="Bold"
+               Text="Connection Error"
+               VerticalOptions="Center"
+               HorizontalOptions="Center" />
+
+        <Label FontSize="20"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Text="Please check your network connection" />
+
+        <Label FontSize="20"
+               Text="and try again"
+               VerticalOptions="Center"
+               HorizontalOptions="Center" />
+
+        <Image WidthRequest="200"
+               Margin="0, 30, 0, 30"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Source="broken_connection.png" />
+
+        <Button FontSize="20"
+                Text="Try Again"
+                WidthRequest="275"
+                TextColor="White"
+                Clicked="TryAgain_Clicked"
+                BackgroundColor="#0074C0" />
+
+    </VerticalStackLayout>
+    
+</ContentPage>

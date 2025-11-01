@@ -1,18 +1,18 @@
-using System.Collections.ObjectModel;
 using System.Text.Json;
+using System.Collections.ObjectModel;
 
 namespace Mapidemic.Models;
 
 public class BusinessLogic
 {
     private Settings? settings;
-    private readonly Database database;
+    private Database database;
     private const int postalCodeLength = 5;
     private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
-    public ObservableCollection<Symptom> SymptomList { get; set; }
-    public SortedSet<AnalyzedIllness> SymptomAnalysis { get; set; }
-    public AnalyzedIllness LikelyIllness { get; set; }
+    public ObservableCollection<Symptom>? SymptomList { get; set; }
+    public SortedSet<AnalyzedIllness>? SymptomAnalysis { get; set; }
+    public AnalyzedIllness? LikelyIllness { get; set; }
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -20,36 +20,45 @@ public class BusinessLogic
     /// <param name="database"></param>
     public BusinessLogic(Database database)
     {
+        // this function is for testing the settings setup
+        // ClearSettings();
+        // comment out this function when not testing
+
         this.database = database;
         SymptomList = new ObservableCollection<Symptom>();
-        LoadSymptomsList();
-
-        /// this function is for testing the settings setup
-        // ClearSettings();
-        /// comment out this function when not testing
-
-        try
+        SymptomAnalysis = null;
+        LikelyIllness = null;
+        try // attempting to load local settings file
         {
             string jsonSettings = File.ReadAllText(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
             settings = JsonSerializer.Deserialize<Settings>(jsonSettings)!;
         }
-        catch (Exception)
+        catch (Exception) // setting settings to null if they don't exist to force app setup
         {
-            /// null if settings file cannot be read in
-            /// or does not exist
             settings = null;
         }
+    }
+
+    /// <summary>
+    /// A function that tests the database
+    /// connection
+    /// </summary>
+    /// <returns>True is connection valid, false if not</returns>
+    public async Task<bool> TestDatabaseConnection()
+    {
+        return await database.TestConnection();
     }
 
     /// <summary>
     /// A function that loads the local
     /// list of symptoms from the database,
     /// sorts them, and adds them to a collection
+    /// <returns>True if the load completes</returns>
     /// </summary>
-    private async void LoadSymptomsList()
+    public async void LoadSymptomsList()
     {
         SortedSet<string> symptoms = new SortedSet<string>(); ;
-        foreach (Illness illness in await database.GetSymptomsList())
+        foreach (Illness illness in await database!.GetSymptomsList())
         {
             foreach (string symptom in illness.Symptoms!)
             {
@@ -58,8 +67,8 @@ public class BusinessLogic
         }
         foreach (string symptom in symptoms)
         {
-            SymptomList.Add(new Symptom(symptom));
-        } // For some reason, the git merge we did on 10/11/2025 removed the two curly braces here. Odd, but it works now. Keep an eye on this in the future.
+            SymptomList!.Add(new Symptom(symptom));
+        }
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ public partial class SettingsPage : ContentPage
         InitializeComponent();
 
         //Display current postal code
-        string postalCode = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        string postalCode = MauiProgram.businessLogic!.ReadSettings().PostalCode.ToString();
         switch(postalCode.Length)
         {
             case 3: PostalCodeEnt.Text = $"00{postalCode}"; break;
