@@ -10,7 +10,7 @@ public class BusinessLogic
     private const int postalCodeLength = 5;
     private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
-    public ObservableCollection<Symptom>? SymptomList { get; set; }
+    public ObservableCollection<Symptom> SymptomList { get; set; }
     public SortedSet<AnalyzedIllness>? SymptomAnalysis { get; set; }
     public AnalyzedIllness? LikelyIllness { get; set; }
 
@@ -24,10 +24,10 @@ public class BusinessLogic
         // ClearSettings();
         // comment out this function when not testing
 
+        LikelyIllness = null;
+        SymptomAnalysis = null;
         this.database = database;
         SymptomList = new ObservableCollection<Symptom>();
-        SymptomAnalysis = null;
-        LikelyIllness = null;
         try // attempting to load local settings file
         {
             string jsonSettings = File.ReadAllText(Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath));
@@ -40,8 +40,7 @@ public class BusinessLogic
     }
 
     /// <summary>
-    /// A function that tests the database
-    /// connection
+    /// A function that asks the database to test the database connection
     /// </summary>
     /// <returns>True is connection valid, false if not</returns>
     public async Task<bool> TestDatabaseConnection()
@@ -53,19 +52,18 @@ public class BusinessLogic
     /// A function that loads the local
     /// list of symptoms from the database,
     /// sorts them, and adds them to a collection
-    /// <returns>True if the load completes</returns>
     /// </summary>
     public async void LoadSymptomsList()
     {
-        SortedSet<string> symptoms = new SortedSet<string>(); ;
-        foreach (Illness illness in await database!.GetSymptomsList())
+        SortedSet<string> symptoms = new SortedSet<string>(); // auxiliary storage for sorting
+        foreach (Illness illness in await database!.GetSymptomsList()) // getting full illness list
         {
-            foreach (string symptom in illness.Symptoms!)
+            foreach (string symptom in illness.Symptoms!) // storing each unique illness
             {
                 symptoms.Add(symptom);
             }
         }
-        foreach (string symptom in symptoms)
+        foreach (string symptom in symptoms) // adding each unique illness to an observable collection for live updates
         {
             SymptomList!.Add(new Symptom(symptom));
         }
@@ -106,13 +104,12 @@ public class BusinessLogic
     /// A function that accepts settings changes and saves
     /// then to the device's local settings file
     /// </summary>
-    /// <param name="unitSetting"></param> Where is this used? - Alex
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
     public async Task<bool> SaveSettings(bool themeEnum, int postalCode)
     {
-        try
+        try // attempting to save param settings
         {
             AppTheme enumValue = themeEnum ? AppTheme.Dark : AppTheme.Light;
             JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
@@ -122,7 +119,7 @@ public class BusinessLogic
             settings = new Settings(enumValue, postalCode);
             return true;
         }
-        catch (Exception)
+        catch (Exception) // catching json parse error
         {
             return false;
         }
@@ -138,17 +135,17 @@ public class BusinessLogic
     {
         int postalCode;
         bool validPostalCode = true;
-        if (entryText == null || entryText.Length != postalCodeLength)
+        if (entryText == null || entryText.Length != postalCodeLength) // checking for proper 5-digit length
         {
             validPostalCode = false;
         }
-        else if (!int.TryParse(entryText, out postalCode))
+        else if (!int.TryParse(entryText, out postalCode)) // checking for integer value (U.S. postal codes only)
         {
             validPostalCode = false;
         }
-        else
+        else // validating postal code
         {
-            if (!await database.ValidatePostalCode(postalCode))
+            if (!await database.ValidatePostalCode(postalCode)) // checking for invalid postal codes
             {
                 validPostalCode = false;
             }
@@ -165,9 +162,9 @@ public class BusinessLogic
     public async Task<bool> ValidateCheckboxUsed()
     {
         int index = 0;
-        while (index < SymptomList.Count)
+        while (index < SymptomList.Count) // checking all checkboxes
         {
-            if (SymptomList[index].IsChecked)
+            if (SymptomList[index].IsChecked) // verifying if a checkbox is checked
             {
                 return true;
             }
@@ -184,18 +181,18 @@ public class BusinessLogic
     public async void RunSymptomAnalysis()
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
-        HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
-        List<Illness> illnesses = await database.GetIllnessesList();
-        foreach (Illness illness in illnesses)
+        HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms(); // getting all user symptoms
+        List<Illness> illnesses = await database.GetIllnessesList(); // getting a list of all illnesses
+        foreach (Illness illness in illnesses) // checking each illness
         {
             int matchingSymptoms = 0;
             int extraUserSymptoms = 0;
             int extraIllnessSymptoms;
             double finalProbability;
-            HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!);
-            foreach (Symptom symptom in userSymptoms)
+            HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!); // transforming list => set for constant comparisons
+            foreach (Symptom symptom in userSymptoms) // checking each user illness
             {
-                if (illnessSymptoms.Contains(symptom.Name!))
+                if (illnessSymptoms.Contains(symptom.Name!)) // checking if the user symptoms is an illness symptom
                 {
                     matchingSymptoms++;
                 }
@@ -204,14 +201,14 @@ public class BusinessLogic
                     extraUserSymptoms++;
                 }
             }
-            extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms;
+            extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms; // performing probability calculation
             finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
-            if (finalProbability != 0)
+            if (finalProbability != 0) // ignoring illnesses that do not match the user symptoms
             {
                 SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
             }
         }
-        LikelyIllness = SymptomAnalysis.First();
+        LikelyIllness = SymptomAnalysis.First(); // extracting the likely illness
         SymptomAnalysis.Remove(LikelyIllness);
     }
 
@@ -224,10 +221,10 @@ public class BusinessLogic
     /// <returns>A set of all the user symptoms</returns>
     private HashSet<Symptom> ProcessCheckedSymptoms()
     {
-        HashSet<Symptom> checkedSymptoms = new HashSet<Symptom>();
-        foreach (Symptom symptom in SymptomList)
+        HashSet<Symptom> checkedSymptoms = new HashSet<Symptom>(); // structure to hold user symptoms, set for constant insertion
+        foreach (Symptom symptom in SymptomList) //  getting each symptom in the list
         {
-            if (symptom.IsChecked)
+            if (symptom.IsChecked) // adding to checked symptoms
             {
                 checkedSymptoms.Add(symptom);
                 symptom.IsChecked = false;
@@ -239,7 +236,7 @@ public class BusinessLogic
     /// <summary>
     /// A function that return all the illnesses
     /// </summary>
-    /// <returns></returns>
+    /// <returns>a list of all illnesses</returns>
     public async Task<List<Illness>> GetIllnessesList()
     {
         return await database.GetIllnessesList();

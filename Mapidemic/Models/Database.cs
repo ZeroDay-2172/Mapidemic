@@ -20,23 +20,22 @@ public class Database
     /// <summary>
     /// A function that tests the database connection
     /// </summary>
-    /// <returns>True is connection valid, false if not</returns>
+    /// <returns>true is connection valid, false if not</returns>
     public async Task<bool> TestConnection()
     {
         try // attempting a query
         {
-            var query = supabaseClient.From<PostalCode>().Where(x => x.Code == 601).Get();
-            var completedQuery = await Task.WhenAny(query, Task.Delay(TimeSpan.FromSeconds(5)));
-            if (completedQuery == query)
+            var query = supabaseClient.From<PostalCode>().Where(x => x.Code == 601).Get(); // setting up the query
+            var completedQuery = await Task.WhenAny(query, Task.Delay(TimeSpan.FromSeconds(5))); // forcing the query to take less than 5 seconds to complete
+            if (completedQuery == query) // comparing 
             {
-                var result = await query;
-                return result.Model!.Code == 601;
+                var result = await query; // completing the query
+                return result.Model!.Code == 601; // validating result
             }
+            else
             {
-                throw new Exception();
+                throw new Exception(); // throwing an exception if the query does not get a response from the database in time
             }
-
-            // return (await supabaseClient.From<PostalCode>().Where(x => x.Code == 601).Get(cts.Token)).Model!.Code == 601;
         }
         catch (Exception) // returning false if query failed
         {
@@ -52,7 +51,7 @@ public class Database
     /// <returns>true if valid postal code, false if not</returns>
     public async Task<bool> ValidatePostalCode(int postalCode)
     {
-        /// the list returned will contain the corresponding postal code, or nothing
+        // the list returned will contain the corresponding postal code, or nothing
         var response = await supabaseClient.From<PostalCode>().Where(x => x.Code == postalCode).Get();
         return response?.Models?.Count == 1;
     }
@@ -61,7 +60,7 @@ public class Database
     /// A function that returns all symptoms that
     /// appear in the database
     /// </summary>
-    /// <returns>An observable collection of all symptoms</returns>
+    /// <returns>a list of all symptoms</returns>
     public async Task<List<Illness>> GetSymptomsList()
     {
         return (await supabaseClient.From<Illness>().Select("symptoms").Get()).Models;
@@ -70,11 +69,10 @@ public class Database
     /// <summary>
     /// A function that gets a list of illnesses from the database
     /// </summary>
-    /// <returns></returns>
+    /// <returns>a list of all illnesses in the database</returns>
     public async Task<List<Illness>> GetIllnessesList()
     {
-        var response = await supabaseClient.From<Illness>().Where(x => x.Name != null).Get();
-        return response.Models;
+        return (await supabaseClient.From<Illness>().Where(x => x.Name != null).Get()).Models;
     }
 
     public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
