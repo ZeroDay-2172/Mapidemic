@@ -62,7 +62,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Bronchitis" 
+                        x:Name="BronchitisHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -93,7 +93,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Chickenpox" 
+                        x:Name="ChickenpoxHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -124,7 +124,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Common Cold" 
+                        x:Name="CommonColdHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -155,8 +155,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label 
-                        Grid.Column="1" 
-                        Text="COVID-19" 
+                        x:Name="CovidHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -189,7 +188,7 @@
 
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="E. Coli" 
+                        x:Name="EColiHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -218,7 +217,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Influenza" 
+                        x:Name="InfluenzaHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -250,7 +249,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Listeria" 
+                        x:Name="ListeriaHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -283,7 +282,7 @@
 
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Measles" 
+                        x:Name="MeaslesHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -317,7 +316,7 @@
 
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Pneumonia " 
+                        x:Name="PneumoniaHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -348,7 +347,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Salmonella" 
+                        x:Name="SalmonellaHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -380,7 +379,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Strep Throat" 
+                        x:Name="StrepThroatHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"
@@ -411,7 +410,7 @@
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto" ColumnSpacing="8">
                     <Label
-                        Text="Whooping Cough" 
+                        x:Name="CoughHeaderLabel"
                         FontAttributes="Bold" 
                         FontSize="18" 
                         TextColor="White"

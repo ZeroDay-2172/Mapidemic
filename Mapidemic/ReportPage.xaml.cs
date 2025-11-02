@@ -20,7 +20,6 @@ public partial class ReportPage : ContentPage
     public ReportPage()
     {
         InitializeComponent();
-        BindingContext = this;
         InitIllnessLabelMap();
     }
 
@@ -35,23 +34,38 @@ public partial class ReportPage : ContentPage
         // Pull symptoms from your DB and show them alphabetically
         var set = new SortedSet<string>(StringComparer.CurrentCultureIgnoreCase);
 
-        var illnesses = await MauiProgram.businessLogic.GetIllnessesList(); // your method
+        var illnesses = await MauiProgram.businessLogic.GetIllnessesList();
         if (illnesses != null)
         {
             foreach (var ill in illnesses)
             {
-                if (ill?.Symptoms == null) continue;
-                foreach (var s in ill.Symptoms)
-                {
-                    if (!string.IsNullOrWhiteSpace(s))
-                        set.Add(s);
-                }
+                var s = ill?.Illness?.Trim();
+                if (!string.IsNullOrWhiteSpace(s))
+                    set.Add(s);
             }
         }
 
         SymptomHeaderItems.Clear();
         foreach (var s in set)
             SymptomHeaderItems.Add(s);
+
+        var headerLabels = new List<Label>
+        {
+            BronchitisHeaderLabel, ChickenpoxHeaderLabel,
+            CommonColdHeaderLabel, CovidHeaderLabel,
+            EColiHeaderLabel, InfluenzaHeaderLabel,
+            ListeriaHeaderLabel, MeaslesHeaderLabel,
+            PneumoniaHeaderLabel, SalmonellaHeaderLabel,
+            StrepThroatHeaderLabel, CoughHeaderLabel
+        };
+
+        int i = 0;
+        foreach (var name in set)
+        {
+            if (i >= headerLabels.Count) break;
+            headerLabels[i].Text = name;
+            i++;
+        }
     }
 
     /// <summary>

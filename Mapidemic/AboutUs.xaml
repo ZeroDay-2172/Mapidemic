@@ -1,107 +1,123 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:local="clr-namespace:Mapidemic"
-                x:Class="Mapidemic.AboutUs"
-                Title="Meet the Team">
-    
-    <Grid RowDefinitions="*" Padding ="15" >
-        
-        <Grid Grid.Row="0" ColumnDefinitions="2*,3*" ColumnSpacing="5" VerticalOptions="FillAndExpand">
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="Mapidemic.AboutUs"
+            Title="Meet the Team">
 
-            <Grid Grid.Column="0" RowDefinitions="*,*,*,*" RowSpacing="10" VerticalOptions="FillAndExpand">
-                    <Button Grid.Row="0" Text="Alex Griep"
-                        FontSize="16" 
-                        BackgroundColor="#0066CC"
-                        TextColor="White"
-                        Clicked ="ShowInfo" 
-                        CommandParameter="{x:Reference AlexGriep}"
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        LineBreakMode="WordWrap"/>
-                    <Button Grid.Row="1" Text="Arthur Waldman"
-                        FontSize="16"
-                        BackgroundColor="#0066CC"
-                        TextColor="White"
-                        Clicked ="ShowInfo" 
-                        CommandParameter="{x:Reference ArthurWaldman}" 
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        LineBreakMode="WordWrap"/>
-                    <Button Grid.Row="2" Text="Connor McGuire"
-                        FontSize="16" 
-                        BackgroundColor="#0066CC"
-                        TextColor="White"
-                        Clicked ="ShowInfo" 
-                        CommandParameter="{x:Reference ConnorMcGuire}" 
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        LineBreakMode="WordWrap"/>
-                    <Button Grid.Row="3" Text="Neng Yang"
-                        FontSize="16" 
-                        BackgroundColor="#0066CC"
-                        TextColor="White"
-                        Clicked ="ShowInfo" 
-                        CommandParameter="{x:Reference NengYang}" 
-                        VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        LineBreakMode="WordWrap"/>
-            </Grid>
+  <!-- Alex -->
+  <ContentPage Title="Alex Griep">
+    <ScrollView>
+      <VerticalStackLayout Padding="16" Spacing="12">
+        <Label FontSize="18">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Name: " />
+              <Span Text="Alex Griep" FontAttributes="Bold" />
+              <Span Text="Major: " />
+              <Span Text="Computer Science" />
+              <Span Text="\nContact: " />
+              <Span Text="alex@example.com" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
 
-            <Grid Grid.Column="1" >
-                <Frame x:Name="AlexGriep" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="Alex Griep" FontSize="22" FontAttributes="Bold"/>
-                        <Label Text="Major" FontSize="18"/>
-                        <Label Text="Contact Information" FontSize="14" />
-                        <Label LineBreakMode="WordWrap">
-                            <Label.FormattedText >
-                                Place text here
-                            </Label.FormattedText>
-                        </Label>
-                        
-                    </VerticalStackLayout>
-                </Frame>
+        <Label LineBreakMode="WordWrap">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Bio: " FontAttributes="Bold"/>
+              <Span Text="Place text here" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+      </VerticalStackLayout>
+    </ScrollView>
+  </ContentPage>
 
-                <Frame x:Name="ArthurWaldman" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Arthur Waldman" FontSize="22" FontAttributes="Bold"/>
-                    <Label Text="Major" FontSize="18"/>
-                    <Label Text="Contact Information" FontSize="14" />
-                    <Label LineBreakMode="WordWrap">
-                        <Label.FormattedText >
-                            Place text here
-                        </Label.FormattedText>
-                    </Label>
-                </VerticalStackLayout>
-                </Frame>
+  <!-- Arthur -->
+  <ContentPage Title="Arthur Waldman">
+    <ScrollView>
+      <VerticalStackLayout Padding="16" Spacing="12">
+        <Label FontSize="18">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Name: " />
+              <Span Text="Arthur Waldman" FontAttributes="Bold" />
+              <Span Text="\nMajor: " />
+              <Span Text="Computer Science" />
+              <Span Text="\nContact: " />
+              <Span Text="arthur@example.com" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
 
-                <Frame x:Name="ConnorMcGuire" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Connor McGuire" FontSize="22" FontAttributes="Bold"/>
-                    <Label Text="Major" FontSize="18"/>
-                    <Label Text="Contact Information" FontSize="14" />
-                    <Label LineBreakMode="WordWrap">
-                        <Label.FormattedText >
-                            Place text here
-                        </Label.FormattedText>
-                    </Label>
-                </VerticalStackLayout>
-                </Frame>
+        <Label LineBreakMode="WordWrap">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Bio: " FontAttributes="Bold"/>
+              <Span Text="Place text here" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+      </VerticalStackLayout>
+    </ScrollView>
+  </ContentPage>
 
-                <Frame x:Name="NengYang" IsVisible="False" Padding="16" CornerRadius="16" BackgroundColor="Transparent">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Neng Yang" FontSize="22" FontAttributes="Bold"/>
-                    <Label Text="Major" FontSize="18"/>
-                    <Label Text="Contact Information" FontSize="14" />
-                    <Label LineBreakMode="WordWrap">
-                        <Label.FormattedText >
-                            Place text here
-                        </Label.FormattedText>
-                    </Label>
-                </VerticalStackLayout>
-                </Frame>
-            </Grid>
-        </Grid>
-    </Grid>
-</ContentPage>
+  <!-- Connor -->
+  <ContentPage Title="Connor McGuire">
+    <ScrollView>
+      <VerticalStackLayout Padding="16" Spacing="12">
+        <Label FontSize="18">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Name: " />
+              <Span Text="Connor McGuire" FontAttributes="Bold" />
+              <Span Text="\nMajor: " />
+              <Span Text="Computer Science" />
+              <Span Text="\nContact: " />
+              <Span Text="connor@example.com" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+
+        <Label LineBreakMode="WordWrap">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Bio: " FontAttributes="Bold"/>
+              <Span Text="Place text here" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+      </VerticalStackLayout>
+    </ScrollView>
+  </ContentPage>
+
+  <!-- Neng -->
+  <ContentPage Title="Neng Yang">
+    <ScrollView>
+      <VerticalStackLayout Padding="16" Spacing="12">
+        <Label FontSize="18">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Name: " />
+              <Span Text="Neng Yang" FontAttributes="Bold" />
+              <Span Text="\nMajor: " />
+              <Span Text="Computer Science" />
+              <Span Text="\nContact: " />
+              <Span Text="neng@example.com" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+
+        <Label LineBreakMode="WordWrap">
+          <Label.FormattedText>
+            <FormattedString>
+              <Span Text="Bio: " FontAttributes="Bold"/>
+              <Span Text="Place text here" />
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+      </VerticalStackLayout>
+    </ScrollView>
+  </ContentPage>
+
+</TabbedPage>
