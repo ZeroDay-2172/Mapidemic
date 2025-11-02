@@ -97,7 +97,7 @@ public class BusinessLogic
     /// A function that accepts settings changes and saves
     /// then to the device's local settings file
     /// </summary>
-    /// <param name="unitSetting"></param>
+    /// <param name="unitSetting"></param> Where is this used? - Alex
     /// <param name="themeEnum"></param>
     /// <param name="postalCode"></param>
     /// <returns>true is settings were updated, false is not</returns>
@@ -176,7 +176,7 @@ public class BusinessLogic
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms();
-        List<Illness> illnesses = await database.GetIllnessList();
+        List<Illness> illnesses = await database.GetIllnessesList();
         foreach (Illness illness in illnesses)
         {
             int matchingSymptoms = 0;
@@ -226,10 +226,28 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
-    
-    public async Task<List<Illnesses>> GetIllnessesList()
+
+    /// <summary>
+    /// A function that return all the illnesses
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<Illness>> GetIllnessesList()
     {
         return await database.GetIllnessesList();
+    }
+
+    /// <summary>
+    /// A function that return all the zip illness counts
+    /// </summary>
+    /// <returns></returns>
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
+    {
+        return await database.GetZipIllnessCounts();
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        return await database.GetPostalCodeCentroids(postalCode);
     }
 
     /// <summary>
@@ -261,6 +279,23 @@ public class BusinessLogic
         {
             return false; // Return false if the insertion failed (Might be a bug, while creating this, it still went through)
         }
+    }
+
+    /// <summary>
+    /// Function calls database to return number of cases of specific illness on
+    /// given day either locally or nationally.
+    /// </summary>
+    /// <param name="selectedIllness">name of illness</param>
+    /// <param name="date">date to get data for</param>
+    /// <param name="localTrends">local to zip code (true), or national (false)</param>
+    /// <returns></returns>
+    /// </summary>
+    public async Task<int> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
+    {
+        if (localTrends == true)
+            return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
+        else
+            return await database.getNumberOfReports(selectedIllness, date, -1);
     }
 
     /// <summary>

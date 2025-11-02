@@ -7,24 +7,19 @@
   <!-- Alex -->
   <ContentPage Title="Alex Griep">
     <ScrollView>
-      <VerticalStackLayout Padding="16" Spacing="12">
+      <VerticalStackLayout Padding="10">
         <Label FontSize="18">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Name: " />
-              <Span Text="Alex Griep" FontAttributes="Bold" />
-              <Span Text="Major: " />
-              <Span Text="Computer Science" />
-              <Span Text="\nContact: " />
-              <Span Text="alex@example.com" />
+              <Span Text="Alex Griep &#10;" FontAttributes="Bold" />
+              <Span Text="Major " />
             </FormattedString>
           </Label.FormattedText>
         </Label>
 
-        <Label LineBreakMode="WordWrap">
+        <Label FontSize="18" LineBreakMode="WordWrap">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Bio: " FontAttributes="Bold"/>
               <Span Text="Place text here" />
             </FormattedString>
           </Label.FormattedText>
@@ -36,24 +31,19 @@
   <!-- Arthur -->
   <ContentPage Title="Arthur Waldman">
     <ScrollView>
-      <VerticalStackLayout Padding="16" Spacing="12">
+      <VerticalStackLayout Padding="10">
         <Label FontSize="18">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Name: " />
-              <Span Text="Arthur Waldman" FontAttributes="Bold" />
-              <Span Text="\nMajor: " />
-              <Span Text="Computer Science" />
-              <Span Text="\nContact: " />
-              <Span Text="arthur@example.com" />
+              <Span Text="Arthur Waldman &#10;" FontAttributes="Bold" />
+              <Span Text="Major" />
             </FormattedString>
           </Label.FormattedText>
         </Label>
 
-        <Label LineBreakMode="WordWrap">
+        <Label FontSize="18" LineBreakMode="WordWrap">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Bio: " FontAttributes="Bold"/>
               <Span Text="Place text here" />
             </FormattedString>
           </Label.FormattedText>
@@ -65,24 +55,19 @@
   <!-- Connor -->
   <ContentPage Title="Connor McGuire">
     <ScrollView>
-      <VerticalStackLayout Padding="16" Spacing="12">
+      <VerticalStackLayout Padding="10">
         <Label FontSize="18">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Name: " />
-              <Span Text="Connor McGuire" FontAttributes="Bold" />
-              <Span Text="\nMajor: " />
-              <Span Text="Computer Science" />
-              <Span Text="\nContact: " />
-              <Span Text="connor@example.com" />
+              <Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
+              <Span Text="Major" />
             </FormattedString>
           </Label.FormattedText>
         </Label>
 
-        <Label LineBreakMode="WordWrap">
+        <Label FontSize="18" LineBreakMode="WordWrap">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Bio: " FontAttributes="Bold"/>
               <Span Text="Place text here" />
             </FormattedString>
           </Label.FormattedText>
@@ -94,24 +79,19 @@
   <!-- Neng -->
   <ContentPage Title="Neng Yang">
     <ScrollView>
-      <VerticalStackLayout Padding="16" Spacing="12">
+      <VerticalStackLayout Padding="10">
         <Label FontSize="18">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Name: " />
-              <Span Text="Neng Yang" FontAttributes="Bold" />
-              <Span Text="\nMajor: " />
-              <Span Text="Computer Science" />
-              <Span Text="\nContact: " />
-              <Span Text="neng@example.com" />
+              <Span Text="Neng Yang &#10;" FontAttributes="Bold" />
+              <Span Text="Major" />
             </FormattedString>
           </Label.FormattedText>
         </Label>
 
-        <Label LineBreakMode="WordWrap">
+        <Label FontSize="18" LineBreakMode="WordWrap">
           <Label.FormattedText>
             <FormattedString>
-              <Span Text="Bio: " FontAttributes="Bold"/>
               <Span Text="Place text here" />
             </FormattedString>
           </Label.FormattedText>

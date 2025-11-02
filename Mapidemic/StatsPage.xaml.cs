@@ -9,15 +9,15 @@ using Supabase;
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
 
-public partial class ReportPage : ContentPage
+public partial class StatsPage : ContentPage
 {
 
     private readonly Dictionary<string, int> _illnesses = new();
-    private Dictionary<string, Label> _labelByIllness;
+    private Dictionary<string, Label> _labelByIllness = new();
     public ObservableCollection<string> SymptomHeaderItems { get; } = new();
 
 
-    public ReportPage()
+    public StatsPage()
     {
         InitializeComponent();
         InitIllnessLabelMap();
@@ -39,7 +39,7 @@ public partial class ReportPage : ContentPage
         {
             foreach (var ill in illnesses)
             {
-                var s = ill?.Illness?.Trim();
+                var s = ill?.Name?.Trim();
                 if (!string.IsNullOrWhiteSpace(s))
                     set.Add(s);
             }

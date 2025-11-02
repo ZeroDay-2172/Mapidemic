@@ -1,5 +1,9 @@
 namespace Mapidemic.Models;
 using System.Collections.ObjectModel;
+using Supabase.Postgrest;
+
+using System.Formats.Asn1;
+using System.Formats.Asn1;
 
 public class Database
 {
@@ -40,22 +44,24 @@ public class Database
     }
 
     /// <summary>
-    /// A function that return all the illnesses
-    /// that appear in the database
-    /// </summary>
-    /// <returns>A list of all illnesses</returns>
-    public async Task<List<Illness>> GetIllnessList()
-    {
-        return (await supabaseClient.From<Illness>().Get()).Models;
-    }
-
-    /// <summary>
     /// A function that gets a list of illnesses from the database
     /// </summary>
     /// <returns></returns>
-    public async Task<List<Illnesses>> GetIllnessesList()
+    public async Task<List<Illness>> GetIllnessesList()
     {
-        var response = await supabaseClient.From<Illnesses>().Where(x => x.Illness != null).Get();
+        var response = await supabaseClient.From<Illness>().Where(x => x.Name != null).Get();
+        return response.Models;
+    }
+
+    public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
+    {
+        var response = await supabaseClient.From<ZipIllnessCounts>().Select("*").Get();
+        return response.Models;
+    }
+
+    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    {
+        var response = await supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get();
         return response.Models;
     }
 
@@ -70,5 +76,38 @@ public class Database
 
         var response = await supabaseClient.From<IllnessReport>().Where(x => x.PostalCode == postalCode && x.ReportDate >= days).Get();
         return response.Models;
+    }
+
+    /// <summary>
+    /// Returns the count of rows (reports) of an illness in the provided zip code, on the specific day.
+    /// </summary>
+    /// <param name="illnessName">Name of illness to find data on</param>
+    /// <param name="date">Date of the report(s) to consider</param>
+    /// <param name="postalCode">Specifies what area the report took place, -1 if national reports</param>
+    /// <returns></returns>
+    public async Task<int> getNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
+    {
+        var startOfDay = date.UtcDateTime.Date;
+        var endOfDay = startOfDay.AddDays(1);
+
+        // Show local reports
+        if (postalCode != -1)
+        {
+            return await supabaseClient
+                         .From<IllnessReport>()
+                         .Where(x => x.PostalCode == postalCode)
+                         .Where(x => x.IllnessType == illnessName)
+                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                         .Count(Supabase.Postgrest.Constants.CountType.Exact);
+        }
+        // Show national reports
+        else
+        {
+            return await supabaseClient
+                         .From<IllnessReport>()
+                         .Where(x => x.IllnessType == illnessName)
+                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                         .Count(Supabase.Postgrest.Constants.CountType.Exact);
+        }
     }
 }

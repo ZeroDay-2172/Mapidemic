@@ -23,7 +23,9 @@
                 FontSize="20"
                 LineBreakMode="WordWrap">
                 <Label.FormattedText >
-                        Place the information here explaining what we do with the data we collect.
+                        <FormattedString>
+                                <Span Text=" Place the information here explaining what we do with the data we collect." />
+                        </FormattedString>
                 </Label.FormattedText>
         </Label>
     </Grid>

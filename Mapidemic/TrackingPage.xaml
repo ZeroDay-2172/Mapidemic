@@ -8,6 +8,6 @@
 
         <local:MapPage Title="Map" /> <!-- Map Page -->
         <local:GraphPage Title="Graph"/> <!-- Graph Page -->
-        <local:ReportPage Title="Report" /> <!-- Report page -->
+        <local:StatsPage Title="Stats" /> <!-- Stats page -->
 
 </TabbedPage>
