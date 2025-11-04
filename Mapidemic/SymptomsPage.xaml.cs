@@ -40,13 +40,20 @@ public partial class SymptomsPage : ContentPage
         (sender as Button)!.IsEnabled = false;
         if (await MauiProgram.businessLogic.ValidateCheckboxUsed())
         {
-            MauiProgram.businessLogic.RunSymptomAnalysis();
-            NavigationPage parentPage = (Parent.Parent as NavigationPage)!;
-            NavigationPage newPage = new NavigationPage(new LoadingPage());
-            newPage.BarTextColor = Color.FromArgb("#FFFFFF");
-		    newPage.BarBackgroundColor = Color.FromArgb("#0074C0");
-            _ = parentPage.PopAsync();
-            await parentPage.PushAsync(newPage);
+            try // attempting to run symptom analysis
+            {
+                await MauiProgram.businessLogic.RunSymptomAnalysis();
+                NavigationPage parentPage = (Parent.Parent as NavigationPage)!;
+                NavigationPage newPage = new NavigationPage(new LoadingPage());
+                newPage.BarTextColor = Color.FromArgb("#FFFFFF");
+                newPage.BarBackgroundColor = Color.FromArgb("#0074C0");
+                _ = parentPage.PopAsync();
+                await parentPage.PushAsync(newPage);
+            }
+            catch (Exception error) // catching error if database could not be reached for symptom analysis
+            {
+                await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            }
         }
         else
         {

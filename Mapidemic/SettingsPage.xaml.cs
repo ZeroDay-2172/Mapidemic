@@ -46,28 +46,35 @@ public partial class SettingsPage : ContentPage
     /// <param name="args"></param>
     public async void SaveButton_Clicked(Object sender, EventArgs args)
     {
-        bool postalValid = await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text);
-        if (postalValid)
+        try
         {
-            bool saveSuccess = await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(PostalCodeEnt.Text));
-
-            if (saveSuccess)
+            if (await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text))
             {
-                SetDarkMode();
-                MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(PostalCodeEnt.Text);
-                await DisplayAlert("Success!", "Settings have been saved!", "OK");
+                if (await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(PostalCodeEnt.Text)))
+                {
+                    SetDarkMode();
+                    MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(PostalCodeEnt.Text);
+                    await DisplayAlert("Success!", "Settings have been saved!", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Could not save settings...", "OK");
+                }
             }
             else
-                await DisplayAlert("Error", "Could not save settings...", "OK");
+            {
+                await DisplayAlert("Error", "Please enter postal zip code", "OK");
+            }
         }
-        else
-            await DisplayAlert("Error", "Please enter postal zip code", "OK");
+        catch(Exception error)
+        {
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+        }
     }
 
     /// <summary>
     /// Function that sets Dark Mode if darkMode equals true, otherwise sets Light Mode.
     /// </summary>
-    /// <param name="dark"></param>
     private void SetDarkMode()
     {
         if (this.darkMode == true)

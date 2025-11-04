@@ -34,9 +34,16 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public async void ScButton_Clicked(object sender, EventArgs args)
 	{
-		MauiProgram.businessLogic.LoadSymptomsList();
-		viewport = new NavigationPage(new SymptomsPage());
-		PrepareViewport();
+		try
+		{
+			await MauiProgram.businessLogic.LoadSymptomsList();
+			viewport = new NavigationPage(new SymptomsPage());
+			PrepareViewport();
+		}
+		catch(Exception error)
+        {
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+        }
 	}
 
 	/// <summary>

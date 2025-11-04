@@ -53,19 +53,27 @@ public class BusinessLogic
     /// list of symptoms from the database,
     /// sorts them, and adds them to a collection
     /// </summary>
-    public async void LoadSymptomsList()
+    public async Task<bool> LoadSymptomsList()
     {
-        SortedSet<string> symptoms = new SortedSet<string>(); // auxiliary storage for sorting
-        foreach (Illness illness in await database!.GetSymptomsList()) // getting full illness list
+        try
         {
-            foreach (string symptom in illness.Symptoms!) // storing each unique illness
+            SortedSet<string> symptoms = new SortedSet<string>(); // auxiliary storage for sorting
+            foreach (Illness illness in await database!.GetSymptomsList()) // getting full illness list
             {
-                symptoms.Add(symptom);
+                foreach (string symptom in illness.Symptoms!) // storing each unique illness
+                {
+                    symptoms.Add(symptom);
+                }
             }
+            foreach (string symptom in symptoms) // adding each unique illness to an observable collection for live updates
+            {
+                SymptomList!.Add(new Symptom(symptom));
+            }
+            return true;
         }
-        foreach (string symptom in symptoms) // adding each unique illness to an observable collection for live updates
+        catch(Exception error) // error if the database could not be reached
         {
-            SymptomList!.Add(new Symptom(symptom));
+            throw new Exception(error.Message);
         }
     }
 
@@ -145,9 +153,16 @@ public class BusinessLogic
         }
         else // validating postal code
         {
-            if (!await database.ValidatePostalCode(postalCode)) // checking for invalid postal codes
+            try // attempting to communicate with the database
             {
-                validPostalCode = false;
+                if (!await database.ValidatePostalCode(postalCode)) // checking for invalid postal codes
+                {
+                    validPostalCode = false;
+                }
+            }
+            catch(Exception error) // passing the exception message to the ui-layer if the database cannot be reached
+            {
+                throw new Exception(error.Message);
             }
         }
         return validPostalCode;
@@ -178,38 +193,47 @@ public class BusinessLogic
     /// to determine how likely it is that a user has a specified
     /// illness based on their symptoms
     /// </summary>
-    public async void RunSymptomAnalysis()
+    /// <returns>true if the symptom analysis completed</returns>
+    public async Task<bool> RunSymptomAnalysis()
     {
         SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms(); // getting all user symptoms
-        List<Illness> illnesses = await database.GetIllnessesList(); // getting a list of all illnesses
-        foreach (Illness illness in illnesses) // checking each illness
+        try // attempting to read the illness list from the database
         {
-            int matchingSymptoms = 0;
-            int extraUserSymptoms = 0;
-            int extraIllnessSymptoms;
-            double finalProbability;
-            HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!); // transforming list => set for constant comparisons
-            foreach (Symptom symptom in userSymptoms) // checking each user illness
+            List<Illness> illnesses = await GetIllnessesList(); // getting a list of all illnesses
+            foreach (Illness illness in illnesses) // checking each illness
             {
-                if (illnessSymptoms.Contains(symptom.Name!)) // checking if the user symptoms is an illness symptom
+                int matchingSymptoms = 0;
+                int extraUserSymptoms = 0;
+                int extraIllnessSymptoms;
+                double finalProbability;
+                HashSet<string> illnessSymptoms = new HashSet<string>(illness.Symptoms!); // transforming list => set for constant comparisons
+                foreach (Symptom symptom in userSymptoms) // checking each user illness
                 {
-                    matchingSymptoms++;
+                    if (illnessSymptoms.Contains(symptom.Name!)) // checking if the user symptoms is an illness symptom
+                    {
+                        matchingSymptoms++;
+                    }
+                    else
+                    {
+                        extraUserSymptoms++;
+                    }
                 }
-                else
+                extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms; // performing probability calculation
+                finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
+                if (finalProbability != 0) // ignoring illnesses that do not match the user symptoms
                 {
-                    extraUserSymptoms++;
+                    SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
                 }
             }
-            extraIllnessSymptoms = illnessSymptoms.Count - matchingSymptoms; // performing probability calculation
-            finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
-            if (finalProbability != 0) // ignoring illnesses that do not match the user symptoms
-            {
-                SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
-            }
+            LikelyIllness = SymptomAnalysis.First(); // extracting the likely illness
+            SymptomAnalysis.Remove(LikelyIllness);
+            return true;
         }
-        LikelyIllness = SymptomAnalysis.First(); // extracting the likely illness
-        SymptomAnalysis.Remove(LikelyIllness);
+        catch (Exception error) // catching error if database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 
     /// <summary>
@@ -239,21 +263,49 @@ public class BusinessLogic
     /// <returns>a list of all illnesses</returns>
     public async Task<List<Illness>> GetIllnessesList()
     {
-        return await database.GetIllnessesList();
+        try // attempting to read the illness list from the database
+        {
+            return await database.GetIllnessesList();
+        }
+        catch (Exception error) // throwing error for ui if database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 
     /// <summary>
-    /// A function that return all the zip illness counts
+    /// A function that gets a list containing each postal
+    /// code that has one or more illness reports
     /// </summary>
-    /// <returns></returns>
+    /// <returns>a list of postal codes and illness reports count values</returns>
     public async Task<List<ZipIllnessCounts>> GetZipIllnessCounts()
     {
-        return await database.GetZipIllnessCounts();
+        try // attempting to read the postal code and illness reports counts list
+        {
+            return await database.GetZipIllnessCounts();
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 
+    /// <summary>
+    /// A function that gets the centroid values on the map
+    /// for each postal code in the United States
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <returns>a list containing all the centroid values</returns>
     public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
     {
-        return await database.GetPostalCodeCentroids(postalCode);
+        try // attempting to read the postal code centroid list
+        {
+            return await database.GetPostalCodeCentroids(postalCode);
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 
     /// <summary>
@@ -295,13 +347,19 @@ public class BusinessLogic
     /// <param name="date">date to get data for</param>
     /// <param name="localTrends">local to zip code (true), or national (false)</param>
     /// <returns></returns>
-    /// </summary>
     public async Task<int> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
     {
-        if (localTrends == true)
-            return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
-        else
-            return await database.getNumberOfReports(selectedIllness, date, -1);
+        try // attempting to get total illness reports from the database
+        {
+            if (localTrends == true)
+                return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
+            else
+                return await database.getNumberOfReports(selectedIllness, date, -1);
+        }
+        catch (Exception error) // catching error if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 
     /// <summary>
@@ -313,24 +371,31 @@ public class BusinessLogic
     /// <returns>a dictionary containing all illness based on the postal code</returns>
     public async Task<Dictionary<string, int>> GenerateReport(int postalCode, int daysPicked)
     {
-        // Fetch from the database
-        var report = await database.GenerateReport(postalCode, daysPicked);
-
-        // Createa a new count per illness
-        var counts = new Dictionary<string, int>();
-
-        // Add counts for each reported illness
-        foreach (var r in report)
+        try // attempting to read illness report from the database
         {
-            if (counts.TryGetValue(r.IllnessType, out var n))
+            // Fetch from the database
+            var report = await database.GenerateReport(postalCode, daysPicked);
+
+            // Creates a new count per illness
+            var counts = new Dictionary<string, int>();
+
+            // Add counts for each reported illness
+            foreach (var r in report)
             {
-                counts[r.IllnessType] = n + 1;
+                if (counts.TryGetValue(r.IllnessType, out var n))
+                {
+                    counts[r.IllnessType] = n + 1;
+                }
+                else
+                {
+                    counts[r.IllnessType] = 1;
+                }
             }
-            else
-            {
-                counts[r.IllnessType] = 1;
-            }
+            return counts;
         }
-        return counts;
+        catch(Exception error) // catching error if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
     }
 }
