@@ -1,9 +1,8 @@
-using Java.Sql;
-
 namespace Mapidemic.Models;
 
 public class Database
 {
+    private const int timeoutDuration = 5;
     private const string networkError = "Network error! Please try again shortly.";
     private const string supabaseUrl = "https://aeqrpazberlimssdzviz.supabase.co";
     private const string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlcXJwYXpiZXJsaW1zc2R6dml6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0NTE2NTQsImV4cCI6MjA3NTAyNzY1NH0.wRZ11nD7S9x-VAQo6KLewuRJpQvg0iFepFZ8dM9oCGM";
@@ -31,7 +30,7 @@ public class Database
     /// <exception cref="Exception">database error</exception>
     private async Task<T> IssueQuery<T>(Task<T> query)
     {
-        var completedQuery = await Task.WhenAny(query, Task.Delay(TimeSpan.FromSeconds(5))); // setting the connection time to 5 seconds
+        var completedQuery = await Task.WhenAny(query, Task.Delay(TimeSpan.FromSeconds(timeoutDuration))); // setting the connection time to 5 seconds
         if (completedQuery == query) // ensuring the query finishes in time
         {
             return await query;
@@ -182,19 +181,19 @@ public class Database
             if (postalCode != -1) // show local reports
             {
                 return await IssueQuery(supabaseClient
-                                         .From<IllnessReport>()
-                                         .Where(x => x.PostalCode == postalCode)
-                                         .Where(x => x.IllnessType == illnessName)
-                                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
-                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));
+                                        .From<IllnessReport>()
+                                        .Where(x => x.PostalCode == postalCode)
+                                        .Where(x => x.IllnessType == illnessName)
+                                        .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                                        .Count(Supabase.Postgrest.Constants.CountType.Exact));
             }
             else // show national reports
             {
                 return await IssueQuery(supabaseClient
-                                         .From<IllnessReport>()
-                                         .Where(x => x.IllnessType == illnessName)
-                                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
-                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));
+                                        .From<IllnessReport>()
+                                        .Where(x => x.IllnessType == illnessName)
+                                        .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
+                                        .Count(Supabase.Postgrest.Constants.CountType.Exact));
             }
         }
         catch(Exception error) // exception if the database cannot be reached

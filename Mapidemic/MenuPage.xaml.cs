@@ -34,15 +34,21 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public async void ScButton_Clicked(object sender, EventArgs args)
 	{
-		try
+		Popup.IsOpen = true;
+		await Task.Yield();
+		try // attempting to load the symptoms list
 		{
 			await MauiProgram.businessLogic.LoadSymptomsList();
 			viewport = new NavigationPage(new SymptomsPage());
 			PrepareViewport();
 		}
-		catch(Exception error)
+		catch (Exception error) // catching error if the database could not be reached
+		{
+			await DisplayAlert("Network Error", $"{error.Message}", "OK");
+		}
+		finally // resetting the activity indicator
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            Popup.IsOpen = false;
         }
 	}
 

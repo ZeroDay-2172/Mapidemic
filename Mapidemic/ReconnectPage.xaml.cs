@@ -24,6 +24,8 @@ public partial class ReconnectPage : ContentPage
     /// <param name="args"></param>
     public async void TryAgain_Clicked(Object sender, EventArgs args)
     {
+        Popup.IsOpen = true;
+		await Task.Yield();
         if (await MauiProgram.businessLogic.TestDatabaseConnection()) // testing the database connection
         {
             if (MauiProgram.businessLogic.ReadSettings() != null) // checking for first time users
@@ -42,5 +44,6 @@ public partial class ReconnectPage : ContentPage
         {
             await DisplayAlert("Connection Error", "Connection attempt failed", "OK");
         }
+        Popup.IsOpen = false;
     }
 }
