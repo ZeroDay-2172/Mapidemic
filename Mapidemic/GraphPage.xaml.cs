@@ -35,11 +35,18 @@ public partial class GraphPage : ContentPage
     /// </summary>
     public async Task LoadIllnesses()
     {
-        var illnesses = await MauiProgram.businessLogic.GetIllnessesList();
-        IllnessCollection.Clear();
-        foreach (var illness in illnesses)
+        try // attempting to read the illness list from the database
         {
-            IllnessCollection.Add(illness);
+            var illnesses = await MauiProgram.businessLogic.GetIllnessesList();
+            IllnessCollection.Clear();
+            foreach (var illness in illnesses)
+            {
+                IllnessCollection.Add(illness);
+            }
+        }
+        catch(Exception error) // catching error if the database could not be reached
+        {
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
         }
     }
 

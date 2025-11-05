@@ -56,11 +56,16 @@ public class ChartModel
     public async Task<int[]> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
     {
         int[] result = new int[numDays];
-
-        // Starting at current day, in descending order. i.e. Today(i), yesterday(i+1), day before yesterday(i+2)
-        for (int i = 0; i < result.Length; i++)
+        for (int i = 0; i < result.Length; i++) // Starting at current day, in descending order. i.e. Today(i), yesterday(i+1), day before yesterday(i+2)
         {
-            result[i] = await MauiProgram.businessLogic.getNumberOfReports(selectedIllness, DateTimeOffset.UtcNow.AddDays(-i), localTrends);
+            try // attempting to get the number of reports from the database
+            {
+                result[i] = await MauiProgram.businessLogic.getNumberOfReports(selectedIllness, DateTimeOffset.UtcNow.AddDays(-i), localTrends);
+            }
+            catch (Exception) // putting zero for a given day if the database cannot be reached
+            {
+                result[i] = 0;
+            }
         }
         return result;
     }

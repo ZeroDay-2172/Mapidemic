@@ -1,6 +1,3 @@
-using Mapidemic.Models;
-using System.Runtime.CompilerServices;
-
 namespace Mapidemic;
 
 public partial class MenuPage : ContentPage
@@ -37,8 +34,22 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public async void ScButton_Clicked(object sender, EventArgs args)
 	{
-		viewport = new NavigationPage(new SymptomsPage());
-		PrepareViewport();
+		Popup.IsOpen = true;
+		await Task.Yield();
+		try // attempting to load the symptoms list
+		{
+			await MauiProgram.businessLogic.LoadSymptomsList();
+			viewport = new NavigationPage(new SymptomsPage());
+			PrepareViewport();
+		}
+		catch (Exception error) // catching error if the database could not be reached
+		{
+			await DisplayAlert("Network Error", $"{error.Message}", "OK");
+		}
+		finally // resetting the activity indicator
+        {
+            Popup.IsOpen = false;
+        }
 	}
 
 	/// <summary>
