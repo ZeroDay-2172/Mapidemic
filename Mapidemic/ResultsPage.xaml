@@ -239,7 +239,7 @@
                                                         HeightRequest="100"
                                                         ColumnDefinitions="2*, 1*, 4*">
 
-                                                        <gauge:SfRadialGauge BackgroundColor="Transparent" Grid.Column="0">
+                                                        <gauge:SfRadialGauge BackgroundColor="Transparent" Grid.Column="0" >
                                                                <gauge:SfRadialGauge.Axes>
                                                                       <gauge:RadialAxis Minimum="0"
                                                                                     Maximum="100"
@@ -257,7 +257,11 @@
                                                                              </gauge:RadialAxis.AxisLineStyle>
 
                                                                              <gauge:RadialAxis.Pointers>
-                                                                                    <gauge:RangePointer Value="{Binding Probability}" CornerStyle="EndCurve" PointerWidth="5">
+                                                                                    <gauge:RangePointer Value="{Binding Probability}"
+                                                                                                        CornerStyle="EndCurve"
+                                                                                                        PointerWidth="5"
+                                                                                                        EnableAnimation="True"
+                                                                                                        AnimationDuration="1000">
                                                                                            <gauge:RangePointer.Fill>
                                                                                                   <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                                                                                          <GradientStop Color="#0074C0" Offset="0.0" />
