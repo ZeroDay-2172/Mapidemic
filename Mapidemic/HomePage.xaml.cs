@@ -36,9 +36,12 @@ public partial class HomePage : FlyoutPage
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	public void SettingsButton_Clicked(object sender, EventArgs args)
+	public async void SettingsButton_Clicked(object sender, EventArgs args)
 	{
-		this.menuPage.SettingsPageHandler();
+		if (ViewPort.Navigation.NavigationStack.LastOrDefault() is not SettingsPage) // only loading settings page if not already loaded
+        {
+			await this.ViewPort.PushAsync(new SettingsPage());
+        }
 	}
 
 	/// <summary>
