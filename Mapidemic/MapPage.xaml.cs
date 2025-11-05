@@ -30,7 +30,6 @@ public partial class MapPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await EnsureLocationPermission();
         await CenterOnUserPostalCode();
         await RenderReportHeatmap();
     }
@@ -79,10 +78,9 @@ public partial class MapPage : ContentPage
         int? postalCode = settings.PostalCode;
         if (postalCode != null)
         {
-            var locations = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
-            if (locations != null && locations.Count > 0)
+            var location = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
+            if (location != null)
             {
-                var location = locations[0];
                 var center = new Location(location.Latitude, location.Longitude); // Gathers the map on internal centroids given by Census.gov, wacky postal codes have odd centroids that will never be 100% accurate. Downside of user privacy.
                 MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
             }
@@ -112,7 +110,7 @@ public partial class MapPage : ContentPage
             return cachedLocation;
         }
 
-        var centroid = (await MauiProgram.businessLogic.GetPostalCodeCentroids(zip)).FirstOrDefault(); // Step 2: Fetch from database
+        var centroid = await MauiProgram.businessLogic.GetPostalCodeCentroids(zip); // Step 2: Fetch from database
         if (centroid != null)
         {
             var location = new Location(centroid.Latitude, centroid.Longitude);
@@ -158,7 +156,7 @@ public partial class MapPage : ContentPage
             var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
             if (counts == null || counts.Count == 0)
             {
-                return; // No data to render!
+                return; // No data to render! TODO: Negate and swap this logic e.g. if counts exist, render them
             }
 
             var grouped = counts
@@ -200,9 +198,9 @@ public partial class MapPage : ContentPage
 
         if (count <= 7)
         {
-            return (Colors.Red, baseRadius); // more
+            return (Colors.Orange, baseRadius); // more
         }
-        return (Colors.Black, baseRadius); // severe
+        return (Colors.Red, baseRadius); // severe
     }
 
     /// <summary>

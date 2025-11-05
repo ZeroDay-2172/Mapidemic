@@ -8,14 +8,14 @@
 
 
 
-        <Grid Padding="25"
+        <Grid Padding="0"
                         RowSpacing="0"
                         ColumnSpacing="0">
 
                 <maps:Map x:Name="MapControl"
                                 Grid.Row="0"
-                                MapType="Street"
-                                IsShowingUser="true"/>
+                                MapType="Satellite"
+                                IsShowingUser="false"/>
                                 
                 <Button Text="Report"
                                 Clicked="OnReportIllnessClicked"

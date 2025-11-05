@@ -59,10 +59,10 @@ public class Database
         return response.Models;
     }
 
-    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    public async Task<PostalCodeCentroids?> GetPostalCodeCentroids(int postalCode)
     {
         var response = await supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get();
-        return response.Models;
+        return response.Models.FirstOrDefault();
     }
 
     /// <summary>

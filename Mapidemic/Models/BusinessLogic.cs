@@ -245,7 +245,7 @@ public class BusinessLogic
         return await database.GetZipIllnessCounts();
     }
 
-    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    public async Task<PostalCodeCentroids?> GetPostalCodeCentroids(int postalCode)
     {
         return await database.GetPostalCodeCentroids(postalCode);
     }
