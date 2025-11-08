@@ -68,7 +68,7 @@
                     </DataTemplate>
                     </syncfusion:SfListView.ItemTemplate>
 
-                    <!-- Optional: Empty view -->
+                    <!-- Empty view -->
                     <syncfusion:SfListView.EmptyView>
                     <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center">
                         <Label Text="No reports found." FontAttributes="Bold" />

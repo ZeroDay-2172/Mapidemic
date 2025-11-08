@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Supabase;
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
+using Syncfusion.Maui.ListView;
 
 public partial class StatsPage : ContentPage
 {
@@ -19,11 +20,6 @@ public partial class StatsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
     }
 
     /// <summary>
