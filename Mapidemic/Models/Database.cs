@@ -1,3 +1,5 @@
+using Xamarin.Google.ErrorProne.Annotations;
+
 namespace Mapidemic.Models;
 
 public class Database
@@ -7,6 +9,7 @@ public class Database
     private const string supabaseUrl = "https://aeqrpazberlimssdzviz.supabase.co";
     private const string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlcXJwYXpiZXJsaW1zc2R6dml6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0NTE2NTQsImV4cCI6MjA3NTAyNzY1NH0.wRZ11nD7S9x-VAQo6KLewuRJpQvg0iFepFZ8dM9oCGM";
     public Supabase.Client supabaseClient;
+    private Supabase.Postgrest.Constants.Ordering ascending = Supabase.Postgrest.Constants.Ordering.Ascending; //Add as second parameter in Order method of query to order ascending
 
     /// <summary>
     /// The default constructor of a Database
@@ -100,7 +103,7 @@ public class Database
     {
         try // querying the database for the illness list
         {
-            return (await IssueQuery(supabaseClient.From<Illness>().Where(x => x.Name != null).Get())).Models;
+            return (await IssueQuery(supabaseClient.From<Illness>().Where(x => x.Name != null).Order("illness", ascending).Get())).Models;
         }
         catch (Exception error) // exception if the database cannot be reached
         {
