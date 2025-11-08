@@ -55,7 +55,7 @@ public partial class GraphPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void illnessChosen_handler(Object sender, EventArgs args)
+    public async void IllnessChosen_handler(Object sender, EventArgs args)
     {
         Picker illnessPicker = (Picker)sender;
 
@@ -73,7 +73,7 @@ public partial class GraphPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void localitySwitch_toggled(Object sender, EventArgs args)
+    public async void LocalitySwitch_toggled(Object sender, EventArgs args)
     {
         if (localTrends == true)
             localTrends = false;
@@ -86,7 +86,7 @@ public partial class GraphPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void refreshButtonClicked(Object sender, EventArgs args)
+    public async void RefreshButtonClicked(Object sender, EventArgs args)
     {
         if (selectedIllness.Length > 0)
         {

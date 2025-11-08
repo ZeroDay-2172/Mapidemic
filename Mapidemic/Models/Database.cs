@@ -172,7 +172,7 @@ public class Database
     /// <param name="date">Date of the report(s) to consider</param>
     /// <param name="postalCode">Specifies what area the report took place, -1 if national reports</param>
     /// <returns></returns>
-    public async Task<int> getNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
+    public async Task<int> GetNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
     {
         var startOfDay = date.UtcDateTime.Date;
         var endOfDay = startOfDay.AddDays(1);

@@ -350,14 +350,14 @@ public class BusinessLogic
     /// <param name="date">date to get data for</param>
     /// <param name="localTrends">local to zip code (true), or national (false)</param>
     /// <returns></returns>
-    public async Task<int> getNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
+    public async Task<int> GetNumberOfReports(string selectedIllness, DateTimeOffset date, bool localTrends)
     {
         try // attempting to get total illness reports from the database
         {
             if (localTrends == true)
-                return await database.getNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
+                return await database.GetNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
             else
-                return await database.getNumberOfReports(selectedIllness, date, -1);
+                return await database.GetNumberOfReports(selectedIllness, date, -1);
         }
         catch (Exception error) // catching error if the database could not be reached
         {

@@ -28,7 +28,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     x:Name="illnessPicker"
-                    SelectedIndexChanged="illnessChosen_handler"
+                    SelectedIndexChanged="IllnessChosen_handler"
                     ItemsSource="{Binding IllnessCollection}"
                     ItemDisplayBinding="{Binding Name}">
                 <Picker.Items>
@@ -77,12 +77,12 @@
             <Switch OnColor="#0074C0"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Toggled="localitySwitch_toggled"/>
+                    Toggled="LocalitySwitch_toggled"/>
 
             <Button Text="Load Data"
                     TextColor="white"
                     BackgroundColor="#0074C0"
-                    Clicked="refreshButtonClicked"
+                    Clicked="RefreshButtonClicked"
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="20"
