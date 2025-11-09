@@ -53,23 +53,6 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
-    /// Ensure the app has location permissions; if not, request them.
-    /// </summary>
-    async Task EnsureLocationPermission()
-    {
-        var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(); // This is unused for now, chances are will totally be deleted later on
-        if (status != PermissionStatus.Granted)
-        {
-            status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-        }
-
-        if (status != PermissionStatus.Granted)
-        {
-            await DisplayAlert("Permission Denied", "Location permission is required to show your current location on the map.", "OK");
-        }
-    }
-
-    /// <summary>
     /// Center the map on the user's postal code.
     /// </summary>
     async Task CenterOnUserPostalCode()
@@ -186,7 +169,7 @@ public partial class MapPage : ContentPage
                 }
 
                 var style = GetStyleForCount(item.Count);
-                await DrawHeatmapCircles(center, style.radiusMiles, style.color, item.Zip); // Draw the circle on the map
+                await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
 
             }
         }
@@ -218,7 +201,7 @@ public partial class MapPage : ContentPage
     /// <summary>
     /// Draw heatmap circles on the map based on illness report data.
     /// </summary>
-    private async Task DrawHeatmapCircles(Location Center, double Radius, Color Color, int Zip)
+    private async Task DrawHeatmapCircles(Location Center, double Radius, Color Color)
     {
         var circle = new Circle
         {
@@ -229,15 +212,7 @@ public partial class MapPage : ContentPage
             FillColor = Color.WithAlpha(0.35f),
         };
 
-        Pin pin = new Pin
-        {
-            Label = Zip.ToString("D5"),
-            Location = Center,
-            Type = PinType.Place
-        };
-
         MapControl.MapElements.Add(circle);
-        MapControl.Pins.Add(pin);
         _heatmapCircles.Add(circle);
     }
 
