@@ -100,8 +100,6 @@
 
             </VerticalStackLayout>
 
-            <VerticalStackLayout x:Name="Blank" />
-
         </Grid>
 
 </ContentPage>

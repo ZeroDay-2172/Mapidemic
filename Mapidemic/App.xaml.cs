@@ -21,16 +21,11 @@ public partial class App : Application
 	/// <returns>The app window</returns>
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		Settings settings = MauiProgram.businessLogic.ReadSettings();
-		if (settings != null)
+		Settings settings = MauiProgram.businessLogic!.ReadSettings();
+		if (settings != null) // loading app theme if existing user
 		{
 			Current!.UserAppTheme = settings.Theme;
-			return new Window(new HomePage());
 		}
-		else
-		{
-			MauiProgram.businessLogic.CreateSettingsFile();
-			return new Window(new AppShell());
-		}
+		return new Window(new AppShell());
 	}
 }

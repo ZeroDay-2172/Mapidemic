@@ -57,7 +57,7 @@ public partial class MapPage : ContentPage
     /// </summary>
     async Task EnsureLocationPermission()
     {
-        var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(); // Might move this down to CenterOnUserPostalCode
+        var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(); // This is unused for now, chances are will totally be deleted later on
         if (status != PermissionStatus.Granted)
         {
             status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
@@ -76,25 +76,31 @@ public partial class MapPage : ContentPage
     {
         var settings = MauiProgram.businessLogic.ReadSettings();
         int? postalCode = settings.PostalCode;
-        if (postalCode != null)
+        try // attempting to read the list of postal code centroids
         {
-            var location = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
-            if (location != null)
+            if (postalCode != null)
             {
-                var center = new Location(location.Latitude, location.Longitude); // Gathers the map on internal centroids given by Census.gov, wacky postal codes have odd centroids that will never be 100% accurate. Downside of user privacy.
-                MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
+                var location = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
+                if (location != null)
+                {
+                    var center = new Location(location.Latitude, location.Longitude); // Gathers the map on internal centroids given by Census.gov, wacky postal codes have odd centroids that will never be 100% accurate. Downside of user privacy.
+                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
+                }
+            }
+            else
+            {
+                var location = await Geolocation.Default.GetLastKnownLocationAsync(); // If for some reason postal code isn't set, fall back to device location. Look into adding a default location for the most private of users.
+                if (location != null)
+                {
+                    var center = new Location(location.Latitude, location.Longitude);
+                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
+                }
             }
         }
-        else
+        catch (Exception error) // catching error if database could not be reached to get the list of centroids
         {
-            var location = await Geolocation.Default.GetLastKnownLocationAsync(); // If for some reason postal code isn't set, fall back to device location. Look into adding a default location for the most private of users.
-            if (location != null)
-            {
-                var center = new Location(location.Latitude, location.Longitude);
-                MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
-            }
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
         }
-
     }
 
     /// <summary>
@@ -109,30 +115,36 @@ public partial class MapPage : ContentPage
         {
             return cachedLocation;
         }
-
-        var centroid = await MauiProgram.businessLogic.GetPostalCodeCentroids(zip); // Step 2: Fetch from database
-        if (centroid != null)
+        try // attempting to read in the postal code centroids
         {
-            var location = new Location(centroid.Latitude, centroid.Longitude);
-            _zipCenterCache[zip] = location;
-            return location;
-        }
-
-        try // Step 3: Fallback to geocoding service
-        {
-            string postalCode = zip.ToString("D5");
-            var locations = await Geocoding.Default.GetLocationsAsync(postalCode);
-            var location = locations?.FirstOrDefault();
-            if (location != null)
+            var centroid = await MauiProgram.businessLogic.GetPostalCodeCentroids(zip); // Step 2: Fetch from database
+            if (centroid != null)
             {
-                var loc = new Location(location.Latitude, location.Longitude);
-                _zipCenterCache[zip] = loc;
-                return loc;
+                var location = new Location(centroid.Latitude, centroid.Longitude);
+                _zipCenterCache[zip] = location;
+                return location;
+            }
+
+            try // Step 3: Fallback to geocoding service
+            {
+                string postalCode = zip.ToString("D5");
+                var locations = await Geocoding.Default.GetLocationsAsync(postalCode);
+                var location = locations?.FirstOrDefault();
+                if (location != null)
+                {
+                    var loc = new Location(location.Latitude, location.Longitude);
+                    _zipCenterCache[zip] = loc;
+                    return loc;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error geocoding postal code {zip}: {ex.Message}");
             }
         }
-        catch (Exception ex)
+        catch (Exception error) // catching error if the database could not be reached for postal code centroids
         {
-            System.Diagnostics.Debug.WriteLine($"Error geocoding postal code {zip}: {ex.Message}");
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
         }
 
         System.Diagnostics.Debug.WriteLine($"Warning: No centroid found for postal code {zip}."); // Step 4: Total failure
@@ -174,7 +186,7 @@ public partial class MapPage : ContentPage
                 }
 
                 var style = GetStyleForCount(item.Count);
-                await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
+                await DrawHeatmapCircles(center, style.radiusMiles, style.color, item.Zip); // Draw the circle on the map
 
             }
         }
@@ -206,7 +218,7 @@ public partial class MapPage : ContentPage
     /// <summary>
     /// Draw heatmap circles on the map based on illness report data.
     /// </summary>
-    private async Task DrawHeatmapCircles(Location Center, double Radius, Color Color)
+    private async Task DrawHeatmapCircles(Location Center, double Radius, Color Color, int Zip)
     {
         var circle = new Circle
         {
@@ -214,10 +226,18 @@ public partial class MapPage : ContentPage
             Radius = Distance.FromMiles(Radius),
             StrokeWidth = 2,
             StrokeColor = Color.WithAlpha(0.9f),
-            FillColor = Color.WithAlpha(0.35f)
+            FillColor = Color.WithAlpha(0.35f),
+        };
+
+        Pin pin = new Pin
+        {
+            Label = Zip.ToString("D5"),
+            Location = Center,
+            Type = PinType.Place
         };
 
         MapControl.MapElements.Add(circle);
+        MapControl.Pins.Add(pin);
         _heatmapCircles.Add(circle);
     }
 
