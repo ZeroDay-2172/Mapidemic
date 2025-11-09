@@ -396,7 +396,20 @@ public class BusinessLogic
             }
             return counts;
         }
-        catch(Exception error) // catching error if the database could not be reached
+        catch (Exception error) // catching error if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+    
+    public async Task<int> GetPopulationCount(int postalCode)
+    {
+        try // attempting to read population count from the database
+        {
+            var population = await database.GetPopulationCount(postalCode);
+            return population;
+        }
+        catch (Exception error) // catching error if the database could not be reached
         {
             throw new Exception(error.Message);
         }

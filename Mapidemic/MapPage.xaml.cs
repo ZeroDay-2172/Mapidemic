@@ -7,6 +7,7 @@ public partial class MapPage : ContentPage
 {
     private readonly List<Circle> _heatmapCircles = new();
     private static readonly Dictionary<int, Location> _zipCenterCache = new();
+    private readonly Dictionary<int, int?> _populationCache = new();
     private readonly SemaphoreSlim _renderLock = new(1, 1); // Semaphore is here to save the day, preventing concurrent renders
     private bool _refreshScheduled;
 
@@ -168,7 +169,8 @@ public partial class MapPage : ContentPage
                     continue; // Skip if no centroid found
                 }
 
-                var style = GetStyleForCount(item.Count);
+                var population = await GetPopulation(item.Zip); // Get the population for the ZIP code
+                var style = GetStyleForCount(item.Count, population); // Get style based on count and population
                 await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
 
             }
@@ -180,12 +182,25 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
-    /// Map a report count to a color and radius. Thresholds are easy to tweak.
+    /// Map a report count and population to a color and radius. Thresholds are easy to tweak.
     /// </summary>
-    private (Color color, double radiusMiles) GetStyleForCount(int count)
+    private (Color color, double radiusMiles) GetStyleForCount(int count, int? population)
     {
         const double baseRadius = 2.5; // miles
 
+        if (population.HasValue && population.Value > 0) {
+            double incidenceRate = (double)count / population.Value * 10000; // Calculate incidence rate per 10,000 people
+
+            switch (incidenceRate)
+            {
+                case <= 5:
+                    return (Colors.Yellow, baseRadius); // minimal
+                case <= 15:
+                    return (Colors.Orange, baseRadius); // more
+                default:
+                    return (Colors.Red, baseRadius); // severe
+            }
+        }
         if (count <= 2)
         {
             return (Colors.Yellow, baseRadius); // minimal
@@ -196,6 +211,28 @@ public partial class MapPage : ContentPage
             return (Colors.Orange, baseRadius); // more
         }
         return (Colors.Red, baseRadius); // severe
+    }
+
+    /// <summary>
+    /// Get the population count for a given postal code, using cache if available.
+    /// </summary>
+    private async Task<int?> GetPopulation(int postalCode)
+    {
+        if (_populationCache.TryGetValue(postalCode, out var cachedPopulation))
+        {
+            return cachedPopulation;
+        }
+        try
+        {
+            var population = await MauiProgram.businessLogic.GetPopulationCount(postalCode); // Fetches population count from the database
+            _populationCache[postalCode] = population;
+            return population;
+        }
+        catch (Exception error) // If the database could not be reached
+        {
+            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            return null;
+        }
     }
 
     /// <summary>

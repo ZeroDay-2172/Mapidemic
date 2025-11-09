@@ -196,7 +196,27 @@ public class Database
                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));
             }
         }
-        catch(Exception error) // exception if the database cannot be reached
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+    
+    /// <summary>
+    /// A function that gets the population count
+    /// for a specific postal code from the database
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<int> GetPopulationCount(int postalCode)
+    {
+        try // querying the database for the population count of a specific postal code, may not include all postal codes in the US
+        {
+            var populationRecord = (await IssueQuery(supabaseClient.From<Population>().Where(x => x.PostalCode == postalCode).Get())).Models.FirstOrDefault();
+            return populationRecord != null ? populationRecord.PopulationCount : 0;
+        }
+        catch (Exception error) // exception if the database could not be reached
         {
             throw new Exception(error.Message);
         }
