@@ -55,19 +55,22 @@ public class BusinessLogic
     /// </summary>
     public async Task<bool> LoadSymptomsList()
     {
-        try
+        try // attempting to read the symptoms list
         {
-            SortedSet<string> symptoms = new SortedSet<string>(); // auxiliary storage for sorting
-            foreach (Illness illness in await database!.GetSymptomsList()) // getting full illness list
+            if (SymptomList.Count == 0) // only reading from the database once
             {
-                foreach (string symptom in illness.Symptoms!) // storing each unique illness
+                SortedSet<string> symptoms = new SortedSet<string>(); // auxiliary storage for sorting
+                foreach (Illness illness in await database!.GetSymptomsList()) // getting full illness list
                 {
-                    symptoms.Add(symptom);
+                    foreach (string symptom in illness.Symptoms!) // storing each unique illness
+                    {
+                        symptoms.Add(symptom);
+                    }
                 }
-            }
-            foreach (string symptom in symptoms) // adding each unique illness to an observable collection for live updates
-            {
-                SymptomList!.Add(new Symptom(symptom));
+                foreach (string symptom in symptoms) // adding each unique illness to an observable collection for live updates
+                {
+                    SymptomList!.Add(new Symptom(symptom));
+                }
             }
             return true;
         }
