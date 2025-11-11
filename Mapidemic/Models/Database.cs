@@ -131,13 +131,13 @@ public class Database
     /// </summary>
     /// <param name="postalCode"></param>
     /// <returns>a list containing all the centroid values</returns>
-    public async Task<List<PostalCodeCentroids>> GetPostalCodeCentroids(int postalCode)
+    public async Task<PostalCodeCentroids?> GetPostalCodeCentroids(int postalCode)
     {
         try // querying the database for the list of postal code centroids
         {
             // var result = (await supabaseClient.From<PostalCodeCentroids>().Filter<List<int>>("postal_code", Supabase.Postgrest.Constants.Operator.In, [54901, 54902]).Get()).Models;
             // Console.WriteLine($"-------------------- {result[0].Code} : {result[0].Latitude} : {result[0].Longitude} ---------------------- {result[1].Code} : {result[1].Latitude} : {result[1].Longitude} ------------------------------------------------------------------------");
-            return (await IssueQuery(supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get())).Models;
+            return (await IssueQuery(supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get())).Models.FirstOrDefault();
         }
         catch (Exception error) // exception if the database cannot be reached
         {
@@ -196,7 +196,27 @@ public class Database
                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));
             }
         }
-        catch(Exception error) // exception if the database cannot be reached
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+    
+    /// <summary>
+    /// A function that gets the population count
+    /// for a specific postal code from the database
+    /// </summary>
+    /// <param name="postalCode"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<int> GetPopulationCount(int postalCode)
+    {
+        try // querying the database for the population count of a specific postal code, may not include all postal codes in the US
+        {
+            var populationRecord = (await IssueQuery(supabaseClient.From<Population>().Where(x => x.PostalCode == postalCode).Get())).Models.FirstOrDefault();
+            return populationRecord != null ? populationRecord.PopulationCount : 0;
+        }
+        catch (Exception error) // exception if the database could not be reached
         {
             throw new Exception(error.Message);
         }
