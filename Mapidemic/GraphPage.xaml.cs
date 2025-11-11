@@ -16,6 +16,9 @@ public partial class GraphPage : ContentPage
     private string selectedIllness = "";
     private bool localTrends = false;
     private bool localityChosen = false;
+
+    // Note that 0 indicates no selection
+    private int numDays = 0;
     public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
     public GraphPage()
@@ -96,30 +99,59 @@ public partial class GraphPage : ContentPage
     }
 
     /// <summary>
+    /// EH for a time range being selected for the graph data.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    public async void TimeRangePicked_handler(Object sender, EventArgs args)
+    {
+        switch(timeRangePicker.SelectedIndex)
+        {
+            case 0:
+                numDays = 7;
+                break;
+            case 1:
+                numDays = 14;
+                break;
+            case 2:
+                numDays = 30;
+                break;
+            default:
+                numDays = 0;
+                break;
+        }
+    }
+
+    /// <summary>
     /// Handler for button that refreshes graph's data, only if illness is selected.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
     public async void RefreshButtonClicked(Object sender, EventArgs args)
     {
-        if (localityChosen)
+        if (localityChosen) // Locality is chosen
         {
-            if (selectedIllness.Length > 0)
+            if (numDays != 0) // Number of days is chosen
             {
-                // Get the chatModel with the data included
-                ChartModel chartModel = await ChartModel.CreateAsync(selectedIllness, localTrends);
-
-                if (chartModel.data.Count != 0)
+                if (selectedIllness.Length > 0)
                 {
-                    // Reverse data to show most recent data on the right
-                    chartModel.data.Reverse();
-                    // Update graph to show data
-                    column.ItemsSource = chartModel.data;
-                }
-                else
-                    await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
+                    // Get the chatModel with the data included
+                    ChartModel chartModel = await ChartModel.CreateAsync(selectedIllness, localTrends, numDays);
 
-                // ApplyGraphTheme();
+                    if (chartModel.data.Count != 0)
+                    {
+                        // Reverse data to show most recent data on the right
+                        chartModel.data.Reverse();
+                        // Update graph to show data
+                        column.ItemsSource = chartModel.data;
+                    }
+                    else
+                        await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Alert!", "Please specify a time range", "OK");
             }
         }
         else
