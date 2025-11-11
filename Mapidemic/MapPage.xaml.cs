@@ -20,6 +20,10 @@ public partial class MapPage : ContentPage
     private const int returnMoreThreshold = 3;
     private const int returnSevereThreshold = 4;
     private const int returnCriticalThreshold = 5;
+    private const int defaultMinimumThreshold = 2;
+    private const int defaultModerateThreshold = 5;
+    private const int defaultMoreThreshold = 10;
+    private const int defaultSevereThreshold = 15;
 
     public MapPage()
     {
@@ -220,13 +224,13 @@ public partial class MapPage : ContentPage
         }
         switch (count) // This switch case will only execute if population data is unavailable
         {
-            case <= 2:
+            case <= defaultMinimumThreshold:
                 return (Colors.Yellow, baseRadius);
-            case <= 5:
+            case <= defaultModerateThreshold:
                 return (Colors.Gold, baseRadius);
-            case <= 10:
+            case <= defaultMoreThreshold:
                 return (Colors.Orange, baseRadius);
-            case <= 15:
+            case <= defaultSevereThreshold:
                 return (Colors.OrangeRed, baseRadius);
             default:
                 return (Colors.Red, baseRadius);
