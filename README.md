@@ -1,3 +1,9 @@
+Sprint 3 Changes:
+- Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population
+-
+-
+-
+
 Sprint 2 changes:
 - Added color coded circles to the map showing illness density in each postal code :smile: :smile: :smile:
 - Graphing functionality added to display histogram of illness data, both locally and nationally :smile: :smile: :smile:

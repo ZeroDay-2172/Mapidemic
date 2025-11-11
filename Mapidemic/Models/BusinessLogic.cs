@@ -6,13 +6,17 @@ namespace Mapidemic.Models;
 public class BusinessLogic
 {
     private Settings? settings;
-    private Database database;
+    private readonly Database database;
     private const int postalCodeLength = 5;
     private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
     public SortedSet<AnalyzedIllness>? SymptomAnalysis { get; set; }
     public AnalyzedIllness? LikelyIllness { get; set; }
+
+    // MODEL FOR CONTACTING CHAT-GPT, DO NOT DELETE
+    // public string ChatResponse { get; set; }
+    // private readonly OpenAIService openAIService;
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -27,6 +31,11 @@ public class BusinessLogic
         LikelyIllness = null;
         SymptomAnalysis = null;
         this.database = database;
+
+        // CHAT-GPT MODEL, DO NOT DELETE
+        // ChatResponse = "";
+        // openAIService = new OpenAIService();
+
         SymptomList = new ObservableCollection<Symptom>();
         try // attempting to load local settings file
         {
@@ -259,6 +268,12 @@ public class BusinessLogic
         }
         return checkedSymptoms;
     }
+
+    // METHOD FOR CONTACTING CHAT-GPT, DON'T DELETE
+    // public async Task GetChatResponse(string symptomString)
+    // {
+    //     ChatResponse = await openAIService.GetLikelyIllness(symptomString);
+    // }
 
     /// <summary>
     /// A function that returns all the illnesses

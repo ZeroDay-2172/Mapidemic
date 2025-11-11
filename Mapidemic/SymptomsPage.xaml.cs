@@ -1,3 +1,4 @@
+using System.Text;
 using Mapidemic.Models;
 
 namespace Mapidemic;
@@ -44,6 +45,17 @@ public partial class SymptomsPage : ContentPage
             {
                 NavigationPage parent = (Parent as NavigationPage)!;
                 await MauiProgram.businessLogic.RunSymptomAnalysis();
+
+                // THIS CODE IS SAMPLE CODE TO ASK CHAT-GPT FOR THE SYMPTOM ANALYSIS
+                // StringBuilder symptomString = new StringBuilder();
+                // HashSet<Symptom> userSymptoms = MauiProgram.businessLogic.ProcessCheckedSymptoms();
+                // foreach (Symptom symptom in userSymptoms)
+                // {
+                //     symptomString.Append($"{symptom.Name}, ");
+                // }
+                // await MauiProgram.businessLogic.GetChatResponse(symptomString.ToString());
+                // await parent.PushAsync(new BlankPage());
+
                 await parent.PushAsync(new ResultsPage());
                 parent.Navigation.RemovePage(this);
             }
