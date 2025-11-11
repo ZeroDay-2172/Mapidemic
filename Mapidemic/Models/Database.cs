@@ -1,3 +1,5 @@
+
+
 namespace Mapidemic.Models;
 
 public class Database
@@ -7,6 +9,7 @@ public class Database
     private const string supabaseUrl = "https://aeqrpazberlimssdzviz.supabase.co";
     private const string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlcXJwYXpiZXJsaW1zc2R6dml6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0NTE2NTQsImV4cCI6MjA3NTAyNzY1NH0.wRZ11nD7S9x-VAQo6KLewuRJpQvg0iFepFZ8dM9oCGM";
     public Supabase.Client supabaseClient;
+    private Supabase.Postgrest.Constants.Ordering ascending = Supabase.Postgrest.Constants.Ordering.Ascending; //Add as second parameter in Order method of query to order ascending
 
     /// <summary>
     /// The default constructor of a Database
@@ -100,7 +103,7 @@ public class Database
     {
         try // querying the database for the illness list
         {
-            return (await IssueQuery(supabaseClient.From<Illness>().Where(x => x.Name != null).Get())).Models;
+            return (await IssueQuery(supabaseClient.From<Illness>().Where(x => x.Name != null).Order("illness", ascending).Get())).Models;
         }
         catch (Exception error) // exception if the database cannot be reached
         {
@@ -170,19 +173,20 @@ public class Database
     /// </summary>
     /// <param name="illnessName">Name of illness to find data on</param>
     /// <param name="date">Date of the report(s) to consider</param>
-    /// <param name="postalCode">Specifies what area the report took place, -1 if national reports</param>
+    /// <param name="localTrends">Specifies local to zip code if true, else national</param>
     /// <returns></returns>
-    public async Task<int> getNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
+    public async Task<int> GetNumberOfReports(string illnessName, DateTimeOffset date, bool localTrends)
     {
         var startOfDay = date.UtcDateTime.Date;
         var endOfDay = startOfDay.AddDays(1);
+        var zipCode = MauiProgram.businessLogic.ReadSettings().PostalCode;
         try // attempting to get total illness reports from the database
         {
-            if (postalCode != -1) // show local reports
+            if (localTrends) // show local reports
             {
                 return await IssueQuery(supabaseClient
                                         .From<IllnessReport>()
-                                        .Where(x => x.PostalCode == postalCode)
+                                        .Where(x => x.PostalCode == zipCode)
                                         .Where(x => x.IllnessType == illnessName)
                                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));

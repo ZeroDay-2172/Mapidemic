@@ -4,11 +4,15 @@
              xmlns:local="clr-namespace:Mapidemic"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              x:Class="Mapidemic.GraphPage">
 
     <VerticalStackLayout Margin="0,0,20,0">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -28,7 +32,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     x:Name="illnessPicker"
-                    SelectedIndexChanged="illnessChosen_handler"
+                    SelectedIndexChanged="IllnessChosen_handler"
                     ItemsSource="{Binding IllnessCollection}"
                     ItemDisplayBinding="{Binding Name}">
                 <Picker.Items>
@@ -63,30 +67,45 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Possibly be able to pick National, or from your zip code -->
-            <Label Text="National / Local Trends"
+            <!-- View National data, or data from your zip code -->
+            <Label Text="Locality:"
                     FontSize="18"
                     Grid.Row="0"
                     Grid.Column="0"/>
-            <Switch OnColor="#0074C0"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Toggled="localitySwitch_toggled"/>
+            <Picker Grid.Row="0" Grid.Column="1" x:Name="localityPicker" SelectedIndexChanged="LocalityPicked_handler" Title="National or Zip Code?">
+                <Picker.Items>
+                    <x:String>National</x:String>
+                    <x:String>Zip Code</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Label Text="Time Range:"
+                    FontSize="18"
+                    Grid.Row="1"
+                    Grid.Column="0"/>
+            <Picker Grid.Row="1" Grid.Column="1" x:Name="timeRangePicker" SelectedIndexChanged="TimeRangePicked_handler" Title="# of days">
+                <Picker.Items>
+                    <x:String>7 days</x:String>
+                    <x:String>14 days</x:String>
+                    <x:String>30 days</x:String>
+                </Picker.Items>
+            </Picker>
 
             <Button Text="Load Data"
                     TextColor="white"
+                    FontSize="18"
                     BackgroundColor="#0074C0"
-                    Clicked="refreshButtonClicked"
-                    Grid.Row="1"
+                    Clicked="RefreshButtonClicked"
+                    Grid.Row="2"
                     Grid.Column="0"
-                    Margin="20"
-                    HorizontalOptions="Center"/>
+                    Margin="20"/>
         </Grid>
     </VerticalStackLayout>
 

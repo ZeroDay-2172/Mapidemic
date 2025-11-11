@@ -48,7 +48,7 @@
                     <Label Text="Postal Code" FontSize="18" Padding="20" Grid.Row="1" Grid.Column="0"/>
                     <Entry x:Name="PostalCodeEnt" FontSize="18" Grid.Row="1" Grid.Column="1" VerticalTextAlignment="Start" HorizontalTextAlignment="Center"/>
 
-                    <Button Text="Save Settings" Clicked="SaveButton_Clicked" x:Name="PostalCodeButton" Grid.Row="2" Grid.Column="1" BackgroundColor="#0074C0"/>
+                    <Button Text="Save Settings" Clicked="SaveButton_Clicked" x:Name="PostalCodeButton" Grid.Row="2" Grid.Column="1" BackgroundColor="#0074C0" FontSize="18" TextColor="White"/>
                 </Grid>
             </StackLayout>
 
