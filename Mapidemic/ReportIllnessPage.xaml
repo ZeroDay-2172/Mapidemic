@@ -96,7 +96,8 @@
                                                                Placeholder="e.g. 54937"
                                                                Keyboard="Numeric"
                                                                MaxLength="5"
-                                                               HorizontalOptions="Fill"/>
+                                                               HorizontalOptions="Fill"
+                                                               TextColor="Black"/>
                                                 </Border>
                                                 <Label x:Name="ZipError"
                                                        IsVisible="False"

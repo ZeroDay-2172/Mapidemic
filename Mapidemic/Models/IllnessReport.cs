@@ -12,7 +12,7 @@ public class IllnessReport : BaseModel
     public int PostalCode { get; set; }
 
     [Column("illness_type")]
-    public string IllnessType { get; set; }
+    public string? IllnessType { get; set; }
 
     [Column("report_date")]
     public DateTimeOffset ReportDate { get; set; }
