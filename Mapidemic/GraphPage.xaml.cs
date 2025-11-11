@@ -27,7 +27,9 @@ public partial class GraphPage : ContentPage
         illnessPicker.BindingContext = this;
     }
 
-
+    /// <summary>
+    /// Sets behavior of GraphPage upon appearing to the user.
+    /// </summary>
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -136,6 +138,7 @@ public partial class GraphPage : ContentPage
                 if (selectedIllness.Length > 0)
                 {
                     // Get the chatModel with the data included
+                    await Task.Yield();
                     ChartModel chartModel = await ChartModel.CreateAsync(selectedIllness, localTrends, numDays);
 
                     if (chartModel.data.Count != 0)

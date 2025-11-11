@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Mapidemic"
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              x:Class="Mapidemic.GraphPage">
 
     <VerticalStackLayout Margin="0,0,20,0">
@@ -99,6 +100,7 @@
 
             <Button Text="Load Data"
                     TextColor="white"
+                    FontSize="18"
                     BackgroundColor="#0074C0"
                     Clicked="RefreshButtonClicked"
                     Grid.Row="2"

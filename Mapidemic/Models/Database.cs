@@ -1,4 +1,4 @@
-using Xamarin.Google.ErrorProne.Annotations;
+
 
 namespace Mapidemic.Models;
 
@@ -173,19 +173,20 @@ public class Database
     /// </summary>
     /// <param name="illnessName">Name of illness to find data on</param>
     /// <param name="date">Date of the report(s) to consider</param>
-    /// <param name="postalCode">Specifies what area the report took place, -1 if national reports</param>
+    /// <param name="localTrends">Specifies local to zip code if true, else national</param>
     /// <returns></returns>
-    public async Task<int> GetNumberOfReports(string illnessName, DateTimeOffset date, int postalCode)
+    public async Task<int> GetNumberOfReports(string illnessName, DateTimeOffset date, bool localTrends)
     {
         var startOfDay = date.UtcDateTime.Date;
         var endOfDay = startOfDay.AddDays(1);
+        var zipCode = MauiProgram.businessLogic.ReadSettings().PostalCode;
         try // attempting to get total illness reports from the database
         {
-            if (postalCode != -1) // show local reports
+            if (localTrends) // show local reports
             {
                 return await IssueQuery(supabaseClient
                                         .From<IllnessReport>()
-                                        .Where(x => x.PostalCode == postalCode)
+                                        .Where(x => x.PostalCode == zipCode)
                                         .Where(x => x.IllnessType == illnessName)
                                         .Where(x => x.ReportDate >= startOfDay && x.ReportDate < endOfDay)
                                         .Count(Supabase.Postgrest.Constants.CountType.Exact));

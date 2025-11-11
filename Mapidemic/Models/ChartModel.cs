@@ -22,6 +22,13 @@ public class ChartModel
         data = new List<ChartData>();
     }
 
+    /// <summary>
+    /// Create a ChartModel object asynchronously.
+    /// </summary>
+    /// <param name="selectedIllness">string representing chosen illness</param>
+    /// <param name="localTrends">true : local trends, else national</param>
+    /// <param name="numDays">number of days to include data for</param>
+    /// <returns></returns>
     public static async Task<ChartModel> CreateAsync(string selectedIllness, bool localTrends, int numDays)
     {
         var model = new ChartModel();

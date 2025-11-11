@@ -261,7 +261,7 @@ public class BusinessLogic
     }
 
     /// <summary>
-    /// A function that return all the illnesses
+    /// A function that returns all the illnesses
     /// </summary>
     /// <returns>a list of all illnesses</returns>
     public async Task<List<Illness>> GetIllnessesList()
@@ -354,10 +354,7 @@ public class BusinessLogic
     {
         try // attempting to get total illness reports from the database
         {
-            if (localTrends == true)
-                return await database.GetNumberOfReports(selectedIllness, date, ReadSettings().PostalCode);
-            else
-                return await database.GetNumberOfReports(selectedIllness, date, -1);
+            return await database.GetNumberOfReports(selectedIllness, date, localTrends);
         }
         catch (Exception error) // catching error if the database could not be reached
         {
