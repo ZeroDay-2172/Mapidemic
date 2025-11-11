@@ -10,6 +10,16 @@ public partial class MapPage : ContentPage
     private readonly Dictionary<int, int?> _populationCache = new();
     private readonly SemaphoreSlim _renderLock = new(1, 1); // Semaphore is here to save the day, preventing concurrent renders
     private bool _refreshScheduled;
+    private const int percentageMultiplier = 100;
+    private const int minPercentageThreshold = 5;
+    private const int moderatePercentageThreshold = 10;
+    private const int morePercentageThreshold = 15;
+    private const int maxPercentageThreshold = 20;
+    private const int returnMinimalThreshold = 1;
+    private const int returnModerateThreshold = 2;
+    private const int returnMoreThreshold = 3;
+    private const int returnSevereThreshold = 4;
+    private const int returnCriticalThreshold = 5;
 
     public MapPage()
     {
@@ -194,15 +204,15 @@ public partial class MapPage : ContentPage
 
             switch (incidenceRate)
             {
-                case <= 1:
+                case <= returnMinimalThreshold:
                     return (Colors.Yellow, baseRadius); // minimal
-                case <= 2:
+                case <= returnModerateThreshold:
                     return (Colors.Gold, baseRadius); // moderate
-                case <= 3:
+                case <= returnMoreThreshold:
                     return (Colors.Orange, baseRadius); // more
-                case <= 4:
+                case <= returnSevereThreshold:
                     return (Colors.OrangeRed, baseRadius); // severe
-                case <= 5:
+                case <= returnCriticalThreshold:
                     return (Colors.Red, baseRadius); // dangerous
                 default:
                     break; // fallback to count-based styling
@@ -251,18 +261,18 @@ public partial class MapPage : ContentPage
     /// </summary>
     private int DetermineRateThreshold(int count, int population)
     {
-        double percent = (double)count / population * 100; // Since GetStyleForCount relies on the population being non-null, we don't need to check for null here.
+        double percent = (double)count / population * percentageMultiplier; // Since GetStyleForCount relies on the population being non-null, we don't need to check for null here.
 
-        if (percent <= 5)
-            return 1;
-        else if (percent <= 10)
-            return 2;
-        else if (percent <= 15)
-            return 3;
-        else if (percent <= 20)
-            return 4;
+        if (percent <= minPercentageThreshold)
+            return returnMinimalThreshold;
+        else if (percent <= moderatePercentageThreshold)
+            return returnModerateThreshold;
+        else if (percent <= morePercentageThreshold)
+            return returnMoreThreshold;
+        else if (percent <= maxPercentageThreshold)
+            return returnSevereThreshold;
         else
-            return 5;
+            return returnCriticalThreshold;
     }
 
     /// <summary>
