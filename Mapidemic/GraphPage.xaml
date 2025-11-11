@@ -70,14 +70,16 @@
             </Grid.ColumnDefinitions>
 
             <!-- Possibly be able to pick National, or from your zip code -->
-            <Label Text="National / Local Trends"
+            <Label Text="Locality:"
                     FontSize="18"
                     Grid.Row="0"
                     Grid.Column="0"/>
-            <Switch OnColor="#0074C0"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Toggled="LocalitySwitch_toggled"/>
+            <Picker Grid.Row="0" Grid.Column="1" x:Name="localityPicker" SelectedIndexChanged="LocalityPicked_handler">
+                <Picker.Items>
+                    <x:String>National</x:String>
+                    <x:String>Zip Code</x:String>
+                </Picker.Items>
+            </Picker>
 
             <Button Text="Load Data"
                     TextColor="white"

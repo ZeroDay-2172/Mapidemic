@@ -15,6 +15,7 @@ public partial class GraphPage : ContentPage
 {
     private string selectedIllness = "";
     private bool localTrends = false;
+    private bool localityChosen = false;
     public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
     public GraphPage()
@@ -28,6 +29,7 @@ public partial class GraphPage : ContentPage
     {
         base.OnAppearing();
         await LoadIllnesses();
+        selectedIllness = "";
     }
 
     /// <summary>
@@ -73,12 +75,20 @@ public partial class GraphPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void LocalitySwitch_toggled(Object sender, EventArgs args)
+    public async void LocalityPicked_handler(Object sender, EventArgs args)
     {
-        if (localTrends == true)
+        if (localityPicker.SelectedIndex == 0)
+        {
             localTrends = false;
-        else
+            localityChosen = true;
+        }
+        else if (localityPicker.SelectedIndex == 1)
+        {
             localTrends = true;
+            localityChosen = true;
+        }
+        else
+            localityChosen = false;
     }
 
     /// <summary>
@@ -88,36 +98,43 @@ public partial class GraphPage : ContentPage
     /// <param name="args"></param>
     public async void RefreshButtonClicked(Object sender, EventArgs args)
     {
-        if (selectedIllness.Length > 0)
+        if (localityChosen)
         {
-            // Get the chatModel with the data included
-            ChartModel chartModel = await ChartModel.CreateAsync(selectedIllness, localTrends);
+            if (selectedIllness.Length > 0)
+            {
+                // Get the chatModel with the data included
+                ChartModel chartModel = await ChartModel.CreateAsync(selectedIllness, localTrends);
 
-            if (chartModel.data.Count != 0)
-            {
-                // Reverse data to show most recent data on the right
-                chartModel.data.Reverse();
-                // Update graph to show data
-                column.ItemsSource = chartModel.data;
-            }
-            else
-                await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
+                if (chartModel.data.Count != 0)
+                {
+                    // Reverse data to show most recent data on the right
+                    chartModel.data.Reverse();
+                    // Update graph to show data
+                    column.ItemsSource = chartModel.data;
+                }
+                else
+                    await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
 
-            if (Application.Current!.UserAppTheme == AppTheme.Dark)
-            {
-                dataChart.XAxes[0].LabelStyle.TextColor = Colors.White;
-                dataChart.XAxes[0].Title.TextColor = Colors.White;
-                dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
-                dataChart.YAxes[0].Title.TextColor = Colors.White;
+                if (Application.Current!.UserAppTheme == AppTheme.Dark)
+                {
+                    dataChart.XAxes[0].LabelStyle.TextColor = Colors.White;
+                    dataChart.XAxes[0].Title.TextColor = Colors.White;
+                    dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
+                    dataChart.YAxes[0].Title.TextColor = Colors.White;
+                }
+                else
+                {
+                    dataChart.XAxes[0].LabelStyle.TextColor = Colors.Black;
+                    dataChart.XAxes[0].Title.TextColor = Colors.Black;
+                    dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
+                    dataChart.YAxes[0].Title.TextColor = Colors.Black;
+                }
             }
-            else
-            {
-                dataChart.XAxes[0].LabelStyle.TextColor = Colors.Black;
-                dataChart.XAxes[0].Title.TextColor = Colors.Black;
-                dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
-                dataChart.YAxes[0].Title.TextColor = Colors.Black;
-            }
-                
         }
+        else
+        {
+            await DisplayAlert("Alert!", "Please specify a locality", "OK");
+        }
+        
     }
 }
