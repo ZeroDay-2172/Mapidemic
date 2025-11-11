@@ -36,8 +36,6 @@
             <Button x:Name="SearchButton"
                     Grid.Row="0" Grid.Column="2"
                     Text="Search"
-                    TextColor="White"
-                    BackgroundColor="#0074C0"
                     Clicked="Clicked_Search" />
             </Grid>
 
@@ -48,33 +46,32 @@
                                         SelectionMode="None"
                                         AutoFitMode="DynamicHeight">
                     <syncfusion:SfListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,6"
-                                Padding="12"
-                                StrokeThickness="1"
-                                Stroke="#FFCFCFCF"
-                                BackgroundColor="{DynamicResource ContentPageBackgroundColor}"
-                                StrokeShape="RoundRectangle 12">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                        <VerticalStackLayout Grid.Column="0" Spacing="2">
-                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" HeightRequest="25" />
-                            <Label Text="{Binding ReportCount}" FontSize="12" FontAttributes="Bold" HeightRequest="25"/>
-                        </VerticalStackLayout>
-                        <Label Grid.Column="1"
-                                Text="{Binding Count}"
-                                FontAttributes="Bold"
-                                FontSize="18"
-                                VerticalTextAlignment="Center"/>
-                        </Grid>
-                        </Border>
-                    </DataTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,6"
+                                    Padding="10"
+                                    StrokeThickness="1"
+                                    Stroke="#FFCFCFCF"
+                                    StrokeShape="RoundRectangle 12">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="10">
+                                        <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" HeightRequest="25" />
+                                        <Label Text="{Binding ReportCount}" FontSize="11" FontAttributes="Bold" HeightRequest="25"/>
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1"
+                                            Text="{Binding Count}"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
                     </syncfusion:SfListView.ItemTemplate>
 
                     <!-- Empty view -->
                     <syncfusion:SfListView.EmptyView>
-                    <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center">
-                        <Label Text="No reports found." FontAttributes="Bold" />
-                    </VerticalStackLayout>
+                        <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center">
+                            <Label Text="No reports found." FontAttributes="Bold" />
+                        </VerticalStackLayout>
                     </syncfusion:SfListView.EmptyView>
 
                 </syncfusion:SfListView>
