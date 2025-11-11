@@ -74,7 +74,7 @@
                     FontSize="18"
                     Grid.Row="0"
                     Grid.Column="0"/>
-            <Picker Grid.Row="0" Grid.Column="1" x:Name="localityPicker" SelectedIndexChanged="LocalityPicked_handler">
+            <Picker Grid.Row="0" Grid.Column="1" x:Name="localityPicker" SelectedIndexChanged="LocalityPicked_handler" Title="National or Zip Code?">
                 <Picker.Items>
                     <x:String>National</x:String>
                     <x:String>Zip Code</x:String>

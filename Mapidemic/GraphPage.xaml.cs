@@ -28,8 +28,12 @@ public partial class GraphPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        ApplyGraphTheme();
         await LoadIllnesses();
+
+        // Reset chart & illness selection
         selectedIllness = "";
+        column.ItemsSource = null;
     }
 
     /// <summary>
@@ -46,7 +50,7 @@ public partial class GraphPage : ContentPage
                 IllnessCollection.Add(illness);
             }
         }
-        catch(Exception error) // catching error if the database could not be reached
+        catch (Exception error) // catching error if the database could not be reached
         {
             await DisplayAlert("Network Error", $"{error.Message}", "OK");
         }
@@ -115,26 +119,34 @@ public partial class GraphPage : ContentPage
                 else
                     await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
 
-                if (Application.Current!.UserAppTheme == AppTheme.Dark)
-                {
-                    dataChart.XAxes[0].LabelStyle.TextColor = Colors.White;
-                    dataChart.XAxes[0].Title.TextColor = Colors.White;
-                    dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
-                    dataChart.YAxes[0].Title.TextColor = Colors.White;
-                }
-                else
-                {
-                    dataChart.XAxes[0].LabelStyle.TextColor = Colors.Black;
-                    dataChart.XAxes[0].Title.TextColor = Colors.Black;
-                    dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
-                    dataChart.YAxes[0].Title.TextColor = Colors.Black;
-                }
+                // ApplyGraphTheme();
             }
         }
         else
         {
             await DisplayAlert("Alert!", "Please specify a locality", "OK");
         }
-        
+
+    }
+
+    /// <summary>
+    /// Method to apply current user theme to the graph.
+    /// </summary>
+    public async void ApplyGraphTheme()
+    {
+        if (Application.Current!.UserAppTheme == AppTheme.Dark)
+        {
+            dataChart.XAxes[0].LabelStyle.TextColor = Colors.White;
+            dataChart.XAxes[0].Title.TextColor = Colors.White;
+            dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
+            dataChart.YAxes[0].Title.TextColor = Colors.White;
+        }
+        else
+        {
+            dataChart.XAxes[0].LabelStyle.TextColor = Colors.Black;
+            dataChart.XAxes[0].Title.TextColor = Colors.Black;
+            dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
+            dataChart.YAxes[0].Title.TextColor = Colors.Black;
+        }
     }
 }
