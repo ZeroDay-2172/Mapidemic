@@ -63,6 +63,16 @@ public partial class StatsPage : ContentPage
                 {
                     _illnesses[kv.Key] = kv.Value;
                 }
+
+                IllnessItems.Clear();
+                foreach (var kv in _illnesses.Where(k => k.Value > 0).OrderBy(kv => kv.Key, StringComparer.CurrentCultureIgnoreCase))
+                {
+                    IllnessItems.Add(new StatData
+                    {
+                        Name = kv.Key,
+                        Count = kv.Value
+                    });
+                }
             }
             catch(Exception reportError) // catching error if the database could not be reached
             {
