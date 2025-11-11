@@ -7,7 +7,7 @@
     Title="Mapidemic">
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:NewUserPage}"
-        Route="NewUserPage" />
+        ContentTemplate="{DataTemplate local:LogoPage}"
+        Route="LogoPage" />
 
 </Shell> 

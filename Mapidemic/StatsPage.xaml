@@ -36,6 +36,8 @@
             <Button x:Name="SearchButton"
                     Grid.Row="0" Grid.Column="2"
                     Text="Search"
+                    TextColor="White"
+                    BackgroundColor="#0074C0"
                     Clicked="Clicked_Search" />
             </Grid>
 

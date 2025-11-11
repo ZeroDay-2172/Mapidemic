@@ -38,40 +38,40 @@ public partial class StatsPage : ContentPage
             await DisplayAlert("Invalid ZIP", "Please enter a 5-digit ZIP code (e.g., 54901)", "OK");
             return;
         }
-
-        // Validate if it is a postal code
-        bool isValid = await MauiProgram.businessLogic.ValidatePostalCode(zip);
-        if (!isValid)
+        try // attempting database queries
         {
-            await DisplayAlert("Invalid ZIP", "Please enter a 5-digit ZIP code (e.g., 54901)", "OK");
-            return;
-        }
-
-        // Read the days picked from the picker. Default is set to 1 day.
-        int days = 1;
-        if (DaysPicked?.SelectedItem is string s && int.TryParse(s, out var d))
-        {
-            days = d;
-        }
-
-        // Fetch the counts from businesslogic for the given ZIP and days
-        var result = await MauiProgram.businessLogic.GenerateReport(postalCode, days);
-
-        // Fills the dictionary with counts
-        _illnesses.Clear();
-        foreach (var kv in result)
-        {
-            _illnesses[kv.Key] = kv.Value;
-        }
-
-        IllnessItems.Clear();
-        foreach (var kv in _illnesses.Where(k => k.Value > 0).OrderBy(kv => kv.Key, StringComparer.CurrentCultureIgnoreCase))
-        {
-            IllnessItems.Add(new StatData
+            // Validate if it is a postal code
+            if (!await MauiProgram.businessLogic.ValidatePostalCode(zip)) // attempting to validate postal code
             {
-                Name = kv.Key,
-                Count = kv.Value
-            });
+                await DisplayAlert("Invalid ZIP", "Please enter a 5-digit ZIP code (e.g., 54901)", "OK");
+                return;
+            }
+            // Read the days picked from the picker. Default is set to 1 day.
+            int days = 1;
+            if (DaysPicked?.SelectedItem is string s && int.TryParse(s, out var d))
+            {
+                days = d;
+            }
+            try
+            {
+                // Fetch the counts from businesslogic for the given ZIP and days
+                var result = await MauiProgram.businessLogic.GenerateReport(postalCode, days);
+
+                // Fills the dictionary with counts
+                _illnesses.Clear();
+                foreach (var kv in result)
+                {
+                    _illnesses[kv.Key] = kv.Value;
+                }
+            }
+            catch(Exception reportError) // catching error if the database could not be reached
+            {
+                await DisplayAlert("Network Error", $"{reportError.Message}", "OK");
+            }
+        }
+        catch(Exception postalCodeError) // catching error if the database could not be reached
+        {
+            await DisplayAlert("Network Error", $"{postalCodeError.Message}", "OK");
         }
     }
         
