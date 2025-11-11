@@ -9,23 +9,23 @@
 
 
         <Grid Padding="0"
-                        RowSpacing="0"
-                        ColumnSpacing="0">
+              RowSpacing="0"
+              ColumnSpacing="0">
 
                 <maps:Map x:Name="MapControl"
-                                Grid.Row="0"
-                                MapType="Satellite"
-                                IsShowingUser="false"/>
-                                
+                          Grid.Row="0"
+                          MapType="Street"
+                          IsShowingUser="false"/>
+
                 <Button Text="Report"
-                                Clicked="OnReportIllnessClicked"
-                                Padding="14,8"
-                                CornerRadius="8"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Start"
-                                Margin="16,16,0,0"
-                                BackgroundColor="#FF4136"
-                                TextColor="White"/>
+                        Clicked="OnReportIllnessClicked"
+                        Padding="14,8"
+                        CornerRadius="8"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        Margin="16,16,0,0"
+                        BackgroundColor="#FF4136"
+                        TextColor="White"/>
         </Grid>
 
 </ContentPage>

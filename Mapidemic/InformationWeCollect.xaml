@@ -1,31 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:local="clr-namespace:Mapidemic"
-                x:Class="Mapidemic.InformationWeCollect"
-                Title="Information We Collect">
-    
-    <Grid VerticalOptions="FillAndExpand"
-          RowDefinitions="Auto, Auto, Auto">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mapidemic"
+             x:Class="Mapidemic.InformationWeCollect"
+             Title="Information We Collect">
 
-        <Label Text="Information We Collect"
-               Grid.Row="0"
-               FontSize="30"
-               TextColor="White"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Padding="5"/>
+        <Grid VerticalOptions="FillAndExpand"
+              RowDefinitions="Auto, Auto, Auto">
 
-        <Label Grid.Row="1"
-                VerticalOptions="Start"
-                HorizontalOptions="Start"
-                Padding="5"
-                FontSize="20"
-                LineBreakMode="WordWrap">
-                <Label.FormattedText >
-                        Place the information here explaining what we do with the data we collect.
-                </Label.FormattedText>
-        </Label>
-    </Grid>
+                <Label Text="Information We Collect"
+                       Grid.Row="0"
+                       FontSize="30"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Padding="5"/>
+
+                <ScrollView>
+                        <Label LineBreakMode="WordWrap" Padding="20" FontSize="15">
+                                <Label.FormattedText>
+                                        <FormattedString>
+
+                                                <!-- No personal info -->
+                                                <Span Text="We don’t collect personal information or require accounts."/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="Mapidemic is anonymous by design and intended for users 18+."/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 1) Illness Reports -->
+                                                <Span Text="1) Illness Reports (anonymous)"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="When you submit a report, we store:"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Illness type (from the app’s list)"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• ZIP code of the reported area"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Date and time of the report"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Average recovery period for that illness (from CDC and similar public sources)"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• A unique report ID (not linked to you)"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="Use: We aggregate counts by ZIP to render the heatmap."/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="Retention: Each report is kept only until the illness’s average recovery period has passed, then it’s deleted."/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 2) Population & Geography -->
+                                                <Span Text="2) Population &amp; Geography Data (non-user)"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Population by ZIP from Census.gov (stored separately)"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• ZIP centroids (from Census data) to place heatmap circles"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• These datasets are not about you and only scale/position the map"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 3) Location -->
+                                                <Span Text="3) Location"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• The app does not access GPS, Bluetooth, Wi-Fi, or other device sensors"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• You can enter a default ZIP code to center the map"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 4) Device/Logs/Analytics -->
+                                                <Span Text="4) Device Data, Logs, and Analytics"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• We do not collect device identifiers, IP addresses, ad IDs, crash analytics, or usage analytics"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• We do not send emails or texts from the app"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 5) Feedback -->
+                                                <Span Text="5) Feedback &amp; Support"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• If you email us, a team member replies from a shared inbox"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• After the issue is resolved, the email is deleted"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 6) Third parties -->
+                                                <Span Text="6) Third-Party Services"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Supabase (backend/database) stores anonymous report and reference data"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• Google Maps displays the map"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• We do not share raw report data; it appears only in-app and is removed when it expires"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="&#10;"/>
+
+                                                <!-- 7) Preferences -->
+                                                <Span Text="7) User Controls &amp; Preferences"
+                                                                FontAttributes="Bold"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• In-app preferences: Dark Mode and default ZIP"/>
+                                                <Span Text="&#10;"/>
+                                                <Span Text="• There are no accounts to delete; individual reports expire automatically when their recovery period elapses"/>
+
+                                        </FormattedString>
+                                </Label.FormattedText>
+                        </Label>
+                </ScrollView>
+
+        </Grid>
 
 </ContentPage>

@@ -6,7 +6,7 @@ namespace Mapidemic;
 public partial class MapPage : ContentPage
 {
     private readonly List<Circle> _heatmapCircles = new();
-    private static readonly Dictionary<int, Location> _zipCenterCache = new();
+    private readonly Dictionary<int, Location> _zipCenterCache = new();
     private readonly Dictionary<int, int?> _populationCache = new();
     private readonly SemaphoreSlim _renderLock = new(1, 1); // Semaphore is here to save the day, preventing concurrent renders
     private bool _refreshScheduled;
@@ -60,7 +60,7 @@ public partial class MapPage : ContentPage
     {
         var settings = MauiProgram.businessLogic.ReadSettings();
         int? postalCode = settings.PostalCode;
-        try // attempting to read the list of postal code centroids
+        try
         {
             if (postalCode != null)
             {
@@ -143,16 +143,16 @@ public partial class MapPage : ContentPage
     {
         try
         {
-            foreach (var c in _heatmapCircles) // Looks into it's local cache 
+            foreach (var c in _heatmapCircles)
             {
-                MapControl.MapElements.Remove(c); // Removes all existing circles, to prepare for re-rendering
+                MapControl.MapElements.Remove(c);
             }
-            _heatmapCircles.Clear(); // Clears the local cache of heatmap circles
+            _heatmapCircles.Clear();
 
             var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
             if (counts == null || counts.Count == 0)
             {
-                return; // No data to render! TODO: Negate and swap this logic e.g. if counts exist, render them
+                return; // No data to render
             }
 
             var grouped = counts
@@ -163,15 +163,15 @@ public partial class MapPage : ContentPage
             foreach (var item in grouped)
             {
 
-                var center = await GetCentroidForZip(item.Zip); // Get the centroid for the ZIP code
+                var center = await GetCentroidForZip(item.Zip);
                 if (center == null)
                 {
                     continue; // Skip if no centroid found
                 }
 
-                var population = await GetPopulation(item.Zip); // Get the population for the ZIP code
-                var style = GetStyleForCount(item.Count, population); // Get style based on count and population
-                await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
+                var population = await GetPopulation(item.Zip);
+                var style = GetStyleForCount(item.Count, population);
+                await DrawHeatmapCircles(center, style.radiusMiles, style.color);
 
             }
         }
@@ -188,29 +188,39 @@ public partial class MapPage : ContentPage
     {
         const double baseRadius = 2.5; // miles
 
-        if (population.HasValue && population.Value > 0) {
-            double incidenceRate = (double)count / population.Value * 10000; // Calculate incidence rate per 10,000 people
+        if (population.HasValue && population.Value > 0)
+        {
+            int incidenceRate = DetermineRateThreshold(count, population.Value);
 
             switch (incidenceRate)
             {
-                case <= 5:
+                case <= 1:
                     return (Colors.Yellow, baseRadius); // minimal
-                case <= 15:
+                case <= 2:
+                    return (Colors.Gold, baseRadius); // moderate
+                case <= 3:
                     return (Colors.Orange, baseRadius); // more
+                case <= 4:
+                    return (Colors.OrangeRed, baseRadius); // severe
+                case <= 5:
+                    return (Colors.Red, baseRadius); // dangerous
                 default:
-                    return (Colors.Red, baseRadius); // severe
+                    break; // fallback to count-based styling
             }
         }
-        if (count <= 2)
+        switch (count) // This switch case will only execute if population data is unavailable
         {
-            return (Colors.Yellow, baseRadius); // minimal
+            case <= 2:
+                return (Colors.Yellow, baseRadius);
+            case <= 5:
+                return (Colors.Gold, baseRadius);
+            case <= 10:
+                return (Colors.Orange, baseRadius);
+            case <= 15:
+                return (Colors.OrangeRed, baseRadius);
+            default:
+                return (Colors.Red, baseRadius);
         }
-
-        if (count <= 7)
-        {
-            return (Colors.Orange, baseRadius); // more
-        }
-        return (Colors.Red, baseRadius); // severe
     }
 
     /// <summary>
@@ -224,7 +234,7 @@ public partial class MapPage : ContentPage
         }
         try
         {
-            var population = await MauiProgram.businessLogic.GetPopulationCount(postalCode); // Fetches population count from the database
+            var population = await MauiProgram.businessLogic.GetPopulationCount(postalCode);
             _populationCache[postalCode] = population;
             return population;
         }
@@ -236,17 +246,37 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
+    /// Determine the incidence rate threshold based on count and population.
+    /// Thresholds: 0-5% = 1, 6-10% = 2, 11-15% = 3, 16-20% = 4, >20% = 5
+    /// </summary>
+    private int DetermineRateThreshold(int count, int population)
+    {
+        double percent = (double)count / population * 100; // Since GetStyleForCount relies on the population being non-null, we don't need to check for null here.
+
+        if (percent <= 5)
+            return 1;
+        else if (percent <= 10)
+            return 2;
+        else if (percent <= 15)
+            return 3;
+        else if (percent <= 20)
+            return 4;
+        else
+            return 5;
+    }
+
+    /// <summary>
     /// Draw heatmap circles on the map based on illness report data.
     /// </summary>
-    private async Task DrawHeatmapCircles(Location Center, double Radius, Color Color)
+    private async Task DrawHeatmapCircles(Location center, double radius, Color color)
     {
         var circle = new Circle
         {
-            Center = Center,
-            Radius = Distance.FromMiles(Radius),
+            Center = center,
+            Radius = Distance.FromMiles(radius),
             StrokeWidth = 2,
-            StrokeColor = Color.WithAlpha(0.9f),
-            FillColor = Color.WithAlpha(0.35f),
+            StrokeColor = color.WithAlpha(0.9f),
+            FillColor = color.WithAlpha(0.35f),
         };
 
         MapControl.MapElements.Add(circle);
