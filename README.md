@@ -2,7 +2,7 @@ Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population
 - Added try-catch blocks around every database call to ensure a network error does not crash the app if the database cannot be reached
 - Added building blocks for OpenAI to be used for symptom checking, if Dr. Rogers can get us the funding to make the api calls
--
+- Added syncfusion ListView to display stats report to the users instead of button clicks. Updated Meet the Team page to a tab view to display team information better instead of button clicks also.
 
 Sprint 2 changes:
 - Added color coded circles to the map showing illness density in each postal code :smile: :smile: :smile:
