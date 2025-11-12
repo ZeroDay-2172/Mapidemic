@@ -46,8 +46,6 @@ public partial class SettingsPage : ContentPage
     /// <param name="args"></param>
     public async void SaveButton_Clicked(Object sender, EventArgs args)
     {
-        Popup.IsOpen = true;
-        await Task.Yield();
         try
         {
             if (await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text))
@@ -74,7 +72,7 @@ public partial class SettingsPage : ContentPage
         }
         finally
         {
-            Popup.IsOpen = false;
+            
         }
     }
 
