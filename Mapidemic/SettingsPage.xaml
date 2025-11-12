@@ -18,30 +18,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <popup:SfPopup Message=""
-                                x:Name="Popup"
-                                IsOpen="False"
-                                HeaderTitle=""
-                                StaysOpen="True"
-                                HeaderHeight="0"
-                                WidthRequest="125"
-                                HeightRequest="125"
-                                ShowCloseButton="False"
-                                VerticalOptions="Center"
-                                HorizontalOptions="Center">
-                            
-                            <popup:SfPopup.ContentTemplate>
-                                    <DataTemplate>
-                                            <ActivityIndicator IsRunning="True"
-                                                            Color="#0074C0"
-                                                            VerticalOptions="Center"
-                                                            HorizontalOptions="Center"
-                                                            Scale="2"/>
-                                    </DataTemplate>
-                            </popup:SfPopup.ContentTemplate>
-
-                    </popup:SfPopup>
-
                     <Label Text="Dark Mode" FontSize="18" Padding="20" Grid.Row="0" Grid.Column="0"/>
                     <Switch IsToggled="false" OnColor="#0074C0" Toggled="OnDarkModeToggled" Grid.Row="0" Grid.Column="1" x:Name="DarkModeSwitch"/>
 
