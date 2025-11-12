@@ -64,6 +64,7 @@ public partial class StatsPage : ContentPage
                     _illnesses[kv.Key] = kv.Value;
                 }
 
+                // Fills the Illnessdata with illness that has at least one report sorted alphabetically
                 IllnessItems.Clear();
                 foreach (var kv in _illnesses.Where(k => k.Value > 0).OrderBy(kv => kv.Key, StringComparer.CurrentCultureIgnoreCase))
                 {

@@ -46,7 +46,7 @@ public partial class SettingsPage : ContentPage
     /// <param name="args"></param>
     public async void SaveButton_Clicked(Object sender, EventArgs args)
     {
-        Popup.IsOpen = true;
+        // Popup.IsOpen = true;
         await Task.Yield();
         try
         {
@@ -72,10 +72,10 @@ public partial class SettingsPage : ContentPage
         {
             await DisplayAlert("Network Error", $"{error.Message}", "OK");
         }
-        finally
-        {
-            Popup.IsOpen = false;
-        }
+        // finally
+        // {
+        //     Popup.IsOpen = false;
+        // }
     }
 
     /// <summary>
