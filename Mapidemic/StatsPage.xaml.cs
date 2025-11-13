@@ -29,6 +29,7 @@ public partial class StatsPage : ContentPage
     /// </summary>
     private async Task GetReports(Entry sourceEntry = null)
     {
+        Popup.IsOpen = true;
         var entry = sourceEntry ?? this.FindByName<Entry>("ZipEntry");
         var zip = entry?.Text?.Trim();
 
@@ -82,6 +83,10 @@ public partial class StatsPage : ContentPage
         catch(Exception postalCodeError) // catching error if the database could not be reached
         {
             await DisplayAlert("Network Error", $"{postalCodeError.Message}", "OK");
+        }
+        finally
+        {
+            Popup.IsOpen = false;
         }
     }
         
