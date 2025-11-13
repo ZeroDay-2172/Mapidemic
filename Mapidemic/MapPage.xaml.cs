@@ -67,6 +67,11 @@ public partial class MapPage : ContentPage
         Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
     }
 
+    void OnLegendToggleClicked(object sender, EventArgs e)
+    {
+        LegendFrame.IsVisible = !LegendFrame.IsVisible; // Toggles the visibility of the legend frame
+    }
+
     /// <summary>
     /// Center the map on the user's postal code.
     /// </summary>
