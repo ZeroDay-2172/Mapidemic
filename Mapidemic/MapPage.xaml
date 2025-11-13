@@ -26,6 +26,66 @@
                         Margin="16,16,0,0"
                         BackgroundColor="#FF4136"
                         TextColor="White"/>
+
+                <Button x:Name="LegendToggle"
+                        Text="Legend"
+                        Clicked="OnLegendToggleClicked"
+                        CornerRadius="8"
+                        Padding="14,8"
+                        BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"
+                        TextColor="{AppThemeBinding Light=White, Dark=White}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="0,16,16,0"/>
+
+                <Frame x:Name="LegendFrame"
+                       IsVisible="False"
+                       BackgroundColor="{AppThemeBinding Light=#CCFFFFFF, Dark=#CC000000}"
+                       Padding="12"
+                       CornerRadius="8"
+                       HorizontalOptions="End"
+                       VerticalOptions="Start"
+                       Margin="0,64,16,0">
+
+                        <StackLayout Spacing="8">
+
+                                <Label Text="Legend"
+                                       FontAttributes="Bold"
+                                       FontSize="Medium"
+                                       HorizontalOptions="Center"
+                                       TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+
+                                <StackLayout Orientation="Horizontal"
+                                                Spacing="8">
+                                        <BoxView WidthRequest="20"
+                                                 HeightRequest="20"
+                                                 Color="#FF4136"/>
+                                        <Label Text="High Infection Area"
+                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal"
+                                                Spacing="8">
+                                        <BoxView WidthRequest="20"
+                                                 HeightRequest="20"
+                                                 Color="#FFA500"/>
+                                        <Label Text="Medium Infection Area"
+                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal"
+                                                Spacing="8">
+                                        <BoxView WidthRequest="20"
+                                                 HeightRequest="20"
+                                                 Color="#FFE6F36F"/>
+                                        <Label Text="Low Infection Area"
+                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                </StackLayout>
+
+                        </StackLayout>
+
+                </Frame>
+
         </Grid>
 
 </ContentPage>
