@@ -144,6 +144,8 @@ public partial class GraphPage : ContentPage
 
                     if (chartModel.data.Count != 0)
                     {
+                        // Ensure there are not excessive horizontal lines on graph
+                        SetGraphInterval(chartModel);
                         // Reverse data to show most recent data on the right
                         chartModel.data.Reverse();
                         // Update graph to show data
@@ -183,6 +185,31 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.Black;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
             dataChart.YAxes[0].Title.TextColor = Colors.Black;
+        }
+    }
+
+    /// <summary>
+    /// Method to prevent excessive horizontal lines on graph.
+    /// </summary>
+    /// <param name="chartModel"></param>
+    public void SetGraphInterval(ChartModel chartModel)
+    {
+        int maxIndex = -1;
+        int max = -1;
+        for (int i = 0; i < chartModel.data.Count; i++)
+        {
+            if (chartModel.data.ElementAt(i).value > max)
+            {
+                max = chartModel.data.ElementAt(i).value;
+                maxIndex = i;
+            }
+        }
+
+        // Ensure at most 10 lines, round to next larger int to prevent the cutoff of values
+        if (chartModel.data.ElementAt(maxIndex).value > 10)
+        {
+            numericalAxis.Interval = chartModel.data.ElementAt(maxIndex).value / 10;
+            numericalAxis.Interval = Math.Ceiling(numericalAxis.Interval);
         }
     }
 }

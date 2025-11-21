@@ -49,7 +49,7 @@
                 </chart:CategoryAxis>
             </chart:SfCartesianChart.XAxes>
             <chart:SfCartesianChart.YAxes>
-                <chart:NumericalAxis Interval="1">
+                <chart:NumericalAxis Interval="1" x:Name="numericalAxis">
                     <chart:NumericalAxis.Title>
                         <chart:ChartAxisTitle Text="# of cases"/>
                     </chart:NumericalAxis.Title>
