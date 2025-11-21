@@ -8,6 +8,7 @@ using Mapidemic.Models;
 using Syncfusion.Maui.Toolkit.Charts;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using Android.Widget;
 
 namespace Mapidemic;
 
@@ -46,7 +47,6 @@ public partial class GraphPage : ContentPage
         localityPicker.SelectedIndex = 1;
         numDays = 7;
         timeRangePicker.SelectedIndex = 0;
-
     }
 
     /// <summary>
