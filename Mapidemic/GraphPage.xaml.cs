@@ -39,6 +39,14 @@ public partial class GraphPage : ContentPage
         // Reset chart & illness selection
         selectedIllness = "";
         column.ItemsSource = null;
+
+        // Set default to zip code, and 7 days
+        localTrends = true;
+        localityChosen = true;
+        localityPicker.SelectedIndex = 1;
+        numDays = 7;
+        timeRangePicker.SelectedIndex = 0;
+
     }
 
     /// <summary>
