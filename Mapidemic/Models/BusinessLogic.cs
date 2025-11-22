@@ -1,22 +1,20 @@
 using System.Text.Json;
 using System.Collections.ObjectModel;
-
+using System.Text;
 namespace Mapidemic.Models;
 
 public class BusinessLogic
 {
+    public Gemini googleGemini;
     private Settings? settings;
     private readonly Database database;
     private const int postalCodeLength = 5;
     private const int probabilityFactor = 100;
     private const string uiSettingsPath = "ui_settings.json";
     public ObservableCollection<Symptom> SymptomList { get; set; }
-    public SortedSet<AnalyzedIllness>? SymptomAnalysis { get; set; }
-    public AnalyzedIllness? LikelyIllness { get; set; }
-
-    // MODEL FOR CONTACTING CHAT-GPT, DO NOT DELETE
-    // public string ChatResponse { get; set; }
-    // private readonly OpenAIService openAIService;
+    public SortedSet<StatisticalIllness>? SymptomAnalysis { get; set; }
+    public StatisticalIllness? StatisticalIllness { get; set; }
+    public ArtificialIntelligenceIllness? artificialIntelligenceIllness;
 
     /// <summary>
     /// The designated constructor for a BusinessLogic
@@ -28,13 +26,11 @@ public class BusinessLogic
         // ClearSettings();
         // comment out this function when not testing
 
-        LikelyIllness = null;
         SymptomAnalysis = null;
         this.database = database;
-
-        // CHAT-GPT MODEL, DO NOT DELETE
-        // ChatResponse = "";
-        // openAIService = new OpenAIService();
+        StatisticalIllness = null;
+        googleGemini = new Gemini();
+        artificialIntelligenceIllness = null;
 
         SymptomList = new ObservableCollection<Symptom>();
         try // attempting to load local settings file
@@ -201,14 +197,58 @@ public class BusinessLogic
     }
 
     /// <summary>
+    /// A function that uses AI to determine which
+    /// illness the user is most likely to have
+    /// based on their symptoms
+    /// </summary>
+    /// <returns>true after the Ai responds</returns>
+    public async Task<bool> RunAiSymptomAnalysis()
+    {
+        StringBuilder symptomList = new StringBuilder();
+        foreach (Symptom symptom in ProcessCheckedSymptoms())
+        {
+            symptomList.Append($"{symptom.Name}, ");
+        }
+        string response = await googleGemini.AskGemini(symptomList.ToString());
+        string[] results = response.Split(Environment.NewLine);
+
+        int contagiousPeriodIndex = 1;
+        int recoveryPeriodIndex = 2;
+        int symptomsIndex = 3;
+        if (results[1].Length == 0)
+        {
+            contagiousPeriodIndex = 2;
+            recoveryPeriodIndex = 4;
+            symptomsIndex = 6;
+        }
+
+        int contagiousPeriod;
+        bool validContagiousPeriod = int.TryParse(results[contagiousPeriodIndex], out contagiousPeriod);
+        if (!validContagiousPeriod)
+        {
+            contagiousPeriod = -1;
+        }
+
+        int recoveryPeriod;
+        bool validRecoveryPeriod = int.TryParse(results[recoveryPeriodIndex], out recoveryPeriod);
+        if (!validRecoveryPeriod)
+        {
+            recoveryPeriod = -1;
+        }
+
+        artificialIntelligenceIllness = new ArtificialIntelligenceIllness(results[0], results[symptomsIndex].Split(","), contagiousPeriod, recoveryPeriod);
+        return true;
+    }
+
+    /// <summary>
     /// A function that uses a basic probability formula
     /// to determine how likely it is that a user has a specified
     /// illness based on their symptoms
     /// </summary>
     /// <returns>true if the symptom analysis completed</returns>
-    public async Task<bool> RunSymptomAnalysis()
+    public async Task<bool> RunStatsSymptomAnalysis()
     {
-        SymptomAnalysis = new SortedSet<AnalyzedIllness>(new AnalyzedIllnessComparer());
+        SymptomAnalysis = new SortedSet<StatisticalIllness>(new StatisticalIllnessComparer());
         HashSet<Symptom> userSymptoms = ProcessCheckedSymptoms(); // getting all user symptoms
         try // attempting to read the illness list from the database
         {
@@ -235,11 +275,11 @@ public class BusinessLogic
                 finalProbability = (double)matchingSymptoms / (matchingSymptoms + extraUserSymptoms + extraIllnessSymptoms) * probabilityFactor;
                 if (finalProbability != 0) // ignoring illnesses that do not match the user symptoms
                 {
-                    SymptomAnalysis.Add(new AnalyzedIllness(illness, finalProbability));
+                    SymptomAnalysis.Add(new StatisticalIllness(illness, finalProbability));
                 }
             }
-            LikelyIllness = SymptomAnalysis.First(); // extracting the likely illness
-            SymptomAnalysis.Remove(LikelyIllness);
+            StatisticalIllness = SymptomAnalysis.First(); // extracting the likely illness
+            SymptomAnalysis.Remove(StatisticalIllness);
             return true;
         }
         catch (Exception error) // catching error if database could not be reached
@@ -269,11 +309,17 @@ public class BusinessLogic
         return checkedSymptoms;
     }
 
-    // METHOD FOR CONTACTING CHAT-GPT, DON'T DELETE
-    // public async Task GetChatResponse(string symptomString)
-    // {
-    //     ChatResponse = await openAIService.GetLikelyIllness(symptomString);
-    // }
+    /// <summary>
+    /// A function that resets the checked symptoms after the
+    /// user declined to use the symptom checker
+    /// </summary>
+    public void ClearSymptoms()
+    {
+        foreach (Symptom symptom in SymptomList) //  getting each symptom in the list
+        {
+            symptom.IsChecked = false; // setting the is checked status to false
+        }
+    }
 
     /// <summary>
     /// A function that returns all the illnesses

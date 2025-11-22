@@ -9,6 +9,14 @@
           BackgroundColor="#0074C0"
           RowDefinitions="2*, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
 
+        <Label Text="Menu"
+               Grid.Row="0"
+               FontSize="50"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               BackgroundColor="#0074C0" />
+
         <popup:SfPopup Message=""
                        x:Name="Popup"
                        IsOpen="False"
@@ -21,27 +29,17 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Center">
                 
-                <popup:SfPopup.ContentTemplate>
-                        <DataTemplate>
-                                <ActivityIndicator IsRunning="True"
-                                                   Color="#0074C0"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Center"
-                                                   Scale="2"/>
-                        </DataTemplate>
-                </popup:SfPopup.ContentTemplate>
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <ActivityIndicator IsRunning="True"
+                                       Color="#0074C0"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Scale="2"/>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
 
         </popup:SfPopup>
-
-        <Label Text="Menu"
-               Grid.Row="0"
-               FontSize="50"
-               TextColor="White"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               BackgroundColor="#0074C0" />
-
-               
 
         <Button Grid.Row="1"
                 FontSize="20"

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                xmlns:models="clr-namespace:Mapidemic.Models"
+                x:DataType="models:BusinessLogic"
+                x:Class="Mapidemic.Pages.SymptomChecker.AiResultsPage"
+                Title="Results">
+    
+    <Grid RowDefinitions="4*, 6*" Padding="10">
+
+        <Image Grid.Row="0"
+               WidthRequest="250"
+               Source="robot_assistant.png"  />
+
+        <VerticalStackLayout Grid.Row="1" Spacing="5">
+
+            <Label x:Name="Greeting" FontSize="20" HorizontalOptions="Center" />
+
+            <Label HorizontalTextAlignment="Justify" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="FirstRobotText" FontSize="16" />
+                        <Span x:Name="IllnessText" FontSize="16" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label HorizontalTextAlignment="Justify" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="SecondRobotText" FontSize="16" />
+                        <Span x:Name="ContagiousText" FontSize="16" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label HorizontalTextAlignment="Justify" >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="ThirdRobotText" FontSize="16" />
+                        <Span x:Name="RecoveryText" FontSize="16" FontAttributes="Bold" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label x:Name="FourthRobotText" FontSize="16" HorizontalTextAlignment="Justify" LineHeight="0.95" />
+
+            <ScrollView>
+                <Grid x:Name="SymptomGrid" ColumnDefinitions="1*, 1*" RowSpacing="5" />
+            </ScrollView>
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>
