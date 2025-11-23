@@ -16,7 +16,8 @@
             <VerticalStackLayout Spacing="6">
                 <Label x:Name="SummaryLabel"
                         FontSize="18"
-                        FontAttributes="Bold"/>
+                        FontAttributes="Bold"
+                        TextColor="Black"/>
                 <Label Text="Thank you for reporting your illness. Your report will help track and manage the spread of illnesses in your area."
                         FontSize="14"
                         TextColor="#6E6E6E"/>

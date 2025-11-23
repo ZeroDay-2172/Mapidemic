@@ -6,7 +6,7 @@
              Title="Stats Page"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
 
-    <ScrollView>
+
         <VerticalStackLayout Padding="15" Spacing="12">
             <!-- Search row -->
             <Grid RowDefinitions="Auto,Auto"
@@ -27,6 +27,7 @@
                     Title="Past days" WidthRequest="80"
                     SelectedIndex="0">
                 <Picker.Items>
+                <x:String>1</x:String>
                 <x:String>7</x:String>
                 <x:String>14</x:String>
                 <x:String>30</x:String>
@@ -35,6 +36,8 @@
 
             <Button x:Name="SearchButton"
                     Grid.Row="0" Grid.Column="2"
+                    BackgroundColor="#0074C0"
+                    TextColor="White"
                     Text="Search"
                     Clicked="Clicked_Search" />
             </Grid>
@@ -44,7 +47,8 @@
                 <syncfusion:SfListView x:Name="ListView"
                                         ItemsSource="{Binding IllnessItems}"
                                         SelectionMode="None"
-                                        AutoFitMode="DynamicHeight">
+                                        AutoFitMode="DynamicHeight"
+                                        HeightRequest="580">
                     <syncfusion:SfListView.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="0,6"
@@ -77,5 +81,4 @@
                 </syncfusion:SfListView>
             </Grid>
         </VerticalStackLayout>
-    </ScrollView>
 </ContentPage>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:local="clr-namespace:Mapidemic"
+                x:Class="Mapidemic.FeedbackPage"
+                Title="Feedback">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <Label Text="We’d love your feedback!"
+                   FontSize="22"
+                   FontAttributes="Bold" />
+
+            <Label Text="Tell us what you think about the Mapidemic app. Your feedback is anonymous and helps us improve."
+                   FontSize="13"
+                   LineBreakMode="WordWrap" />
+
+            <!-- Category -->
+            <Label Text="Category"
+                   FontAttributes="Bold"
+                   FontSize="18" />
+            <Picker x:Name="CategoryPicker"
+                    Title="Select category">
+                <Picker.Items>
+                    <x:String>General</x:String>
+                    <x:String>Bug Report</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Feedback text -->
+            <Label Text="Your message"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   Margin="0,10,0,0" />
+            <Border Stroke="LightGray"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="5">
+                <Editor x:Name="FeedbackEditor"
+                        AutoSize="TextChanges"
+                        HeightRequest="350"
+                        Placeholder="Give us your feedback here..." />
+            </Border>
+
+            <!-- Submit button -->
+            <Button x:Name="SubmitButton"
+                    Text="Submit"
+                    Clicked="OnSubmitClicked"
+                    Margin="0,10,0,0"
+                    BackgroundColor="#0074C0"
+                    TextColor="White" />
+
+            <!-- Status Label -->
+            <HorizontalStackLayout Spacing="10"
+                                   VerticalOptions="Center">
+                <Label x:Name="StatusLabel"
+                       Text=""
+                       FontSize="16"
+                       TextColor="Gray" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

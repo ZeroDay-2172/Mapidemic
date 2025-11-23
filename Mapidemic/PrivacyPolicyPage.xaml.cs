@@ -7,7 +7,7 @@ public partial class PrivacyPolicyPage : ContentPage
         InitializeComponent();
     }
 
-    private async Task ToggleAsync(View panel)
+    private void ToggleAsync(View panel)
     {
         if (panel.IsVisible)
         {
@@ -19,6 +19,6 @@ public partial class PrivacyPolicyPage : ContentPage
         }
     }
 
-    private async void ClickedOnIntro(object sender, EventArgs e) => await ToggleAsync(IntroContent);
-    private async void ClickedOnReason(object sender, EventArgs e) => await ToggleAsync(ReasonContent);
+    private async void ClickedOnIntro(object sender, EventArgs e) => ToggleAsync(IntroContent);
+    private async void ClickedOnReason(object sender, EventArgs e) => ToggleAsync(ReasonContent);
 }

@@ -426,4 +426,30 @@ public class BusinessLogic
             throw new Exception(error.Message);
         }
     }
+
+    /// <summary> 
+    /// A function that submits user feedback to the database
+    /// </summary>
+    /// <param name="feedback"></param>
+    /// <returns>true if feedback was submitted, false if not</returns>
+    public async Task<bool> SubmitFeedbackAsync(Feedback feedback)
+    {
+        try // attempting to submit feedback to the database
+        {
+            var response = await database.supabaseClient.From<Feedback>().Insert(feedback); // Insert the feedback into the database
+
+            if (response.ResponseMessage!.IsSuccessStatusCode) // Check if the response indicates success
+            {
+                return true; // Return true if the insertion was successful
+            }
+            else
+            {
+                return false; // Return false if the insertion failed
+            }
+        }
+        catch (Exception error) // catching error if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
 }
