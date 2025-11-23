@@ -225,4 +225,20 @@ public class Database
             throw new Exception(error.Message);
         }
     }
+
+    /// <summary>
+    /// A function that submits user feedback to the database
+    /// </summary>
+    /// <param name="feedback"></param>
+    /// <returns>true if feedback was submitted, false if not</returns>
+    public async Task<bool> SubmitFeedbackAsync(Feedback feedback)
+    {
+        try {
+            return (await IssueQuery(supabaseClient.From<Feedback>().Insert(feedback))).Models.Count == 1;
+        }
+        catch (Exception error)
+        {
+            throw new Exception(error.Message);
+        }
+    }
 }

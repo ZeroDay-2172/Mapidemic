@@ -482,16 +482,7 @@ public class BusinessLogic
     {
         try // attempting to submit feedback to the database
         {
-            var response = await database.supabaseClient.From<Feedback>().Insert(feedback); // Insert the feedback into the database
-
-            if (response.ResponseMessage!.IsSuccessStatusCode) // Check if the response indicates success
-            {
-                return true; // Return true if the insertion was successful
-            }
-            else
-            {
-                return false; // Return false if the insertion failed
-            }
+            return await database.SubmitFeedbackAsync(feedback); // Insert the feedback into the database 
         }
         catch (Exception error) // catching error if the database could not be reached
         {

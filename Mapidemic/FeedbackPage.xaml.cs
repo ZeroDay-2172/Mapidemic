@@ -44,19 +44,30 @@ public partial class FeedbackPage : ContentPage
             };
 
             // Call the business logic to submit feedback
-            await MauiProgram.businessLogic.SubmitFeedbackAsync(feedback);
-
-            // Provide user feedback
-            StatusLabel.Text = "Thank! Your feedback has been submitted.";
-            // Clear input field
-            FeedbackEditor.Text = string.Empty; 
-            // Reset category picker
-            CategoryPicker.SelectedIndex = -1; 
+            bool success = await MauiProgram.businessLogic.SubmitFeedbackAsync(feedback);
+            
+            if(success)
+            {
+                // Provide user feedback
+                StatusLabel.Text = "Thanks! Your feedback has been submitted.";
+                StatusLabel.IsVisible = true;
+                // Clear input field
+                FeedbackEditor.Text = string.Empty; 
+                // Reset category picker
+                CategoryPicker.SelectedIndex = -1; 
+            } 
+            else
+            {
+                // Handle submission failure
+                StatusLabel.Text = "Could not submit feedback. Please try again.";
+                StatusLabel.IsVisible = true;
+            }
         }
         catch (Exception ex)
         {
-            // Handle submission errors
+            // Handle submission failure
             StatusLabel.Text = "Could not submit feedback. Please try again.";
+            StatusLabel.IsVisible = true;
             await DisplayAlert("Error", ex.Message, "OK");
         }
         finally
@@ -64,5 +75,16 @@ public partial class FeedbackPage : ContentPage
             // Re-enable the submit button
             SubmitButton.IsEnabled = true;
         }
+    }
+
+    /// <summary>
+    /// Clears status message when the feedback editor gains focus
+    /// </summary>
+    private void FeedbackEditor_Focused(object sender, FocusEventArgs e)
+    {
+        // Clear status message
+        StatusLabel.Text = string.Empty;
+        // Hide status label
+        StatusLabel.IsVisible = false;
     }
 }
