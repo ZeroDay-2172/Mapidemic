@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:local="clr-namespace:Mapidemic"
+              xmlns:gauge="clr-namespace:Syncfusion.Maui.Gauges;assembly=Syncfusion.Maui.Gauges"
+              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
+              xmlns:models="clr-namespace:Mapidemic.Models"
+              x:DataType="models:BusinessLogic"
+              x:Class="Mapidemic.Pages.SymptomChecker.StatsResultsPage"
+              Title="Results">
+
+       <ScrollView>
+
+              <Grid Padding="10"
+                     HorizontalOptions="Fill"
+                     RowDefinitions="Auto, Auto, Auto, Auto">
+
+                     <Label Grid.Row="0"
+                            FontSize="40"
+                            x:Name="Illness"
+                            FontAttributes="Bold"
+                            VerticalOptions="Start"
+                            HorizontalOptions="Center"
+                            Text="{Binding StatisticalIllness.Illness.Name}" />
+
+                     <gauge:SfRadialGauge Grid.Row="0"
+                                          x:Name="Probability"
+                                          BackgroundColor="Transparent" >
+                            <gauge:SfRadialGauge.Axes>
+                                   <gauge:RadialAxis Minimum="0"
+                                                 Maximum="100"
+                                                 StartAngle="180"
+                                                 EndAngle="0"
+                                                 ShowTicks="False">
+
+                                          <gauge:RadialAxis.AxisLabelStyle>
+                                                 <gauge:GaugeLabelStyle x:Name="GaugeLabels" />
+                                          </gauge:RadialAxis.AxisLabelStyle>
+
+                                          <gauge:RadialAxis.AxisLineStyle>
+                                                 <gauge:RadialLineStyle Thickness="20" ThicknessUnit="Pixel" />
+                                          </gauge:RadialAxis.AxisLineStyle>
+
+                                          <gauge:RadialAxis.Pointers>
+                                                 <gauge:RangePointer PointerWidth="20"
+                                                                     x:Name="GaugePointer"
+                                                                     CornerStyle="EndCurve"
+                                                                     EnableAnimation="True"
+                                                                     AnimationDuration="1000"
+                                                                     Value="{Binding StatisticalIllness.Probability}">
+                                                        <gauge:RangePointer.Fill>
+                                                               <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                      <GradientStop Color="#0074C0" Offset="0.0" />
+                                                                      <GradientStop Color="#003D73" Offset="1.0" />
+                                                               </LinearGradientBrush>
+                                                        </gauge:RangePointer.Fill>
+                                                 </gauge:RangePointer>
+                                          </gauge:RadialAxis.Pointers>
+                                          <gauge:RadialAxis.Annotations>
+                                                 <gauge:GaugeAnnotation>
+                                                        <gauge:GaugeAnnotation.Content>
+                                                               <Label FontSize="30"
+                                                                      FontAttributes="Bold"
+                                                                      Text="{Binding StatisticalIllness.Probability, StringFormat='{0:F2}%'}"/>
+                                                        </gauge:GaugeAnnotation.Content>
+                                                 </gauge:GaugeAnnotation>
+                                          </gauge:RadialAxis.Annotations>
+                                   </gauge:RadialAxis>
+                            </gauge:SfRadialGauge.Axes>
+                     </gauge:SfRadialGauge>
+
+                     <syncfusion:SfExpander Grid.Row="1"
+                                          IsExpanded="False"
+                                          AnimationDuration="100"
+                                          HeaderIconColor="White"
+                                          x:Name="InformationExpand"
+                                          HeaderBackground="#0074C0">
+
+                            <syncfusion:SfExpander.Header>
+
+                                   <Label FontSize="25"
+                                          HeightRequest="50"
+                                          TextColor="White"
+                                          FontAttributes="Bold"
+                                          VerticalOptions="Center"
+                                          BackgroundColor="#0074C0"
+                                          Text="What you should know"
+                                          VerticalTextAlignment="Center"
+                                          HorizontalTextAlignment="Center" />
+
+                            </syncfusion:SfExpander.Header>
+
+                            <syncfusion:SfExpander.Content>
+
+                                   <VerticalStackLayout Spacing="10"
+                                                        Padding="0, 10, 0, 0">
+
+                                          <Label FontSize="20"
+                                                 VerticalOptions="Center"
+                                                 HorizontalTextAlignment="Justify">
+                                                 <Label.FormattedText>
+                                                        <FormattedString>
+                                                               <Span Text="Contagious period: " />
+                                                               <Span Text="{Binding StatisticalIllness.Illness.ContagiousPeriod}" FontAttributes="Bold" />
+                                                               <Span Text=" hour(s) / " />
+                                                               <Span Text="{Binding StatisticalIllness.Illness.ContagiousDays}" FontAttributes="Bold" />
+                                                               <Span Text=" day(s)." />
+                                                        </FormattedString>
+                                                 </Label.FormattedText>
+                                          </Label>
+
+                                          <Label FontSize="20"
+                                                 VerticalOptions="Center"
+                                                 HorizontalTextAlignment="Justify">
+                                                 <Label.FormattedText>
+                                                        <FormattedString>
+                                                               <Span Text="Recovery period: " />
+                                                               <Span Text="{Binding StatisticalIllness.Illness.RecoveryPeriod}" FontAttributes="Bold" />
+                                                               <Span Text=" hour(s) / " />
+                                                               <Span Text="{Binding StatisticalIllness.Illness.RecoveryDays}" FontAttributes="Bold" />
+                                                               <Span Text=" day(s)." />
+                                                        </FormattedString>
+                                                 </Label.FormattedText>
+                                          </Label>
+
+                                          <Label FontSize="20"
+                                                 Text="Full symptoms list:" />
+
+                                          <CollectionView SelectionMode="None"
+                                                          ItemsSource="{Binding StatisticalIllness.Illness.Symptoms}">
+                                                 <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="x:String">
+                                                               <Grid>
+                                                                      <Label Text="{Binding .}"
+                                                                             FontSize="16"
+                                                                             Padding="0, 10, 0, 10"/>
+                                                               </Grid>
+                                                        </DataTemplate>
+                                                 </CollectionView.ItemTemplate>
+                                          </CollectionView>
+
+                            </VerticalStackLayout>
+
+                            </syncfusion:SfExpander.Content>
+
+                     </syncfusion:SfExpander>
+
+                     <Label Grid.Row="2"/>
+
+                     <syncfusion:SfExpander Grid.Row="3"
+                                          IsExpanded="False"
+                                          x:Name="ResultsExpand"
+                                          AnimationDuration="100"
+                                          HeaderIconColor="White"
+                                          HeaderBackground="#0074C0">
+
+                            <syncfusion:SfExpander.Header>
+
+                                   <Label FontSize="25"
+                                          HeightRequest="50"
+                                          TextColor="White"
+                                          FontAttributes="Bold"
+                                          VerticalOptions="Center"
+                                          BackgroundColor="#0074C0"
+                                          Text="Additional results"
+                                          VerticalTextAlignment="Center"
+                                          HorizontalTextAlignment="Center"/>
+
+                            </syncfusion:SfExpander.Header>
+
+                            <syncfusion:SfExpander.Content>
+
+                                   <CollectionView IsVisible="Collapse"
+                                                 x:Name="AnalysisCV"
+                                                 SelectionMode="None"
+                                                 ItemsSource="{Binding SymptomAnalysis}">
+
+                                          <CollectionView.ItemTemplate>
+
+                                                 <DataTemplate x:DataType="models:StatisticalIllness">
+
+                                                 <Grid RowDefinitions="*"
+                                                        HeightRequest="100"
+                                                        ColumnDefinitions="2*, 1*, 4*">
+
+                                                        <gauge:SfRadialGauge BackgroundColor="Transparent" Grid.Column="0" >
+                                                               <gauge:SfRadialGauge.Axes>
+                                                                      <gauge:RadialAxis Minimum="0"
+                                                                                    Maximum="100"
+                                                                                    StartAngle="180"
+                                                                                    EndAngle="0"
+                                                                                    ShowTicks="False"
+                                                                                    ShowLabels="False">
+
+                                                                             <gauge:RadialAxis.AxisLabelStyle>
+                                                                                    <gauge:GaugeLabelStyle x:Name="GaugeLabels"/>
+                                                                             </gauge:RadialAxis.AxisLabelStyle>
+
+                                                                             <gauge:RadialAxis.AxisLineStyle>
+                                                                                    <gauge:RadialLineStyle Thickness="5" ThicknessUnit="Pixel" />
+                                                                             </gauge:RadialAxis.AxisLineStyle>
+
+                                                                             <gauge:RadialAxis.Pointers>
+                                                                                    <gauge:RangePointer Value="{Binding Probability}"
+                                                                                                        CornerStyle="EndCurve"
+                                                                                                        PointerWidth="5"
+                                                                                                        EnableAnimation="True"
+                                                                                                        AnimationDuration="1000">
+                                                                                           <gauge:RangePointer.Fill>
+                                                                                                  <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                                                         <GradientStop Color="#0074C0" Offset="0.0" />
+                                                                                                         <GradientStop Color="#003D73" Offset="1.0" />
+                                                                                                  </LinearGradientBrush>
+                                                                                           </gauge:RangePointer.Fill>
+                                                                                    </gauge:RangePointer>
+                                                                             </gauge:RadialAxis.Pointers>
+                                                                             <gauge:RadialAxis.Annotations>
+                                                                                    <gauge:GaugeAnnotation>
+                                                                                           <gauge:GaugeAnnotation.Content>
+                                                                                                  <Label Text="{Binding Probability, StringFormat='{0:F2}%'}"
+                                                                                                         FontSize="15"
+                                                                                                         FontAttributes="Bold" />
+                                                                                           </gauge:GaugeAnnotation.Content>
+                                                                                    </gauge:GaugeAnnotation>
+                                                                             </gauge:RadialAxis.Annotations>
+                                                                      </gauge:RadialAxis>
+                                                               </gauge:SfRadialGauge.Axes>
+                                                        </gauge:SfRadialGauge>
+
+                                                        <Label FontSize="20"
+                                                               Grid.Column="2"
+                                                               Text="{Binding Illness.Name}"
+                                                               VerticalOptions="Fill"
+                                                               LineBreakMode="WordWrap"
+                                                               HorizontalOptions="Start"
+                                                               VerticalTextAlignment="Center" />
+
+                                                 </Grid>
+
+                                                 </DataTemplate>
+
+                                          </CollectionView.ItemTemplate>
+
+                                   </CollectionView>
+
+                            </syncfusion:SfExpander.Content>
+
+                     </syncfusion:SfExpander>
+
+              </Grid>
+
+       </ScrollView>
+    
+</ContentPage>

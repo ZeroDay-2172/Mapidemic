@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Mapidemic"
              x:Class="Mapidemic.StatsPage"
              Title="Stats Page"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
 
 
@@ -79,6 +80,29 @@
                     </syncfusion:SfListView.EmptyView>
 
                 </syncfusion:SfListView>
+                <popup:SfPopup Message=""
+                       x:Name="Popup"
+                       IsOpen="False"
+                       HeaderTitle=""
+                       StaysOpen="True"
+                       HeaderHeight="0"
+                       WidthRequest="125"
+                       HeightRequest="125"
+                       ShowCloseButton="False"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center">
+                
+                <popup:SfPopup.ContentTemplate>
+                                <DataTemplate>
+                                        <ActivityIndicator IsRunning="True"
+                                                        Color="#0074C0"
+                                                        VerticalOptions="Center"
+                                                        HorizontalOptions="Center"
+                                                        Scale="2"/>
+                                </DataTemplate>
+                        </popup:SfPopup.ContentTemplate>
+
+                </popup:SfPopup>
             </Grid>
         </VerticalStackLayout>
 </ContentPage>

@@ -131,6 +131,7 @@ public partial class GraphPage : ContentPage
     /// <param name="args"></param>
     public async void RefreshButtonClicked(Object sender, EventArgs args)
     {
+        Popup.IsOpen = true;
         if (localityChosen) // Locality is chosen
         {
             if (numDays != 0) // Number of days is chosen
@@ -161,7 +162,7 @@ public partial class GraphPage : ContentPage
         {
             await DisplayAlert("Alert!", "Please specify a locality", "OK");
         }
-
+        Popup.IsOpen = false;
     }
 
     /// <summary>

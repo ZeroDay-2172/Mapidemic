@@ -1,3 +1,5 @@
+using Mapidemic.Pages.SymptomChecker;
+
 namespace Mapidemic;
 
 public partial class MenuPage : ContentPage
@@ -45,7 +47,7 @@ public partial class MenuPage : ContentPage
 		{
 			await DisplayAlert("Network Error", $"{error.Message}", "OK");
 		}
-		finally // resetting the activity indicator
+		finally
         {
             Popup.IsOpen = false;
         }
