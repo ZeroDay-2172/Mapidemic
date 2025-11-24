@@ -39,6 +39,13 @@ public partial class GraphPage : ContentPage
         // Reset chart & illness selection
         selectedIllness = "";
         column.ItemsSource = null;
+
+        // Set default to zip code, and 7 days
+        localTrends = true;
+        localityChosen = true;
+        localityPicker.SelectedIndex = 1;
+        numDays = 7;
+        timeRangePicker.SelectedIndex = 0;
     }
 
     /// <summary>
@@ -144,10 +151,14 @@ public partial class GraphPage : ContentPage
 
                     if (chartModel.data.Count != 0)
                     {
+                        // Ensure there are not excessive horizontal lines on graph
+                        SetGraphInterval(chartModel);
                         // Reverse data to show most recent data on the right
                         chartModel.data.Reverse();
                         // Update graph to show data
                         column.ItemsSource = chartModel.data;
+                        // Set the title for the graph
+                        SetGraphTitle();
                     }
                     else
                         await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
@@ -176,6 +187,7 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.White;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
             dataChart.YAxes[0].Title.TextColor = Colors.White;
+            chartTitle.TextColor = Colors.White;
         }
         else
         {
@@ -183,6 +195,51 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.Black;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
             dataChart.YAxes[0].Title.TextColor = Colors.Black;
+            chartTitle.TextColor = Colors.White;
         }
+    }
+
+    /// <summary>
+    /// Method to prevent excessive horizontal lines on graph.
+    /// </summary>
+    /// <param name="chartModel"></param>
+    public void SetGraphInterval(ChartModel chartModel)
+    {
+        int maxIndex = -1;
+        int max = -1;
+        for (int i = 0; i < chartModel.data.Count; i++)
+        {
+            if (chartModel.data.ElementAt(i).value > max)
+            {
+                max = chartModel.data.ElementAt(i).value;
+                maxIndex = i;
+            }
+        }
+
+        // Ensure at most 10 lines, round to next larger int to prevent the cutoff of values
+        if (chartModel.data.ElementAt(maxIndex).value > 10)
+        {
+            numericalAxis.Interval = chartModel.data.ElementAt(maxIndex).value / 10;
+            numericalAxis.Interval = Math.Ceiling(numericalAxis.Interval);
+        }
+    }
+
+    /// <summary>
+    /// Method that sets the graph's title after the data has been fetched
+    /// </summary>
+    private async void SetGraphTitle()
+    {
+        String newTitle = selectedIllness + " reports for previous " + numDays + " days in ";
+
+        bool isDarkMode = (Application.Current!.UserAppTheme == AppTheme.Dark);
+
+        // Set the text for the title
+        if (localTrends)
+            newTitle = newTitle + "" + MauiProgram.businessLogic.ReadSettings().PostalCode;
+        else
+            newTitle = newTitle + "the US";
+
+        // Update the actual title's text
+        chartTitle.Text = newTitle;
     }
 }

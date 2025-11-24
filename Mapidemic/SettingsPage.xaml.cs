@@ -1,4 +1,6 @@
 //Author(s): Connor McGuire
+using Syncfusion.Maui.Core;
+
 namespace Mapidemic;
 
 public partial class SettingsPage : ContentPage
@@ -54,16 +56,16 @@ public partial class SettingsPage : ContentPage
                 {
                     SetDarkMode();
                     MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(PostalCodeEnt.Text);
-                    await DisplayAlert("Success!", "Settings have been saved!", "OK");
+                    await ShowPopup("Success!", "Settings have been saved!");
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Could not save settings...", "OK");
+                    await ShowPopup("Error", "Could not save settings...");
                 }
             }
             else
             {
-                await DisplayAlert("Error", "Please enter postal zip code", "OK");
+                await ShowPopup("Error", "Please enter a valid zip code!");
             }
         }
         catch (Exception error)
@@ -85,5 +87,42 @@ public partial class SettingsPage : ContentPage
             Application.Current!.UserAppTheme = AppTheme.Dark;
         else
             Application.Current!.UserAppTheme = AppTheme.Light;
+    }
+
+    /// <summary>
+    /// Method that shows a popup with the provided message
+    /// </summary>
+    /// <param name="title">title for the popup</param>
+    /// <param name="message">message to display in the popup</param>
+    private async Task ShowPopup(string title, string message)
+    {
+        settingsPopup.ContentTemplate = new DataTemplate(() =>
+        {
+            // Create the frame
+            Frame popupFrame = new Frame
+            {
+                CornerRadius = 6,
+                Padding = 12,
+                Margin = new Thickness(0,0,0,20),
+                BackgroundColor = Colors.Transparent,
+                HasShadow = false,
+                BorderColor = Colors.Transparent
+            };
+
+            // Create label to hold the text
+            Label popupLabel = new Label
+            {
+                Text = message,
+                TextColor = Colors.Black,
+                HorizontalTextAlignment = TextAlignment.Center,
+                FontSize = 18
+            };
+
+            popupFrame.Content = popupLabel;
+            return popupFrame;
+        });
+
+        settingsPopup.HeaderTitle = title;
+        settingsPopup.Show();
     }
 }
