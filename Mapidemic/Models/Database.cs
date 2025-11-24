@@ -1,5 +1,7 @@
 
 
+using Mapidemic.Pages.SymptomChecker;
+
 namespace Mapidemic.Models;
 
 public class Database
@@ -141,6 +143,66 @@ public class Database
             // var result = (await supabaseClient.From<PostalCodeCentroids>().Filter<List<int>>("postal_code", Supabase.Postgrest.Constants.Operator.In, [54901, 54902]).Get()).Models;
             // Console.WriteLine($"-------------------- {result[0].Code} : {result[0].Latitude} : {result[0].Longitude} ---------------------- {result[1].Code} : {result[1].Latitude} : {result[1].Longitude} ------------------------------------------------------------------------");
             return (await IssueQuery(supabaseClient.From<PostalCodeCentroids>().Where(x => x.Code == postalCode).Get())).Models.FirstOrDefault();
+        }
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    /// <summary>
+    /// A function that gets the centroid values on the map
+    /// for a bulk list of postal codes in the United States
+    /// </summary>
+    /// <param name="postalCodes"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<Dictionary<int, PostalCodeCentroids>> GetPostalCodeCentroidsBulk(IEnumerable<int> postalCodes)
+    {
+        var codes = postalCodes.Distinct().ToList();
+        if (codes.Count == 0)
+        {
+            return new Dictionary<int, PostalCodeCentroids>(); // If no postal codes provided, return empty dictionary
+        }
+
+        try
+        {
+            var result = (await IssueQuery(supabaseClient
+                .From<PostalCodeCentroids>()
+                .Filter<List<int>>("postal_code", Supabase.Postgrest.Constants.Operator.In, codes) // Otherwise, fetch all requested postal codes
+                .Get())).Models;
+
+            return result.ToDictionary(x => x.Code, x => x); // Convert list to dictionary for easy lookup
+        }
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    /// <summary>
+    /// A function that gets the population counts
+    /// for a bulk list of postal codes in the United States
+    /// </summary>
+    /// <param name="postalCodes"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<Dictionary<int, Population>> GetPopulationCountsBulk(IEnumerable<int> postalCodes)
+    {
+        var codes = postalCodes.Distinct().ToList();
+        if (codes.Count == 0)
+        {
+            return new Dictionary<int, Population>(); // If no postal codes provided, return empty dictionary
+        }
+
+        try
+        {
+            var result = (await IssueQuery(supabaseClient
+                .From<Population>()
+                .Filter<List<int>>("postal_code", Supabase.Postgrest.Constants.Operator.In, codes) // Otherwise, fetch all requested postal codes
+                .Get())).Models;
+
+            return result.ToDictionary(x => x.PostalCode, x => x); // Convert list to dictionary for easy lookup
         }
         catch (Exception error) // exception if the database cannot be reached
         {
