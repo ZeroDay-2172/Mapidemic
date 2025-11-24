@@ -158,6 +158,8 @@ public partial class GraphPage : ContentPage
                         chartModel.data.Reverse();
                         // Update graph to show data
                         column.ItemsSource = chartModel.data;
+                        // Set the title for the graph
+                        SetGraphTitle();
                     }
                     else
                         await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
@@ -186,6 +188,7 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.White;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.White;
             dataChart.YAxes[0].Title.TextColor = Colors.White;
+            chartTitle.TextColor = Colors.White;
         }
         else
         {
@@ -193,6 +196,7 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.Black;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
             dataChart.YAxes[0].Title.TextColor = Colors.Black;
+            chartTitle.TextColor = Colors.White;
         }
     }
 
@@ -219,5 +223,24 @@ public partial class GraphPage : ContentPage
             numericalAxis.Interval = chartModel.data.ElementAt(maxIndex).value / 10;
             numericalAxis.Interval = Math.Ceiling(numericalAxis.Interval);
         }
+    }
+
+    /// <summary>
+    /// Method that sets the graph's title after the data has been fetched
+    /// </summary>
+    private async void SetGraphTitle()
+    {
+        String newTitle = selectedIllness + " reports for previous " + numDays + " days in ";
+
+        bool isDarkMode = (Application.Current!.UserAppTheme == AppTheme.Dark);
+
+        // Set the text for the title
+        if (localTrends)
+            newTitle = newTitle + "" + MauiProgram.businessLogic.ReadSettings().PostalCode;
+        else
+            newTitle = newTitle + "the US";
+
+        // Update the actual title's text
+        chartTitle.Text = newTitle;
     }
 }

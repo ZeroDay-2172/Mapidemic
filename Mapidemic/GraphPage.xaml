@@ -9,8 +9,15 @@
 
     <VerticalStackLayout Margin="0,0,20,0">
 
+        <Label Text="No Data Loaded"
+           FontSize="16"
+           FontAttributes="Bold"
+           HorizontalTextAlignment="Center"
+           x:Name="chartTitle"
+           Margin="20,20,20,0"/>
 
-        <chart:SfCartesianChart x:Name="dataChart" Margin="0,60,0,0">
+
+        <chart:SfCartesianChart x:Name="dataChart" Margin="0,20,0,0">
             <chart:SfCartesianChart.XAxes>
                 <chart:CategoryAxis>
                     <chart:CategoryAxis.Title>
