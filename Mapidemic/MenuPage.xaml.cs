@@ -76,13 +76,13 @@ public partial class MenuPage : ContentPage
 	}
 
 	/// <summary>
-	/// A function that displays the contact information page
+	/// A function that displays the feedback page
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	public async void CiButton_Clicked(object sender, EventArgs args)
+	public async void FbButton_Clicked(object sender, EventArgs args)
 	{
-		await homePage!.GetViewport().PushAsync(new ContactInformation());
+		await homePage!.GetViewport().PushAsync(new FeedbackPage());
 		homePage.IsPresented = false;
 	}
 

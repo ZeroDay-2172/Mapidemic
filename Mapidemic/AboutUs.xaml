@@ -1,103 +1,107 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="Mapidemic.AboutUs"
+          x:Class="Mapidemic.AboutUs"
             Title="Meet the Team">
 
-  <!-- Alex -->
-  <ContentPage Title="Alex Griep">
-    <ScrollView>
-      <VerticalStackLayout Padding="10">
-        <Label FontSize="18">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Alex Griep &#10;" FontAttributes="Bold" />
-              <Span Text="Major " />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
+	<!-- Alex -->
+	<ContentPage Title="Alex&#10;Griep">
+		<ScrollView>
+			<VerticalStackLayout Padding="10">
+				<Label FontSize="18">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Alex Griep &#10;" FontAttributes="Bold" />
+					<Span Text="Major " />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
 
-        <Label FontSize="18" LineBreakMode="WordWrap">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Place text here" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
-      </VerticalStackLayout>
-    </ScrollView>
-  </ContentPage>
+				<Label FontSize="18" LineBreakMode="WordWrap">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Place text here" />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
 
-  <!-- Arthur -->
-  <ContentPage Title="Arthur Waldman">
-    <ScrollView>
-      <VerticalStackLayout Padding="10">
-        <Label FontSize="18">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Arthur Waldman &#10;" FontAttributes="Bold" />
-              <Span Text="Major" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
+	<!-- Arthur -->
+	<ContentPage Title="Arthur&#10;Waldman">
+		<ScrollView>
+			<VerticalStackLayout Padding="10">
+				<Label FontSize="18">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Arthur Waldman &#10;" FontAttributes="Bold" />
+					<Span Text="Major" />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
 
-        <Label FontSize="18" LineBreakMode="WordWrap">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Place text here" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
-      </VerticalStackLayout>
-    </ScrollView>
-  </ContentPage>
+				<Label FontSize="18" LineBreakMode="WordWrap">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Place text here" />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
 
-  <!-- Connor -->
-  <ContentPage Title="Connor McGuire">
-    <ScrollView>
-      <VerticalStackLayout Padding="10">
-        <Label FontSize="18">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
-              <Span Text="Major" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
+	<!-- Connor -->
+	<ContentPage Title="Connor&#10;McGuire">
+		<ScrollView>
+			<VerticalStackLayout Padding="10">
+				<Label FontSize="18">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
+					<Span Text="Major" />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
 
-        <Label FontSize="18" LineBreakMode="WordWrap">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Place text here" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
-      </VerticalStackLayout>
-    </ScrollView>
-  </ContentPage>
+				<Label FontSize="18" LineBreakMode="WordWrap">
+				<Label.FormattedText>
+					<FormattedString>
+					<Span Text="Place text here" />
+					</FormattedString>
+				</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
 
-  <!-- Neng -->
-  <ContentPage Title="Neng Yang">
-    <ScrollView>
-      <VerticalStackLayout Padding="10">
-        <Label FontSize="18">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Neng Yang &#10;" FontAttributes="Bold" />
-              <Span Text="Major" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
+	<!-- Neng -->
+	<ContentPage Title="Neng&#10;Yang">
+		<ScrollView>
+			<Grid Padding="15" RowDefinitions="Auto,Auto" RowSpacing="10">
+				<Label FontSize="18"
+					   LineBreakMode="WordWrap"
+					   Grid.Row="0">
+					<Label.FormattedText>
+						<FormattedString>
+						<Span Text="Neng Yang &#10;" FontAttributes="Bold" FontSize="22" />
+						<Span Text=" &#10;" />
+						<Span Text="Major: Computer Science" />
+						<Span Text=" &#10;&#10;" />
+						<Span Text="&#9;&#9;&#9;&#9;&#9;" />
+						<Span Text="I’m a junior at the University of Wisconsin–Oshkosh pursuing a degree in Computer Science. " />
+						<Span Text="This project has been a great opportunity to apply my skills and contribute to a meaningful learning curve. " />
+						<Span Text="My academic journey has allowed me to work with a variety of technologies—from algorithms and Java to "/>
+						<Span Text=".NET MAUI mobile development—and I enjoy continuously learning new tools and improving my skills." />
+						<Span Text="&#10; &#10;" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+	
+				
+			</Grid>
+		</ScrollView>
+	</ContentPage>
 
-        <Label FontSize="18" LineBreakMode="WordWrap">
-          <Label.FormattedText>
-            <FormattedString>
-              <Span Text="Place text here" />
-            </FormattedString>
-          </Label.FormattedText>
-        </Label>
-      </VerticalStackLayout>
-    </ScrollView>
-  </ContentPage>
-
-</TabbedPage>
+	</TabbedPage>

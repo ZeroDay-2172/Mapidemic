@@ -17,7 +17,6 @@
                     <TapGestureRecognizer Tapped="ClickedOnIntro" />
                 </Border.GestureRecognizers>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Text="+" FontSize="24" TextColor="White" VerticalTextAlignment="Center" />
                 <Label Grid.Column="1" 
                     Text="1. Introduction" 
                     FontAttributes="Bold" 
@@ -29,9 +28,28 @@
 
             <!-- Content for Introduction -->
             <Grid Grid.Row="1" x:Name="IntroContent" IsVisible="False"
-                    Padding="14" BackgroundColor="transparent">
-                <Label Text="Explain the Privacy Policy."
-                    LineBreakMode="WordWrap"/>
+                  Padding="14" BackgroundColor="Transparent">
+                <Label LineBreakMode="WordWrap">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="Mapidemic empowers users with real-time awareness of local illness outbreaks " />
+                            <Span Text="so they can proactively plan precautions for their health and safety." />
+                            <Span Text="The app provides this awareness through an anonymous entry system where users can submit information about their sickness." />
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="This policy page is designed to clearly explain how we keep your privacy safe and secure. " />
+                            <Span Text="We are committed to protecting your privacy and ensuring that any information you provide is handled " />
+                            <Span Text="responsibly, securely, and transparently. "/>
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="This Privacy Policy outlines what information Mapidemic collects, how it is used, "/>
+                            <Span Text="and the measures we take to safeguard it. By using Mapidemic, you agree to the practices described in this policy." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </Grid>
 
             <!-- Reason -->
@@ -43,10 +61,6 @@
                     <TapGestureRecognizer Tapped="ClickedOnReason" />
                 </Border.GestureRecognizers>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Text="+" 
-                    FontSize="24" 
-                    TextColor="White" 
-                    VerticalTextAlignment="Center" />
                 <Label Grid.Column="1" 
                     Text="2. Reason" 
                     FontAttributes="Bold" 
@@ -58,9 +72,37 @@
 
             <!-- Content for Reason -->
             <Grid Grid.Row="3" x:Name="ReasonContent" IsVisible="False"
-                    Padding="14" BackgroundColor="transparent">
-                <Label Text="Explain why we collect data."
-                    LineBreakMode="WordWrap"/>
+                  Padding="14" BackgroundColor="Transparent">
+                <Label LineBreakMode="WordWrap">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="Mapidemic ensures the privacy of all its users. We strictly focus on keeping your identity safe and secure." />
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="We do not collect, use, or store any personally identifiable information, such as your name, email address, phone number, or any other direct identifiers." />
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+                            <Span Text="This allows us to:" />
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+
+                            <!-- Bullet list -->
+                            <Span Text="• Provide accurate maps and outbreak trends" />
+                            <Span Text="&#10;"/>
+                            <Span Text="• Improve community health awareness" />
+                            <Span Text="&#10;"/>
+                            <Span Text="• Ensure reliable and anonymous data reporting" />
+                            <Span Text="&#10;"/>
+                            <Span Text="• Maintain overall app performance and security" />
+                            <Span Text="&#10;"/>
+                            <Span Text="&#10;"/>
+                            <Span Text="&#9;&#9;&#9;&#9;&#9;"/>
+                            <Span Text="At no point is your identity linked to any report you submit." />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </Grid>
         </Grid>
     </ScrollView>

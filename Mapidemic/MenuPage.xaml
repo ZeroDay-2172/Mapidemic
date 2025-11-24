@@ -75,8 +75,8 @@
                 FontSize="20"
                 CornerRadius="0"
                 TextColor="White"
-                Text="Contact information"
-                Clicked="CiButton_Clicked"
+                Text="Feedback"
+                Clicked="FbButton_Clicked"
                 BackgroundColor="#0074C0"/>
 
         <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>

@@ -472,4 +472,21 @@ public class BusinessLogic
             throw new Exception(error.Message);
         }
     }
+
+    /// <summary> 
+    /// A function that submits user feedback to the database
+    /// </summary>
+    /// <param name="feedback"></param>
+    /// <returns>true if feedback was submitted, false if not</returns>
+    public async Task<bool> SubmitFeedbackAsync(Feedback feedback)
+    {
+        try // attempting to submit feedback to the database
+        {
+            return await database.SubmitFeedbackAsync(feedback); // Insert the feedback into the database 
+        }
+        catch (Exception error) // catching error if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
 }

@@ -22,6 +22,28 @@ public partial class StatsPage : ContentPage
         BindingContext = this;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Get the default ZIP from settings
+        int defaultZip = MauiProgram.businessLogic.ReadSettings()?.PostalCode ?? 0;
+
+        // If no default ZIP, exit
+        if (defaultZip == 0)
+            return;
+
+        // Put it into the ZipEntry
+        ZipEntry.Text = defaultZip.ToString();
+
+        // DaysPicked set to 30
+        if (DaysPicked.Items.Contains("30"))
+            DaysPicked.SelectedItem = "30";
+
+        // Auto-load illnesses for the user's provided default ZIP
+        await GetReports(ZipEntry);
+    }
+
     /// <summary>
     /// A method to generate the reports of all illnesses
     /// reports for the postal code and adds them. Then the report
@@ -65,6 +87,7 @@ public partial class StatsPage : ContentPage
                     _illnesses[kv.Key] = kv.Value;
                 }
 
+                // Fills the Illnessdata with illness that has at least one report sorted alphabetically
                 IllnessItems.Clear();
                 foreach (var kv in _illnesses.Where(k => k.Value > 0).OrderBy(kv => kv.Key, StringComparer.CurrentCultureIgnoreCase))
                 {
