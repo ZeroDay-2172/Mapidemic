@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+                xmlns:local="clr-namespace:Mapidemic"
+                x:Class="Mapidemic.Pages.SymptomChecker.ProcessPickerPage"
+                Title="Select an option">
+    
+    <Grid>
+
+        <popup:SfPopup IsOpen="False"
+                       StaysOpen="True"
+                       HeaderHeight="50"
+                       FooterHeight="50"
+                       ShowFooter="True"
+                       x:Name="Disclaimer"
+                       VerticalOptions="Center"
+                       AppearanceMode="TwoButton"
+                       HorizontalOptions="Center">
+
+            <popup:SfPopup.HeaderTemplate>
+                    <DataTemplate>
+                            <Label FontSize="15"
+                                    Text="DISCLAIMER"
+                                    TextColor="Black"
+                                    FontAttributes="Bold"
+                                    Padding="15, 15, 15, 0"
+                                    HorizontalTextAlignment="Center"/>
+                    </DataTemplate>
+            </popup:SfPopup.HeaderTemplate>
+            
+            <popup:SfPopup.ContentTemplate>
+                    <DataTemplate>
+                            <Label Padding="15, 0, 15, 15"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="Justify">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                                <Span TextColor="Black" Text="This symptom checking process is based on values provided by the CDC and should " />
+                                                <Span TextColor="Black" Text="not be used in place of an official diagnosis. If you are experiencing " />
+                                                <Span TextColor="Black" Text="symptoms not listed in the symptom checker, please seek the guidance of " />
+                                                <Span TextColor="Black" Text="a medical professional." />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                            </Label>
+                    </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+
+            <popup:SfPopup.FooterTemplate>
+                    <DataTemplate>
+
+                        <Grid ColumnDefinitions="1*, Auto, 1*"
+                              RowDefinitions="*">
+
+                                <Button FontSize="20"
+                                        Text="Accept"
+                                        Grid.Column="0"
+                                        CornerRadius="0"
+                                        TextColor="White"
+                                        Clicked="AcceptClicked"
+                                        BackgroundColor="#0074C0" />
+
+                                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="#696969"></BoxView>
+
+                                <Button FontSize="20"
+                                        Text="Decline"
+                                        Grid.Column="2"
+                                        CornerRadius="0"
+                                        TextColor="White"
+                                        Clicked="DeclinedClicked"
+                                        BackgroundColor="#0074C0" />
+
+                        </Grid>
+                            
+                    </DataTemplate>
+            </popup:SfPopup.FooterTemplate>
+
+        </popup:SfPopup>
+
+        <popup:SfPopup Message=""
+                       x:Name="Popup"
+                       IsOpen="False"
+                       HeaderTitle=""
+                       StaysOpen="True"
+                       HeaderHeight="0"
+                       WidthRequest="125"
+                       HeightRequest="125"
+                       ShowCloseButton="False"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center">
+                
+            <popup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <ActivityIndicator IsRunning="True"
+                                       Color="#0074C0"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Scale="2"/>
+                </DataTemplate>
+            </popup:SfPopup.ContentTemplate>
+
+        </popup:SfPopup>
+
+        <VerticalStackLayout Padding="10, 20, 10, 0"
+                             Spacing="20"
+                             x:Name="Options"
+                             IsVisible="False">
+
+                <Grid>
+
+                        <Image Source="artificial_intelligence.png"
+                               Aspect="AspectFill"
+                               HeightRequest="250">
+
+                               <Image.Shadow>
+                                        <Shadow Brush="Black"
+                                                Opacity="1" />
+                               </Image.Shadow>
+
+                               <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnAiImageTapped"/>
+                               </Image.GestureRecognizers>
+
+                        </Image>
+
+                        <Grid RowDefinitions="Auto, Auto">
+                                <Label Grid.Row="0"
+                                        FontSize="20"
+                                        TextColor="White"
+                                        Text="Artificial Intelligence"
+                                        Padding="10, 0, 0, 0"
+                                        BackgroundColor="#0074C0"
+                                        HeightRequest="50"
+                                        VerticalOptions="Start"
+                                        VerticalTextAlignment="Center" />
+
+                                <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="Black" VerticalOptions="Start" />
+                        </Grid>
+
+                </Grid>
+
+                <Grid>
+
+                        <Image Source="statistics.png"
+                               Aspect="AspectFill"
+                               HeightRequest="250">
+
+                               <Image.Shadow>
+                                        <Shadow Brush="Black"
+                                                Opacity="1" />
+                               </Image.Shadow>
+
+                               <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnStatsImageTapped"/>
+                               </Image.GestureRecognizers>
+
+                        </Image>
+
+                        <Grid RowDefinitions="Auto, Auto">
+                                <Label Grid.Row="0"
+                                        FontSize="20"
+                                        TextColor="White"
+                                        Text="Statistical Analysis"
+                                        Padding="10, 0, 0, 0"
+                                        BackgroundColor="#0074C0"
+                                        HeightRequest="50"
+                                        VerticalOptions="Start"
+                                        VerticalTextAlignment="Center" />
+
+                                <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="Black" VerticalOptions="Start" />
+                        </Grid>
+
+                </Grid>
+
+        </VerticalStackLayout>
+
+        
+
+    </Grid>
+
+</ContentPage>
