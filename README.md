@@ -1,3 +1,7 @@
+Sprint 4 Changes:
+- Added Google Gemini AI integration for symptom checker
+- Updated UI on symptoms page
+
 Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
 - Added try-catch blocks around every database call to ensure a network error does not crash the app if the database cannot be reached :smile: :smile: :smile:
