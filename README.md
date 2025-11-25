@@ -1,6 +1,8 @@
 Sprint 4 Changes:
 - Added Google Gemini AI integration for symptom checker
 - Updated UI on symptoms page
+- Updated UI on graph page
+- Improved popup on settings page
 
 Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
