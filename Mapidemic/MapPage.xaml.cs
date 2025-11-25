@@ -1,6 +1,7 @@
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
 using CommunityToolkit.Mvvm.Messaging;
+using System.ComponentModel;
 namespace Mapidemic;
 
 public partial class MapPage : ContentPage
@@ -24,6 +25,11 @@ public partial class MapPage : ContentPage
     private const int defaultModerateThreshold = 5;
     private const int defaultMoreThreshold = 10;
     private const int defaultSevereThreshold = 15;
+    private const double UsMinLatitude = 24.396308;
+    private const double UsMaxLatitude = 49.384358;
+    private const double UsMinLongitude = -125.0;
+    private const double UsMaxLongitude = -66.93457;
+    private static readonly Location DefaultUsCenter = new Location(37.0902, -95.7129); // Approximate center of the contiguous United States
 
     public MapPage()
     {
@@ -58,7 +64,6 @@ public partial class MapPage : ContentPage
         WeakReferenceMessenger.Default.UnregisterAll(this); // If this isn't here, the app will crash because we can't re-register messengers
     }
 
-
     /// <summary>
     /// Handle the Report Illness button click to navigate to the report page.
     /// </summary>
@@ -70,6 +75,11 @@ public partial class MapPage : ContentPage
     void OnLegendToggleClicked(object sender, EventArgs e)
     {
         LegendFrame.IsVisible = !LegendFrame.IsVisible; // Toggles the visibility of the legend frame
+    }
+
+    void OnLegendBackClicked(object sender, EventArgs e)
+    {
+        LegendFrame.IsVisible = false; // Hides the legend frame when the back button is clicked
     }
 
     /// <summary>
@@ -102,56 +112,8 @@ public partial class MapPage : ContentPage
         }
         catch (Exception error) // catching error if database could not be reached to get the list of centroids
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            await DisplayAlert("Unable to center map", $"{error.Message}", "OK");
         }
-    }
-
-    /// <summary>
-    /// Get the centroid location for a given ZIP code, using cache if available.
-    /// If not in cache, fetch from database or geocode as a fallback.
-    /// </summary>
-    /// <param name="zip"></param>
-    /// <returns>Accurate or Approximate location for the ZIP code, null if not found</returns>
-    private async Task<Location?> GetCentroidForZip(int zip)
-    {
-        if (_zipCenterCache.TryGetValue(zip, out var cachedLocation)) // Step 1: Check cache first
-        {
-            return cachedLocation;
-        }
-        try // attempting to read in the postal code centroids
-        {
-            var centroid = await MauiProgram.businessLogic.GetPostalCodeCentroids(zip); // Step 2: Fetch from database
-            if (centroid != null)
-            {
-                var location = new Location(centroid.Latitude, centroid.Longitude);
-                _zipCenterCache[zip] = location;
-                return location;
-            }
-
-            try // Step 3: Fallback to geocoding service
-            {
-                string postalCode = zip.ToString("D5");
-                var locations = await Geocoding.Default.GetLocationsAsync(postalCode);
-                var location = locations?.FirstOrDefault();
-                if (location != null)
-                {
-                    var loc = new Location(location.Latitude, location.Longitude);
-                    _zipCenterCache[zip] = loc;
-                    return loc;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error geocoding postal code {zip}: {ex.Message}");
-            }
-        }
-        catch (Exception error) // catching error if the database could not be reached for postal code centroids
-        {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
-        }
-
-        System.Diagnostics.Debug.WriteLine($"Warning: No centroid found for postal code {zip}."); // Step 4: Total failure
-        return null;
     }
 
     /// <summary>
@@ -179,24 +141,29 @@ public partial class MapPage : ContentPage
                 .Select(g => new { Zip = g.Key, Count = g.Sum(x => x.TotalCount) }) // Groups by postal code and sums the counts
                 .ToList();
 
+            var zipCodes = grouped.Select(g => g.Zip).ToList();
+            var centroidDict = await MauiProgram.businessLogic.GetPostalCodeCentroidsBulk(zipCodes); // Bulk fetch centroids for all relevant ZIP codes
+            var populationDict = await MauiProgram.businessLogic.GetPopulationCountsBulk(zipCodes); // Bulk fetch populations for all relevant ZIP codes
+
             foreach (var item in grouped)
             {
-
-                var center = await GetCentroidForZip(item.Zip);
-                if (center == null)
+                if (!centroidDict.TryGetValue(item.Zip, out var centroid))
                 {
+                    System.Diagnostics.Debug.WriteLine($"Warning: No centroid found for postal code {item.Zip}. Skipping.");
                     continue; // Skip if no centroid found
                 }
+                var center = new Location(centroid.Latitude, centroid.Longitude);
+                _zipCenterCache[item.Zip] = center; // Cache the location
+                populationDict.TryGetValue(item.Zip, out var population); // Try to get population, may be null
+                _populationCache[item.Zip] = population?.PopulationCount; // Cache population count if available
 
-                var population = await GetPopulation(item.Zip);
-                var style = GetStyleForCount(item.Count, population);
+                var style = GetStyleForCount(item.Count, population?.PopulationCount);
                 await DrawHeatmapCircles(center, style.radiusMiles, style.color);
-
             }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK"); // Display an alert if rendering fails
+            await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK");
         }
     }
 
@@ -239,28 +206,6 @@ public partial class MapPage : ContentPage
                 return (Colors.OrangeRed, baseRadius);
             default:
                 return (Colors.Red, baseRadius);
-        }
-    }
-
-    /// <summary>
-    /// Get the population count for a given postal code, using cache if available.
-    /// </summary>
-    private async Task<int?> GetPopulation(int postalCode)
-    {
-        if (_populationCache.TryGetValue(postalCode, out var cachedPopulation))
-        {
-            return cachedPopulation;
-        }
-        try
-        {
-            var population = await MauiProgram.businessLogic.GetPopulationCount(postalCode);
-            _populationCache[postalCode] = population;
-            return population;
-        }
-        catch (Exception error) // If the database could not be reached
-        {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
-            return null;
         }
     }
 
@@ -325,5 +270,28 @@ public partial class MapPage : ContentPage
             _refreshScheduled = false;
             _renderLock.Release();
         }
+    }
+
+    /// <summary>
+    /// Check if a location is within the bounds of the United States.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    private static bool IsWithinUsBounds(Location location)
+    {
+        return location.Latitude >= UsMinLatitude && location.Latitude <= UsMaxLatitude &&
+               location.Longitude >= UsMinLongitude && location.Longitude <= UsMaxLongitude;
+    }
+
+    /// <summary>
+    /// Clamp a location to the bounds of the United States.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <returns></returns>
+    private static Location ClampToUsBounds(Location location)
+    {
+        double clampedLatitude = Math.Max(UsMinLatitude, Math.Min(UsMaxLatitude, location.Latitude));
+        double clampedLongitude = Math.Max(UsMinLongitude, Math.Min(UsMaxLongitude, location.Longitude));
+        return new Location(clampedLatitude, clampedLongitude);
     }
 }

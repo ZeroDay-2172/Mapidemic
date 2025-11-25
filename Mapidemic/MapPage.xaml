@@ -39,51 +39,111 @@
                         Margin="0,16,16,0"/>
 
                 <Frame x:Name="LegendFrame"
-                       IsVisible="False"
-                       BackgroundColor="{AppThemeBinding Light=#CCFFFFFF, Dark=#CC000000}"
                        Padding="12"
+                       Margin="12"
                        CornerRadius="8"
-                       HorizontalOptions="End"
-                       VerticalOptions="Start"
-                       Margin="0,64,16,0">
+                       BackgroundColor="{AppThemeBinding Light=#F9FAFB, Dark=#111827}"
+                       HasShadow="True"
+                       IsVisible="False">
+                        <ScrollView>
+                                <VerticalStackLayout Spacing="8">
+                                        <Label Text="Illness Heatmap Legend"
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"/>
 
-                        <StackLayout Spacing="8">
+                                        <Label Text="Each circle represents reports in a single ZIP code, drawn at the ZIP code's geographic center, not any person's exact address. Circle size is fixed to help protect privacy."
+                                               FontSize="Small"/>
 
-                                <Label Text="Legend"
-                                       FontAttributes="Bold"
-                                       FontSize="Medium"
-                                       HorizontalOptions="Center"
-                                       TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                                        <Label Text="When population data is available, colors reflect the approximate percent of the ZIP reporting this illness:"
+                                               FontSize="Small"
+                                               Margin="0,4,0,0"/>
 
-                                <StackLayout Orientation="Horizontal"
-                                                Spacing="8">
-                                        <BoxView WidthRequest="20"
-                                                 HeightRequest="20"
-                                                 Color="#FF4136"/>
-                                        <Label Text="High Infection Area"
-                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-                                </StackLayout>
+                                        <Grid ColumnDefinitions="Auto,*"
+                                              RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                              ColumnSpacing="8"
+                                              RowSpacing="4">
+                                                <!-- 0–5% -->
+                                                <BoxView Grid.Row="0"
+                                                         Grid.Column="0"
+                                                         HeightRequest="14"
+                                                         WidthRequest="24"
+                                                         Color="Yellow"/>
+                                                <Label Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Text="Yellow – Minimal activity (0–5% of ZIP population in the current reporting window)."
+                                                       FontSize="Small"/>
 
-                                <StackLayout Orientation="Horizontal"
-                                                Spacing="8">
-                                        <BoxView WidthRequest="20"
-                                                 HeightRequest="20"
-                                                 Color="#FFA500"/>
-                                        <Label Text="Medium Infection Area"
-                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-                                </StackLayout>
+                                                <!-- 6–10% -->
+                                                <BoxView Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         HeightRequest="14"
+                                                         WidthRequest="24"
+                                                         Color="Gold"/>
+                                                <Label Grid.Row="1"
+                                                       Grid.Column="1"
+                                                       Text="Gold – Elevated activity (6–10% of ZIP population)."
+                                                       FontSize="Small"/>
 
-                                <StackLayout Orientation="Horizontal"
-                                                Spacing="8">
-                                        <BoxView WidthRequest="20"
-                                                 HeightRequest="20"
-                                                 Color="#FFE6F36F"/>
-                                        <Label Text="Low Infection Area"
-                                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-                                </StackLayout>
+                                                <!-- 11–15% -->
+                                                <BoxView Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         HeightRequest="14"
+                                                         WidthRequest="24"
+                                                         Color="Orange"/>
+                                                <Label Grid.Row="2"
+                                                       Grid.Column="1"
+                                                       Text="Orange – Higher activity (11–15% of ZIP population)."
+                                                       FontSize="Small"/>
 
-                        </StackLayout>
+                                                <!-- 16–20% -->
+                                                <BoxView Grid.Row="3"
+                                                         Grid.Column="0"
+                                                         HeightRequest="14"
+                                                         WidthRequest="24"
+                                                         Color="OrangeRed"/>
+                                                <Label Grid.Row="3"
+                                                       Grid.Column="1"
+                                                       Text="Orange-Red – Severe activity (16–20% of ZIP population)."
+                                                       FontSize="Small"/>
 
+                                                <!-- >20% -->
+                                                <BoxView Grid.Row="4"
+                                                         Grid.Column="0"
+                                                         HeightRequest="14"
+                                                         WidthRequest="24"
+                                                         Color="Red"/>
+                                                <Label Grid.Row="4"
+                                                       Grid.Column="1"
+                                                       Text="Red – Critical activity (more than 20% of ZIP population)."
+                                                       FontSize="Small"/>
+                                        </Grid>
+
+                                        <Label Text="When population data is missing for a ZIP code, color is based on the number of reports in that ZIP:"
+                                               FontSize="Small"
+                                               Margin="0,8,0,0"/>
+
+                                        <Label Text="• 1–2 reports – Yellow (minimal)"
+                                               FontSize="Small"/>
+                                        <Label Text="• 3–5 reports – Gold (elevated)"
+                                               FontSize="Small"/>
+                                        <Label Text="• 6–10 reports – Orange (higher)"
+                                               FontSize="Small"/>
+                                        <Label Text="• 11–15 reports – Orange-Red (severe)"
+                                               FontSize="Small"/>
+                                        <Label Text="• 16+ reports – Red (critical)"
+                                               FontSize="Small"/>
+
+                                        <Label Text="Map coverage is limited to ZIP codes within the United States. Reports are aggregated and shown only as approximate locations to preserve user privacy."
+                                               FontSize="Small"
+                                               Margin="0,8,0,0"/>
+
+                                        <Button Text="Back"
+                                                HorizontalOptions="End"
+                                                Padding="12,4"
+                                                Clicked="OnLegendBackClicked"
+                                                BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"/>
+                                </VerticalStackLayout>
+                        </ScrollView>
                 </Frame>
 
         </Grid>

@@ -373,6 +373,44 @@ public class BusinessLogic
     }
 
     /// <summary>
+    /// A function that gets the centroid values on the map
+    /// for a bulk list of postal codes in the United States
+    /// </summary>
+    /// <param name="postalCodes"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<Dictionary<int, PostalCodeCentroids>> GetPostalCodeCentroidsBulk(IEnumerable<int> postalCodes)
+    {
+        try // attempting to read the postal code centroid list
+        {
+            return await database.GetPostalCodeCentroidsBulk(postalCodes);
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    /// <summary>
+    /// A function that gets the population counts
+    /// for a bulk list of postal codes in the United States
+    /// </summary>
+    /// <param name="postalCodes"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task<Dictionary<int, Population>> GetPopulationCountsBulk(IEnumerable<int> postalCodes)
+    {
+        try // attempting to read the population counts list
+        {
+            return await database.GetPopulationCountsBulk(postalCodes);
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    /// <summary>
     /// A function that accepts illness report details
     /// and submits them to the database
     /// </summary>
