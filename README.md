@@ -5,6 +5,8 @@ Sprint 4 Changes:
 - Improved popup on settings page
 - Updated legend on the map to provide users with additional information about what the colors mean
 - Reduced the overall number of database calls down to two on the map screen when appearing
+- Improved stats page to display current default ZIP code's reported illness when going to it
+- Added a feedback page for users to submit feedback regarding Mapidemic
 
 Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
