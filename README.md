@@ -3,6 +3,8 @@ Sprint 4 Changes:
 - Updated UI on symptoms page
 - Updated UI on graph page
 - Improved popup on settings page
+- Updated legend on the map to provide users with additional information about what the colors mean
+- Reduced the overall number of database calls down to two on the map screen when appearing
 
 Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
