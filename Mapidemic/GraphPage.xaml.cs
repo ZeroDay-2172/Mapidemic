@@ -38,6 +38,7 @@ public partial class GraphPage : ContentPage
 
         // Reset chart & illness selection
         selectedIllness = "";
+        chartTitle.Text = "No Data Loaded";
         column.ItemsSource = null;
 
         // Set default to zip code, and 7 days
@@ -195,7 +196,7 @@ public partial class GraphPage : ContentPage
             dataChart.XAxes[0].Title.TextColor = Colors.Black;
             dataChart.YAxes[0].LabelStyle.TextColor = Colors.Black;
             dataChart.YAxes[0].Title.TextColor = Colors.Black;
-            chartTitle.TextColor = Colors.White;
+            chartTitle.TextColor = Colors.Black;
         }
     }
 
