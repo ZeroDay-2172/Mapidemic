@@ -1,12 +1,13 @@
 Sprint 4 Changes:
-- Added Google Gemini AI integration for symptom checker
-- Updated UI on symptoms page
-- Updated UI on graph page
-- Improved popup on settings page
-- Updated legend on the map to provide users with additional information about what the colors mean
-- Reduced the overall number of database calls down to two on the map screen when appearing
-- Improved stats page to display current default ZIP code's reported illness when going to it
-- Added a feedback page for users to submit feedback regarding Mapidemic
+- Added Google Gemini AI integration for symptom checker :smile: :smile: :smile:
+- Updated UI on symptoms page :smile:
+- Updated UI on graph page :smile: :smile: :smile:
+- Improved popup on settings page :smile:
+- Updated legend on the map to provide users with additional information about what the colors mean :smile: :smile: :smile:
+- Reduced the overall number of database calls down to two on the map screen when appearing :smile: :smile: :smile:
+- Improved stats page to display current default ZIP code's reported illness when going to it :smile: :smile: :smile:
+- Added a feedback page for users to submit feedback regarding Mapidemic :smile: :smile: :smile:
+- Added feedback database table to house user feedback :smile: :smile: :smile:
 
 Sprint 3 Changes:
 - Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
