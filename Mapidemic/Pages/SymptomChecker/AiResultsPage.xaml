@@ -7,50 +7,212 @@
                 x:Class="Mapidemic.Pages.SymptomChecker.AiResultsPage"
                 Title="Results">
     
-    <Grid RowDefinitions="4*, 6*" Padding="10">
+    <Grid Padding="10"
+          RowDefinitions="4*, 6*" >
 
         <Image Grid.Row="0"
                WidthRequest="250"
-               Source="robot_assistant.png"  />
+               Source="robot_assistant.png" />
 
-        <VerticalStackLayout Grid.Row="1" Spacing="5">
+        <Grid Grid.Row="1"
+              RowDefinitions="1*, Auto, 1*, Auto, 2*">
 
-            <Label x:Name="Greeting" FontSize="20" HorizontalOptions="Center" />
+            <Border Grid.Row="0"
+                    x:Name="Illness"
+                    Stroke="Black"
+                    IsVisible="False"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10">
 
-            <Label HorizontalTextAlignment="Justify" >
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span x:Name="FirstRobotText" FontSize="16" />
-                        <Span x:Name="IllnessText" FontSize="16" FontAttributes="Bold" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                <Grid RowDefinitions="Auto, Auto, 1*">
 
-            <Label HorizontalTextAlignment="Justify" >
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span x:Name="SecondRobotText" FontSize="16" />
-                        <Span x:Name="ContagiousText" FontSize="16" FontAttributes="Bold" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                    <Label Grid.Row="0"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           x:Name="IdentifiedIllness"
+                           HorizontalTextAlignment="Center" />
 
-            <Label HorizontalTextAlignment="Justify" >
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span x:Name="ThirdRobotText" FontSize="16" />
-                        <Span x:Name="RecoveryText" FontSize="16" FontAttributes="Bold" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                    <Label Grid.Row="1"
+                           FontSize="12"
+                           x:Name="GeminiMessage"
+                           HorizontalTextAlignment="Center" />
 
-            <Label x:Name="FourthRobotText" FontSize="16" HorizontalTextAlignment="Justify" LineHeight="0.95" />
+                    <Label Grid.Row="2"
+                           FontSize="40"
+                           x:Name="IllnessName"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center" />
 
-            <ScrollView>
-                <Grid x:Name="SymptomGrid" ColumnDefinitions="1*, 1*" RowSpacing="5" />
-            </ScrollView>
+                </Grid>
 
-        </VerticalStackLayout>
+            </Border>
+
+            <BoxView Grid.Row="1" HeightRequest="5" BackgroundColor="Transparent"></BoxView>
+
+            <Grid Grid.Row="2"
+                  ColumnDefinitions="1*, Auto, 1*">
+
+                <Border Grid.Column="0"
+                        Stroke="Black"
+                        IsVisible="False"
+                        StrokeThickness="2"
+                        x:Name="ContagiousPeriod"
+                        StrokeShape="RoundRectangle 10">
+
+                    <Grid RowDefinitions="Auto, Auto, 3*">
+
+                        <Label Grid.Row="0"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               x:Name="ContagiousHeader"
+                               HorizontalTextAlignment="Center" />
+
+                        <Label Grid.Row="1" FontSize="12" x:Name="ContagiousAverage" HorizontalTextAlignment="Center" />
+
+                        <Grid Grid.Row="2"
+                              RowDefinitions="1*, 1*">
+
+                            <Grid Grid.Row="0"
+                                  ColumnDefinitions="1*, 1*">
+
+                                <Label FontSize="20"
+                                       Grid.Column="0"
+                                       x:Name="ContagiousHoursText"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Label FontSize="20"
+                                       Grid.Column="1"
+                                       x:Name="ContagiousHoursNumber"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                            </Grid>
+
+                            <Grid Grid.Row="1"
+                                  ColumnDefinitions="1*, 1*">
+
+                                <Label FontSize="20"
+                                       Grid.Column="0"
+                                       x:Name="ContagiousDaysText"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Label FontSize="20"
+                                       Grid.Column="1"
+                                       x:Name="ContagiousDaysNumber"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+                <BoxView Grid.Column="1" WidthRequest="5" BackgroundColor="Transparent"></BoxView>
+
+                <Border Grid.Column="2"
+                        Stroke="Black" 
+                        IsVisible="False"
+                        StrokeThickness="2"
+                        x:Name="RecoveryPeriod"
+                        StrokeShape="RoundRectangle 10">
+
+                    <Grid RowDefinitions="Auto, Auto, 3*">
+
+                        <Label Grid.Row="0"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               x:Name="RecoveryHeader"
+                               HorizontalTextAlignment="Center"/>
+
+                        <Label Grid.Row="1"
+                               FontSize="12"
+                               x:Name="RecoveryAverage"
+                               HorizontalTextAlignment="Center" />
+
+                        <Grid Grid.Row="2"
+                              RowDefinitions="1*, 1*">
+
+                            <Grid Grid.Row="0"
+                                  ColumnDefinitions="1*, 1*">
+
+                                <Label FontSize="20"
+                                       Grid.Column="0"
+                                       x:Name="RecoveryHoursText"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Label FontSize="20"
+                                       Grid.Column="1"
+                                       x:Name="RecoveryHoursNumber"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                            </Grid>
+
+                            <Grid Grid.Row="1" ColumnDefinitions="1*, 1*">
+
+                                <Label FontSize="20"
+                                       Grid.Column="0"
+                                       x:Name="RecoveryDaysText"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                                <Label FontSize="20"
+                                       Grid.Column="1"
+                                       x:Name="RecoveryDaysNumber"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center" />
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+            <BoxView Grid.Row="3" HeightRequest="5" BackgroundColor="Transparent"></BoxView>
+
+            <Border Grid.Row="4"
+                    Stroke="Black" 
+                    x:Name="Symptoms"
+                    IsVisible="False"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10">
+
+                <Grid RowDefinitions="Auto, Auto, 1*">
+
+                    <Label Grid.Row="0"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           x:Name="SymptomHeader"
+                           HorizontalTextAlignment="Center" />
+
+                    <Label Grid.Row="1"
+                           FontSize="12"
+                           x:Name="Disclaimer"
+                           HorizontalTextAlignment="Center" />
+
+                    <ScrollView Grid.Row="2">
+
+                        <Grid RowSpacing="5"
+                              x:Name="SymptomGrid"
+                              ColumnDefinitions="1*, 1*" />
+
+                    </ScrollView>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
 
     </Grid>
 
