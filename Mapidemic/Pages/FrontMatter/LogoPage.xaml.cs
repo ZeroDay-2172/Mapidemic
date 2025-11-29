@@ -1,4 +1,4 @@
-namespace Mapidemic;
+namespace Mapidemic.Pages.FrontMatter;
 
 /// <summary>
 ///  suppressing the warning caused by lines: 

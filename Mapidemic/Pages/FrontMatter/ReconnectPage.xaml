@@ -3,7 +3,7 @@
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
                 xmlns:local="clr-namespace:Mapidemic"
-                x:Class="Mapidemic.ReconnectPage"
+                x:Class="Mapidemic.Pages.FrontMatter.ReconnectPage"
                 Title="Connection Error">
     
     <VerticalStackLayout Padding="10"

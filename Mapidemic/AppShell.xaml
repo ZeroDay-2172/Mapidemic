@@ -3,11 +3,12 @@
     x:Class="Mapidemic.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Mapidemic.Pages.FrontMatter"
     xmlns:local="clr-namespace:Mapidemic"
     Title="Mapidemic">
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:LogoPage}"
+        ContentTemplate="{DataTemplate pages:LogoPage}"
         Route="LogoPage" />
 
 </Shell> 

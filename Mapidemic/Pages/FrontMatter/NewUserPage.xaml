@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
-             x:Class="Mapidemic.NewUserPage">
+             x:Class="Mapidemic.Pages.FrontMatter.NewUserPage">
 
         <Grid VerticalOptions="Center" x:Name="Grid">
 
@@ -38,6 +38,7 @@
                            Placeholder="Postal/Zip Code" />
 
                     <Button Text="Enter"
+                            TextColor="White"
                             x:Name="EnterButton"
                             Clicked="OnEnterClicked"
                             BackgroundColor="#0074C0">
@@ -65,6 +66,7 @@
                 </Switch>
 
                 <Button Text="Continue"
+                        TextColor="White"
                         x:Name="ContinueButton"
                         Clicked="OnChoiceSelected"
                         HorizontalOptions="Center"
