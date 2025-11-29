@@ -1,7 +1,6 @@
-namespace Mapidemic;
-using System;
 using Mapidemic.Models;
-using Microsoft.Maui.Controls;
+
+namespace Mapidemic.Pages.Menu;
 
 public partial class FeedbackPage : ContentPage
 {

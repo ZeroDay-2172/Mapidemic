@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
              xmlns:local="clr-namespace:Mapidemic"
-             x:Class="Mapidemic.MenuPage">
+             x:Class="Mapidemic.Pages.Menu.MenuPage">
 
     <Grid VerticalOptions="FillAndExpand"
           BackgroundColor="#0074C0"
@@ -56,7 +56,7 @@
                 CornerRadius="0"
                 TextColor="White"
                 Text="Meet the Team"
-                Clicked="AuButton_Clicked"
+                Clicked="MttButton_Clicked"
                 BackgroundColor="#0074C0"/>
 
         <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="#696969"></BoxView>
@@ -81,17 +81,6 @@
 
         <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>
 
-        <Button Grid.Row="11"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                LineBreakMode="WordWrap"
-                Clicked="CdcButton_Clicked"
-                BackgroundColor="#0074C0"
-                Text="Centers for Disease Control and Prevention"/>
-
-        <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>
-
         <Button Grid.Row="9"
                 FontSize="20"
                 CornerRadius="0"
@@ -100,6 +89,17 @@
                 Clicked="IwcButton_Clicked"
                 BackgroundColor="#0074C0"
                 Text="Information We Collect"/>
+
+        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+
+        <Button Grid.Row="11"
+                FontSize="20"
+                CornerRadius="0"
+                TextColor="White"
+                LineBreakMode="WordWrap"
+                Clicked="CdcButton_Clicked"
+                BackgroundColor="#0074C0"
+                Text="Centers for Disease Control and Prevention"/>
 
     </Grid>
 

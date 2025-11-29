@@ -1,6 +1,6 @@
 using Mapidemic.Pages.SymptomChecker;
 
-namespace Mapidemic;
+namespace Mapidemic.Pages.Menu;
 
 public partial class MenuPage : ContentPage
 {
@@ -54,13 +54,13 @@ public partial class MenuPage : ContentPage
 	}
 
 	/// <summary>
-	/// A function that displays the about us page
+	/// A function that displays the meet the team page
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="args"></param>
-	public async void AuButton_Clicked(object sender, EventArgs args)
+	public async void MttButton_Clicked(object sender, EventArgs args)
 	{
-		await homePage!.GetViewport().PushAsync(new AboutUs());
+		await homePage!.GetViewport().PushAsync(new MeetTheTeamPage());
 		homePage.IsPresented = false;
 	}
 

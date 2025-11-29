@@ -2,6 +2,7 @@
 <FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
+             xmlns:pages="clr-namespace:Mapidemic.Pages.Menu"
              xmlns:models="clr-namespace:Mapidemic.Models"
              x:Class="Mapidemic.HomePage">
 
@@ -11,7 +12,7 @@
 
     <FlyoutPage.Flyout>
 
-        <local:MenuPage Title="Menu" x:Name="menuPage"/>
+        <pages:MenuPage Title="Menu" x:Name="menuPage"/>
 
     </FlyoutPage.Flyout>
     

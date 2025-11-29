@@ -1,4 +1,4 @@
-namespace Mapidemic;
+namespace Mapidemic.Pages.Menu;
 
 public partial class InformationWeCollect : ContentPage
 {
