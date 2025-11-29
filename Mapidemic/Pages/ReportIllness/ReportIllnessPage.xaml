@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-             x:Class="Mapidemic.ReportIllnessPage"
+             x:Class="Mapidemic.Pages.ReportIllness.ReportIllnessPage"
              Title="Report Illness">
 
         <!-- Page-level styles/colors -->
@@ -33,7 +33,7 @@
                 <Style TargetType="Button"
                        x:Key="PrimaryButton">
                         <Setter Property="BackgroundColor"
-                                Value="#4C6FFF"/>
+                                Value="#0074C0"/>
                         <Setter Property="TextColor"
                                 Value="White"/>
                         <Setter Property="CornerRadius"

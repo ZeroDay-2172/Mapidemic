@@ -1,7 +1,4 @@
-//Author(s): Connor McGuire
-using Syncfusion.Maui.Core;
-
-namespace Mapidemic;
+namespace Mapidemic.Pages.Settings;
 
 public partial class SettingsPage : ContentPage
 {

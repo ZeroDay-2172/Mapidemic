@@ -3,7 +3,7 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
-             x:Class="Mapidemic.MapPage"
+             x:Class="Mapidemic.Pages.Landing.MapPage"
              Title="Home">
 
 

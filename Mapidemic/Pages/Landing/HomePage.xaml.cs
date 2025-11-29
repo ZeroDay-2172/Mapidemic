@@ -1,14 +1,13 @@
-namespace Mapidemic;
+using Mapidemic.Pages.Settings;
+
+namespace Mapidemic.Pages.Landing;
 
 /// <summary>
 /// The HomePage UI for the App
 /// </summary>
 public partial class HomePage : FlyoutPage
 {
-	private NavigationPage? viewport;
-
-	//Not a property as it is used as an out argument
-	private bool settingsOpen = false;
+	private bool settingsOpen = false; // Not a property as it is used as an out argument
 
 	/// <summary>
 	/// The default constructor for the HomePage
@@ -37,7 +36,7 @@ public partial class HomePage : FlyoutPage
 	{
 		if (ViewPort.Navigation.NavigationStack.LastOrDefault() is not SettingsPage) // only loading settings page if not already loaded
         {
-			await this.ViewPort.PushAsync(new SettingsPage());
+			await ViewPort.PushAsync(new SettingsPage());
         }
 	}
 

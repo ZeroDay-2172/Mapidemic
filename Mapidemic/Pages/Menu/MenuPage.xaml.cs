@@ -1,4 +1,5 @@
 using Mapidemic.Pages.SymptomChecker;
+using Mapidemic.Pages.Landing;
 
 namespace Mapidemic.Pages.Menu;
 

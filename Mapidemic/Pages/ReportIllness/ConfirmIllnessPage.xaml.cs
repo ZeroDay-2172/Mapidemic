@@ -1,24 +1,17 @@
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Maps;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Devices.Sensors;
-using Mapidemic.Models;
-using Supabase;
 
-namespace Mapidemic;
+namespace Mapidemic.Pages.ReportIllness;
 
 public partial class ConfirmIllnessPage : ContentPage
 {
     private readonly string _illness;
     private readonly string _zip;
-    private readonly BusinessLogic _logic;
 
-    public ConfirmIllnessPage(string illness, string zip, BusinessLogic logic) // Constructor to initialize with illness and ZIP code
+    public ConfirmIllnessPage(string illness, string zip) // Constructor to initialize with illness and ZIP code
     {
         InitializeComponent();
         _illness = illness;
         _zip = zip; // Takes the previously given variables and stores them
-        _logic = logic;
 
         SummaryLabel.Text = $"You are reporting {_illness} in the area with ZIP code {_zip}."; // Update the summary label with the provided information
     }
@@ -73,7 +66,7 @@ public partial class ConfirmIllnessPage : ContentPage
             return;
         }
 
-        var success = await _logic.ReportIllness(Guid.NewGuid(), zipInt, _illness, DateTimeOffset.UtcNow); // Submit the report using the business logic layer
+        var success = await MauiProgram.businessLogic.ReportIllness(Guid.NewGuid(), zipInt, _illness, DateTimeOffset.UtcNow); // Submit the report using the business logic layer
         if (!success)
         {
             await DisplayAlert("Error", "Submit failed. Please try again later.", "OK"); // Show an error if submission fails

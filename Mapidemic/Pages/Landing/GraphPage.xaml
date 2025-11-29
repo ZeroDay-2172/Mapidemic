@@ -5,7 +5,7 @@
              xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
              xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
-             x:Class="Mapidemic.GraphPage">
+             x:Class="Mapidemic.Pages.Landing.GraphPage">
 
     <VerticalStackLayout Margin="0,0,20,0">
 

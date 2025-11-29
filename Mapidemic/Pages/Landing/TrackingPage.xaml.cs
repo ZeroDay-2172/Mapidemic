@@ -1,4 +1,4 @@
-namespace Mapidemic;
+namespace Mapidemic.Pages.Landing;
 
 public partial class TrackingPage : TabbedPage
 {

@@ -1,15 +1,10 @@
-using Supabase;
-using Microsoft.Maui.Devices.Sensors;
-using Microsoft.Maui.ApplicationModel;
 using System.Collections.ObjectModel;
-using Mapidemic.Models;
 
-namespace Mapidemic;
+namespace Mapidemic.Pages.ReportIllness;
 
 public partial class ReportIllnessPage : ContentPage
 {
     private readonly ObservableCollection<string> illnesses = new();
-    private readonly BusinessLogic BusinessLogic = new(new Database());
     public ReportIllnessPage()
     {
         InitializeComponent();
@@ -33,7 +28,7 @@ public partial class ReportIllnessPage : ContentPage
         try
         {
             Busy(true, "Loading illnesses..."); // Show the busy indicator
-            var listing = await BusinessLogic.GetIllnessesList(); // Get the list of illnesses from the business logic layer
+            var listing = await MauiProgram.businessLogic.GetIllnessesList(); // Get the list of illnesses from the business logic layer
             illnesses.Clear();
             foreach (var listitem in listing)
             {
@@ -67,7 +62,7 @@ public partial class ReportIllnessPage : ContentPage
 
         try
         {
-            if (!await BusinessLogic.ValidatePostalCode(postalCodeText)) 
+            if (!await MauiProgram.businessLogic.ValidatePostalCode(postalCodeText!)) 
             {
                 ZipError.IsVisible = true;
                 Busy(false, "Invalid ZIP Code.");
@@ -75,7 +70,7 @@ public partial class ReportIllnessPage : ContentPage
             }
 
             Busy(false);
-            await Navigation.PushAsync(new ConfirmIllnessPage(selectedIllness, postalCodeText, BusinessLogic)); // Navigate to the confirmation page
+            await Navigation.PushAsync(new ConfirmIllnessPage(selectedIllness!, postalCodeText!)); // Navigate to the confirmation page
         } catch (Exception ex)
         {
             Busy(false);

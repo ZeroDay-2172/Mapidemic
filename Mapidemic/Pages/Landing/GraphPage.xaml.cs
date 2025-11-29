@@ -1,15 +1,7 @@
-//Author(s): Connor McGuire
-
-using Microcharts;
-using SkiaSharp;
-using Microcharts.Maui;
-using Syncfusion;
 using Mapidemic.Models;
-using Syncfusion.Maui.Toolkit.Charts;
-using System.Diagnostics;
 using System.Collections.ObjectModel;
 
-namespace Mapidemic;
+namespace Mapidemic.Pages.Landing;
 
 public partial class GraphPage : ContentPage
 {

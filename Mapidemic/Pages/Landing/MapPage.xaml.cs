@@ -1,8 +1,9 @@
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
 using CommunityToolkit.Mvvm.Messaging;
-using System.ComponentModel;
-namespace Mapidemic;
+using Mapidemic.Pages.ReportIllness;
+
+namespace Mapidemic.Pages.Landing;
 
 public partial class MapPage : ContentPage
 {

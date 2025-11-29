@@ -1,14 +1,7 @@
-namespace Mapidemic;
-
-using System;
-using System.Linq;
-using Microsoft.Maui.Controls;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Supabase;
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
-using Syncfusion.Maui.ListView;
+
+namespace Mapidemic.Pages.Landing;
 
 public partial class StatsPage : ContentPage
 {
