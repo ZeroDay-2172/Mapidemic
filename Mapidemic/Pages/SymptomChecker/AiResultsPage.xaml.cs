@@ -132,14 +132,6 @@ public partial class AiResultsPage : ContentPage
             }
         }
 
-        
-
-
-
-
-
-
-
         string[] symptoms = MauiProgram.businessLogic.artificialIntelligenceIllness.Symptoms!;
         if (symptoms.Length == 0)
         {
