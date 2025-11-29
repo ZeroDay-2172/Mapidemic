@@ -2,12 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
              xmlns:local="clr-namespace:Mapidemic"
              x:Class="Mapidemic.Pages.Menu.MenuPage">
 
     <Grid VerticalOptions="FillAndExpand"
-          BackgroundColor="#0074C0"
           RowDefinitions="2*, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
+
+                <Grid.Background>
+                        <LinearGradientBrush EndPoint="1, 0"
+                                             StartPoint="0, 0">
+                                
+                                <GradientStop Color="#003D73" Offset="0"/>
+                                <GradientStop Color="#0074C0" Offset="1"/>
+
+                        </LinearGradientBrush>
+                </Grid.Background>
 
         <Label Text="Menu"
                Grid.Row="0"
@@ -15,7 +25,7 @@
                TextColor="White"
                VerticalOptions="Center"
                HorizontalOptions="Center"
-               BackgroundColor="#0074C0" />
+               BackgroundColor="Transparent" />
 
         <popup:SfPopup Message=""
                        x:Name="Popup"
@@ -41,65 +51,77 @@
 
         </popup:SfPopup>
 
-        <Button Grid.Row="1"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                Text="Symptom Checker"
-                Clicked="ScButton_Clicked"
-                BackgroundColor="#0074C0"/>
+        <buttons:SfButton Grid.Row="1"
+                          Padding="10"
+                          FontSize="20"
+                          CornerRadius="0"
+                          TextColor="White"
+                          Text="Symptom Checker"
+                          Background="Transparent"
+                          Clicked="ScButton_Clicked"/>
 
-        <BoxView Grid.Row="2" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+        <BoxView Grid.Row="2" HeightRequest="1" BackgroundColor="Black"></BoxView>
 
-         <Button Grid.Row="3"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                Text="Meet the Team"
-                Clicked="MttButton_Clicked"
-                BackgroundColor="#0074C0"/>
+        <buttons:SfButton Grid.Row="3"
+                          Padding="10"
+                          FontSize="20"
+                          Text="Feedback"
+                          CornerRadius="0"
+                          TextColor="White"
+                          Background="Transparent"
+                          Clicked="FbButton_Clicked"
+                          HorizontalTextAlignment="Start">
 
-        <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+        </buttons:SfButton>
 
-        <Button Grid.Row="5"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                Text="Privacy Policy"
-                Clicked="PpButton_Clicked"
-                BackgroundColor="#0074C0"/>
+        <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="Black"></BoxView>
 
-        <BoxView Grid.Row="6" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+        <buttons:SfButton Grid.Row="5"
+                          Padding="10"
+                          FontSize="20"
+                          CornerRadius="0"
+                          TextColor="White"
+                          Text="Privacy Policy"
+                          Background="Transparent"
+                          Clicked="PpButton_Clicked"
+                          HorizontalTextAlignment="Start"/>
 
-        <Button Grid.Row="7"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                Text="Feedback"
-                Clicked="FbButton_Clicked"
-                BackgroundColor="#0074C0"/>
+        <BoxView Grid.Row="6" HeightRequest="1" BackgroundColor="Black"></BoxView>
 
-        <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+        <buttons:SfButton Grid.Row="7"
+                          Padding="10"
+                          FontSize="20"
+                          CornerRadius="0"
+                          TextColor="White"
+                          Text="Meet the Team"
+                          Background="Transparent"
+                          Clicked="MttButton_Clicked"
+                          HorizontalTextAlignment="Start"/>
 
-        <Button Grid.Row="9"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                LineBreakMode="WordWrap"
-                Clicked="IwcButton_Clicked"
-                BackgroundColor="#0074C0"
-                Text="Information We Collect"/>
+        <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="Black"></BoxView>
 
-        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="#696969"></BoxView>
+        <buttons:SfButton Grid.Row="9"
+                          Padding="10"
+                          FontSize="20"
+                          CornerRadius="0"
+                          TextColor="White"
+                          Background="Transparent"
+                          Clicked="IwcButton_Clicked"
+                          Text="Information We Collect"
+                          HorizontalTextAlignment="Start"/>
 
-        <Button Grid.Row="11"
-                FontSize="20"
-                CornerRadius="0"
-                TextColor="White"
-                LineBreakMode="WordWrap"
-                Clicked="CdcButton_Clicked"
-                BackgroundColor="#0074C0"
-                Text="Centers for Disease Control and Prevention"/>
+        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="Black"></BoxView>
+
+        <buttons:SfButton Padding="10"
+                          Grid.Row="11"
+                          FontSize="20"
+                          CornerRadius="0"
+                          TextColor="White"
+                          LineBreakMode="WordWrap"
+                          Background="Transparent"
+                          Clicked="CdcButton_Clicked"
+                          HorizontalTextAlignment="Start"
+                          Text="Centers for Disease Control and Prevention"/>
 
     </Grid>
 
