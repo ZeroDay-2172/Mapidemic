@@ -26,17 +26,6 @@
 
                     <Button Text="Save Settings" Clicked="SaveButton_Clicked" x:Name="PostalCodeButton" Grid.Row="2" Grid.Column="1" BackgroundColor="#0074C0" FontSize="18" TextColor="White"/>
                 </Grid>
-
-                <popup:SfPopup x:Name="settingsPopup"
-                               AutoCloseDuration="2000"
-                               ShowCloseButton="false"
-                               HorizontalOptions="Center"
-                               VerticalOptions="End"
-                               IsOpen="false"
-                               IsVisible="false">
-                    
-                </popup:SfPopup>
-
             </StackLayout>
 
 </ContentPage>
