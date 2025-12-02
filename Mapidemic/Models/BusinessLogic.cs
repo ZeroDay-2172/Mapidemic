@@ -102,8 +102,8 @@ public class BusinessLogic
 	public void CreateSettingsFile()
     {
         string destinationPath = Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath);
-        var input = FileSystem.OpenAppPackageFileAsync(uiSettingsPath);
-        var output = File.Create(destinationPath);
+        using var input = FileSystem.OpenAppPackageFileAsync(uiSettingsPath);
+        using var output = File.Create(destinationPath);
         input.Result.CopyToAsync(output);
     }
 
