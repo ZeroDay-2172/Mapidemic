@@ -1,6 +1,9 @@
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
-
+using System.Formats.Asn1;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 namespace Mapidemic.Pages.Landing;
 
 public partial class GraphPage : ContentPage
@@ -13,10 +16,13 @@ public partial class GraphPage : ContentPage
     private int numDays = 0;
     public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
+    public ObservableCollection<string> LocalityCollection { get; set; } = new();
+
     public GraphPage()
     {
         InitializeComponent();
         illnessPicker.BindingContext = this;
+        localityPicker.BindingContext = this;
     }
 
     /// <summary>
@@ -32,6 +38,26 @@ public partial class GraphPage : ContentPage
         selectedIllness = "";
         chartTitle.Text = "No Data Loaded";
         column.ItemsSource = null;
+
+        // Get list of localities -- Can be modified later
+        string postalCode = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        LocalityCollection.Add("National");
+
+        // Handle postalCodes with leading zeros
+        switch (postalCode.Length)
+        {
+            case 3:
+            LocalityCollection.Add("00" + postalCode);
+            break;
+
+            case 4:
+            LocalityCollection.Add("0" + postalCode);
+            break;
+
+            default:
+            LocalityCollection.Add(postalCode);
+            break;
+        }
 
         // Set default to zip code, and 7 days
         localTrends = true;
@@ -154,17 +180,9 @@ public partial class GraphPage : ContentPage
                         SetGraphTitle();
                     }
                     else
-                        await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
+                        await ShowPopup("No reports found in last 7 days");
                 }
             }
-            else
-            {
-                await DisplayAlert("Alert!", "Please specify a time range", "OK");
-            }
-        }
-        else
-        {
-            await DisplayAlert("Alert!", "Please specify a locality", "OK");
         }
         Popup.IsOpen = false;
     }
@@ -234,5 +252,15 @@ public partial class GraphPage : ContentPage
 
         // Update the actual title's text
         chartTitle.Text = newTitle;
+    }
+
+    private async Task ShowPopup(string message)
+    {
+        var popup = Toast.Make(
+            message, 
+            ToastDuration.Short,
+            textSize: 18
+        );
+        await popup.Show();
     }
 }
