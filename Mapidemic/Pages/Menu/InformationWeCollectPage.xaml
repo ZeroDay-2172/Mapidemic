@@ -2,307 +2,273 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.Expander;assembly=Syncfusion.Maui.Expander"
              x:Class="Mapidemic.Pages.Menu.InformationWeCollectPage"
              Title="Information We Collect">
 
     <ScrollView>
-        <Grid Padding="15" RowSpacing="5"
-          RowDefinitions="Auto,Auto,Auto,Auto,
-                            Auto,Auto,Auto,Auto,
-                            Auto,Auto,Auto,Auto,
-                            Auto,Auto,Auto,Auto
-                            ">
+        <VerticalStackLayout Padding="15" Spacing="10">
 
-            <!-- Introduction header -->
-            <Border Grid.Row="0"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnIntro" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="1. Introduction" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 1. Introduction -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;1. Introduction"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- No personal info -->
-            <Grid Grid.Row="1" x:Name="IntroContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="We don’t collect personal information or require accounts. "/>
-                            <Span Text="Mapidemic is anonymous by design and intended for users 18+."/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="We don’t collect personal information or require accounts. " />
+                                <Span Text="Mapidemic is anonymous by design and intended for users 18+." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Illness Reports header -->
-            <Border Grid.Row="2"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnIllnessReports" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="2. Illness Reports" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 2. Illness Reports -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;2. Illness Reports"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Illness Reports details -->
-            <Grid Grid.Row="3" x:Name="IllnessReportsContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="When you submit a report, we store anonymously:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Illness type (from the app’s list)"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• ZIP code of the reported area"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Date and time of the report"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Average recovery period for that illness (from CDC and similar public sources)"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• A unique report ID (not linked to you)"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="Use: We aggregate counts by ZIP to render the heatmap."/>
-                            <Span Text="&#10;"/>
-                            <Span Text="Retention: Each report is kept only until the illness’s average recovery period has passed, then it’s deleted."/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="When you submit a report, we store anonymously:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• Illness type (from the app’s list)"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• ZIP code of the reported area"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• Date and time of the report"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• Average recovery period for that illness (from CDC and similar public sources)"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• A unique report ID (not linked to you)"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="Use: We aggregate counts by ZIP to render the heatmap."/>
+                                <Span Text="&#10;"/>
+                                <Span Text="Retention: Each report is kept only until the illness’s average recovery period has passed, then it’s deleted."/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Population & Geolocation Data header -->
-            <Border Grid.Row="4"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnPopulationGeolocationData" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="3. Population &amp; Geography" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 3. Population & Geography -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;3. Population &amp; Geography"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Population & Geolocation Data details -->
-            <Grid Grid.Row="5" x:Name="PopulationGeolocationDataContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Population &amp; Geography Data (non-user):"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Population by ZIP from Census.gov (stored separately)"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• ZIP centroids (from Census data) to place heatmap circles"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• These datasets are not about you and only scale/position the map"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="Population &amp; Geography Data (non-user):"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• Population by ZIP from Census.gov (stored separately)"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• ZIP centroids (from Census data) to place heatmap circles"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• These datasets are not about you and only scale/position the map"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Location header -->
-            <Border Grid.Row="6"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnLocation" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="4. Location" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 4. Location -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;4. Location"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Location details -->
-            <Grid Grid.Row="7" x:Name="LocationContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Location:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• The app does not access GPS, Bluetooth, Wi-Fi, or other device sensors"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• You can enter a default ZIP code to center the map"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="Location:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• The app does not access GPS, Bluetooth, Wi-Fi, or other device sensors"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• You can enter a default ZIP code to center the map"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Device Data, Logs, and Analytics header -->
-            <Border Grid.Row="8"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnDeviceInformation" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="5. Device Data/Logs/Analytics" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 5. Device Data/Logs/Analytics -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;5. Device Data/Logs/Analytics"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Device Data, Logs, and Analytics details -->
-            <Grid Grid.Row="9" x:Name="DeviceInformationContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Device Data, Logs, and Analytics:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• We do not collect device identifiers, IP addresses, ad IDs, crash analytics, or usage analytics"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• We do not send emails or texts from the app"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="Device Data, Logs, and Analytics:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• We do not collect device identifiers, IP addresses, ad IDs, crash analytics, or usage analytics"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• We do not send emails or texts from the app"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Feedback & Support header -->
-            <Border Grid.Row="10"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnFeedback" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="6. Feedback" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 6. Feedback -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;6. Feedback"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Feedback & Support details -->
-            <Grid Grid.Row="11" x:Name="FeedbackContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Feedback &amp; Support:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• If you email us, a team member replies from a shared inbox"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• After the issue is resolved, the email is deleted"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="Feedback &amp; Support:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• If you email us, a team member replies from a shared inbox"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• After the issue is resolved, the email is deleted"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- Third-Party Services header -->
-            <Border Grid.Row="12"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnThirdPartyServices" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="7. Third-Parties" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 7. Third-Parties -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;7. Third-Parties"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- Third-Party Services details -->
-            <Grid Grid.Row="13" x:Name="ThirdPartyServicesContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="Third-Party Services:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Supabase (backend/database) stores anonymous report and reference data"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• Google Maps displays the map"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• We do not share raw report data; it appears only in-app and is removed when it expires"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="Third-Party Services:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• Supabase (backend/database) stores anonymous report and reference data"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• Google Maps displays the map"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• We do not share raw report data; it appears only in-app and is removed when it expires"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
-            <!-- User Controls & Preferences header -->
-            <Border Grid.Row="14"
-                    Padding="14"
-                    BackgroundColor="#0066CC"
-                    HorizontalOptions="FillAndExpand">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ClickedOnUserControlsPreferences" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Grid.Column="1" 
-                    Text="8. Preferences" 
-                    FontAttributes="Bold" 
-                    FontSize="18" 
-                    TextColor="White"
-                    VerticalTextAlignment="Center" />
-                </Grid>
-            </Border>
+            <!-- 8. Preferences -->
+            <syncfusion:SfExpander IsExpanded="False"
+                                   AnimationDuration="100"
+                                   HeaderIconColor="White"
+                                   HeaderBackground="#0066CC">
+                <syncfusion:SfExpander.Header>
+                    <Label Text="&#9;&#9;8. Preferences"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="White"
+                           HeightRequest="50"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                </syncfusion:SfExpander.Header>
 
-            <!-- User Controls & Preferences details -->
-            <Grid Grid.Row="15" x:Name="UserControlsPreferencesContent" IsVisible="False"
-                  Padding="14" BackgroundColor="Transparent">
-                <Label LineBreakMode="WordWrap">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="User Controls &amp; Preferences:"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• In-app preferences: Dark Mode and default ZIP"/>
-                            <Span Text="&#10;"/>
-                            <Span Text="• There are no accounts to delete; individual reports expire automatically when their recovery period elapses"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-            </Grid>
-        </Grid>
+                <syncfusion:SfExpander.Content>
+                    <Label LineBreakMode="WordWrap" Padding="5">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="&#10;"/>
+                                <Span Text="User Controls &amp; Preferences:"/>
+                                <Span Text="&#10;&#10;"/>
+                                <Span Text="• In-app preferences: Dark Mode and default ZIP"/>
+                                <Span Text="&#10;"/>
+                                <Span Text="• There are no accounts to delete; individual reports expire automatically when their recovery period elapses"/>
+                                <Span Text="&#10;"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
