@@ -1,18 +1,23 @@
-namespace Mapidemic.Pages.Settings;
-using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
+using System.Diagnostics;
+using Mapidemic.Pages.Landing;
 
+namespace Mapidemic.Pages.Settings;
+
+/// <summary>
+/// A class that provides a user interface for the user to change their settings
+/// </summary>
 public partial class SettingsPage : ContentPage
 {
     private bool darkMode;
 
+    /// <summary>
+    /// The designated constructor for the SettingsPage
+    /// </summary>
     public SettingsPage()
     {
         InitializeComponent();
 
-        //Display current postal code
-        string postalCode = MauiProgram.businessLogic!.ReadSettings().PostalCode.ToString();
+        string postalCode = MauiProgram.businessLogic!.ReadSettings().PostalCode.ToString(); // Displaying current postal code
         switch(postalCode.Length)
         {
             case 3: PostalCodeEnt.Text = $"00{postalCode}"; break;
@@ -20,25 +25,31 @@ public partial class SettingsPage : ContentPage
             default: PostalCodeEnt.Text = postalCode; break;
         }
         
-
-        if (Application.Current?.RequestedTheme == AppTheme.Dark)
+        if (Application.Current?.RequestedTheme == AppTheme.Dark) // moving switch to true
+        {
             DarkModeSwitch.IsToggled = true;
-        else
+        }
+        else // moving switch to false
+        {
             DarkModeSwitch.IsToggled = false;
+        }
     }
 
     /// <summary>
-    /// Function that sets dark mode to be toggled on the next
-    /// settings save.
+    /// Function that sets dark mode to be toggled on the next settings save.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
     public void OnDarkModeToggled(Object sender, EventArgs args)
     {
-        if (DarkModeSwitch.IsToggled == true)
+        if (DarkModeSwitch.IsToggled) // storing true position of the switch
+        {
             darkMode = true;
-        else
+        }
+        else // storing false position of the switch
+        {
             darkMode = false;
+        }
     }
 
     /// <summary>
@@ -48,59 +59,37 @@ public partial class SettingsPage : ContentPage
     /// <param name="args"></param>
     public async void SaveButton_Clicked(Object sender, EventArgs args)
     {
-        try
+        try // attempting to save the settings
         {
-            if (await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text))
+            if (await MauiProgram.businessLogic.ValidatePostalCode(PostalCodeEnt.Text)) // validating postal code
             {
-                if (await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(PostalCodeEnt.Text)))
+                if (await MauiProgram.businessLogic.SaveSettings(darkMode, int.Parse(PostalCodeEnt.Text))) // saving settings
                 {
-                    SetDarkMode();
+                    if (darkMode) // updating app theme to dark theme
+                    {
+                        Application.Current!.UserAppTheme = AppTheme.Dark;
+                    }
+                    else // updating app theme to light theme
+                    {
+                        Application.Current!.UserAppTheme = AppTheme.Light;
+                    }
                     MauiProgram.businessLogic.ReadSettings().PostalCode = int.Parse(PostalCodeEnt.Text);
-                    await ShowPopup("Settings have been saved!");
+                    await HomePage.ShowPopup("Settings have been saved");
                 }
-                else
+                else // toast if settings could not be saved
                 {
-                    await ShowPopup("Could not save settings...");
+                    await HomePage.ShowPopup("Settings could not be saved");
                 }
             }
-            else
+            else // invalid postal code
             {
-                await ShowPopup("Please enter a valid zip code!");
+                await HomePage.ShowPopup("Invalid postal code entered");
             }
         }
-        catch (Exception error)
+        catch (Exception error) // error if unable to save to local settings file
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            await HomePage.ShowPopup("Settings could not be saved");
+            Debug.WriteLine(error.Message);
         }
-        finally
-        {
-            
-        }
-    }
-
-    /// <summary>
-    /// Function that sets Dark Mode if darkMode equals true, otherwise sets Light Mode.
-    /// </summary>
-    private void SetDarkMode()
-    {
-        if (this.darkMode == true)
-            Application.Current!.UserAppTheme = AppTheme.Dark;
-        else
-            Application.Current!.UserAppTheme = AppTheme.Light;
-    }
-
-    /// <summary>
-    /// Method that shows a popup with the provided message
-    /// </summary>
-
-    /// <param name="message">message to display in the popup</param>
-    private async Task ShowPopup(string message)
-    {
-        var popup = Toast.Make(
-            message, 
-            ToastDuration.Short,
-            textSize: 18
-        );
-        await popup.Show();
     }
 }

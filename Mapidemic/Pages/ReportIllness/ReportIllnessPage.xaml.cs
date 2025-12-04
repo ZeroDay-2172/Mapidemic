@@ -1,10 +1,19 @@
+using System.Diagnostics;
+using Mapidemic.Pages.Landing;
 using System.Collections.ObjectModel;
 
 namespace Mapidemic.Pages.ReportIllness;
 
+/// <summary>
+/// A class that provides a user interface for reporting illnesses
+/// </summary>
 public partial class ReportIllnessPage : ContentPage
 {
     private readonly ObservableCollection<string> illnesses = new();
+
+    /// <summary>
+    /// The designated constructor for a ReportIllnessPage
+    /// </summary>
     public ReportIllnessPage()
     {
         InitializeComponent();
@@ -38,7 +47,8 @@ public partial class ReportIllnessPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to load illnesses: {ex.Message}", "OK"); // Show an error message if loading fails
+            await HomePage.ShowPopup("Unable to load illnesses"); // Show an error message if loading fails
+            Debug.WriteLine(ex.Message);
         }
         finally { Busy(false); }// Hide the busy indicator
     }
@@ -74,7 +84,8 @@ public partial class ReportIllnessPage : ContentPage
         } catch (Exception ex)
         {
             Busy(false);
-            await DisplayAlert("Error", $"Failed to report illness: {ex.Message}", "OK"); // Show an error message if reporting fails
+            await HomePage.ShowPopup("Unable to report illness. Please try again"); // Show an error message if reporting fails
+            Debug.WriteLine(ex.Message);
         }
     }
 

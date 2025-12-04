@@ -1,8 +1,12 @@
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Mapidemic.Pages.Landing;
 
+/// <summary>
+/// A class that provides a user interface for tracking illness on a graph
+/// </summary>
 public partial class GraphPage : ContentPage
 {
     private string selectedIllness = "";
@@ -13,6 +17,9 @@ public partial class GraphPage : ContentPage
     private int numDays = 0;
     public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
+    /// <summary>
+    /// The designated constructor for a GraphPage
+    /// </summary>
     public GraphPage()
     {
         InitializeComponent();
@@ -57,7 +64,8 @@ public partial class GraphPage : ContentPage
         }
         catch (Exception error) // catching error if the database could not be reached
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            await HomePage.ShowPopup("Unable to load illness data");
+            Debug.WriteLine(error.Message);
         }
     }
 
@@ -154,17 +162,17 @@ public partial class GraphPage : ContentPage
                         SetGraphTitle();
                     }
                     else
-                        await DisplayAlert("Notification", "No reports found in last 7 days", "OK!");
+                        await HomePage.ShowPopup("No reports found in last 7 days");
                 }
             }
             else
             {
-                await DisplayAlert("Alert!", "Please specify a time range", "OK");
+                await HomePage.ShowPopup("Please specify a time range");
             }
         }
         else
         {
-            await DisplayAlert("Alert!", "Please specify a locality", "OK");
+            await HomePage.ShowPopup("Please specify a locality");
         }
         Popup.IsOpen = false;
     }

@@ -203,6 +203,7 @@
                     <ScrollView Grid.Row="2">
 
                         <Grid RowSpacing="5"
+                              Padding="10"
                               x:Name="SymptomGrid"
                               ColumnDefinitions="1*, 1*" />
 
