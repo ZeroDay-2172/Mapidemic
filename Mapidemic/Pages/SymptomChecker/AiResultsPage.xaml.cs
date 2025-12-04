@@ -1,11 +1,11 @@
-using Microsoft.IdentityModel.Tokens;
-
 namespace Mapidemic.Pages.SymptomChecker;
 
+/// <summary>
+/// A class that provides a user interface for the AI symptom analysis
+/// </summary>
 public partial class AiResultsPage : ContentPage
 {
-    private bool drawingComplete;
-    private List<Func<Task<bool>>>? continuation;
+    private bool drawingStarted;
     private const int typeDelay = 35;
     private const int intTypeDelay = 5;
     private const int initialDelay = 500;
@@ -26,8 +26,7 @@ public partial class AiResultsPage : ContentPage
     public AiResultsPage()
     {
         InitializeComponent();
-        drawingComplete = false;
-        continuation = null;
+        drawingStarted = false;
     }
 
     /// <summary>
@@ -35,72 +34,27 @@ public partial class AiResultsPage : ContentPage
     /// </summary>
     protected override async void OnAppearing()
     {
-        if (Application.Current!.UserAppTheme == AppTheme.Dark) // making the border outline visible
+        if (Application.Current!.UserAppTheme == AppTheme.Dark) // making the border outlines white on dark theme
         {
             Illness.Stroke = Colors.White;
             ContagiousPeriod.Stroke = Colors.White;
             RecoveryPeriod.Stroke = Colors.White;
             Symptoms.Stroke = Colors.White;
         }
-        else
+        else // making the border outlines black on light theme
         {
             Illness.Stroke = Colors.Black;
             ContagiousPeriod.Stroke = Colors.Black;
             RecoveryPeriod.Stroke = Colors.Black;
             Symptoms.Stroke = Colors.Black;
         }
-        if (!drawingComplete) // continuing drawing if the user clicked onto the settings page
+        if (!drawingStarted) // drawing the illness sections only once
         {
-            if (continuation.IsNullOrEmpty()) // not loading again if the user clicks on the settings page
-            {
-                await Task.Delay(initialDelay); // giving users time to see robot
-                if (await DrawIdentifiedIllness()) // drawing subsequent sections only if the user stayed on the page
-                {
-                    var contagiousPromise = DrawContagiousPeriod();
-                    var recoveryPromise = DrawRecoveryPeriod();
-                    await Task.WhenAll(contagiousPromise, recoveryPromise); // drawing two small sections at the same time
-                    if (await contagiousPromise && await recoveryPromise) // drawing final section only if user stayed on the page
-                    {
-                        await DrawSymptomList();
-                        drawingComplete = true;
-                    }
-                    else // storing remaining drawing functions to complete if the user clicks the settings button
-                    {
-                        continuation = [DrawSymptomList];
-                    }            
-                }
-                else // storing remaining drawing functions to complete if the user clicks the settings button
-                {
-                    continuation = [DrawContagiousPeriod, DrawRecoveryPeriod, DrawSymptomList];
-                }
-            }
-            else
-            {
-                if (continuation!.Count > 1)
-                {
-                    var contagiousPromise = continuation.First()();
-                    continuation.RemoveAt(0);
-                    var recoveryPromise = continuation.First()();
-                    continuation.RemoveAt(0);
-                    await Task.WhenAll(contagiousPromise, recoveryPromise); // drawing two small sections at the same time
-                    if (await contagiousPromise && await recoveryPromise) // drawing final section only if user stayed on the page
-                    {
-                        await continuation.First()();
-                        continuation.RemoveAt(0);
-                        drawingComplete = true;
-                    }
-                    else // storing remaining drawing functions to complete if the user clicks the settings button
-                    {
-                        continuation = [DrawSymptomList];
-                    } 
-                }
-                else // storing remaining drawing functions to complete if the user clicks the settings button
-                {
-                    await continuation.First()();
-                    continuation = null;
-                    drawingComplete = true;
-                }
-            }
+            drawingStarted = true;
+            await Task.Delay(initialDelay);
+            await DrawIdentifiedIllness();
+            await Task.WhenAll(DrawContagiousPeriod(), DrawRecoveryPeriod());
+            await DrawSymptomList();
         }
     }
 
