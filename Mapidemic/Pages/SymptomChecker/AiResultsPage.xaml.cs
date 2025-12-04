@@ -1,180 +1,254 @@
 namespace Mapidemic.Pages.SymptomChecker;
 
+/// <summary>
+/// A class that provides a user interface for the AI symptom analysis
+/// </summary>
 public partial class AiResultsPage : ContentPage
 {
-    private const int typeDelay = 25;
-    private readonly string greeting = "Hello, my name is Walter!";
-    private readonly string firstLine = "After reviewing your symptoms, I think they align most closely with ";
-    private readonly string secondLine = "Let me tell you a little about this illness. This illness has a contagious period of ";
-    private readonly string altSecondLine = "Let me tell you a little about this illness. The contagious period is not typically the same and can vary.";
-    private readonly string thirdLine = "You won't have to worry too long if you get sick with this illness. This illness has a recovery period of ";
-    private readonly string altThirdLine = "After searching the web for a recovery period, I could not locate one. It appears that the recovery period varies.";
-    private readonly string fourthLine = "I'll show you the symptom list for this illness that is provided by the Center for Disease Control and prevention.";
-    private readonly string altFourthLine = "The symptoms you provided for me may not have been conclusive for this illness. Unfortunately, I was not able to locate a full list of symptoms for you. It is possible more symptoms are associated with this illness.";
+    private bool drawingStarted;
+    private const int typeDelay = 35;
+    private const int intTypeDelay = 5;
+    private const int initialDelay = 500;
+    private const string identifiedIllness = "Identified Illness";
+    private const string gemini = "Powered by Google Gemini";
+    private const string average = "Average time in hours and days";
+    private const string hours = "Hour(s):";
+    private const string days = "Days(s):";
+    private const string division = " / ";
+    private const string contagiousPeriod = "Contagious Period";
+    private const string recoveryPeriod = "Recovery Period";
+    private const string fullSymptomList = "Full Symptom List";
+    private const string cdc = "Obtained from the Center for Disease Control and Prevention";
 
+    /// <summary>
+    /// The designated constructor of an AiResultsPage
+    /// </summary>
     public AiResultsPage()
     {
         InitializeComponent();
+        drawingStarted = false;
     }
 
+    /// <summary>
+    /// A function that begins the drawing process of the illness information
+    /// </summary>
     protected override async void OnAppearing()
     {
-        await Task.Delay(500);
-
-        foreach(char letter in greeting.ToCharArray())
+        if (Application.Current!.UserAppTheme == AppTheme.Dark) // making the border outlines white on dark theme
         {
-            Greeting.Text = $"{Greeting.Text}{letter}";
+            Illness.Stroke = Colors.White;
+            ContagiousPeriod.Stroke = Colors.White;
+            RecoveryPeriod.Stroke = Colors.White;
+            Symptoms.Stroke = Colors.White;
+        }
+        else // making the border outlines black on light theme
+        {
+            Illness.Stroke = Colors.Black;
+            ContagiousPeriod.Stroke = Colors.Black;
+            RecoveryPeriod.Stroke = Colors.Black;
+            Symptoms.Stroke = Colors.Black;
+        }
+        if (!drawingStarted) // drawing the illness sections only once
+        {
+            drawingStarted = true;
+            await Task.Delay(initialDelay);
+            await DrawIdentifiedIllness();
+            await Task.WhenAll(DrawContagiousPeriod(), DrawRecoveryPeriod());
+            await DrawSymptomList();
+        }
+    }
+
+    /// <summary>
+    /// A function that draws the identified illness section of the page and
+    /// lets the page know if it should continue drawing after
+    /// </summary>
+    private async Task<bool> DrawIdentifiedIllness()
+    {
+        Illness.IsVisible = true;
+        foreach(char letter in identifiedIllness.ToCharArray()) // printing header
+        {
+            IdentifiedIllness.Text = $"{IdentifiedIllness.Text}{letter}";
             await Task.Delay(typeDelay);
         }
-
-        foreach(char letter in firstLine.ToCharArray())
+        foreach(char letter in gemini.ToCharArray()) // printing credit
         {
-            FirstRobotText.Text = $"{FirstRobotText.Text}{letter}";
+            GeminiMessage.Text = $"{GeminiMessage.Text}{letter}";
             await Task.Delay(typeDelay);
         }
-
         string illness = MauiProgram.businessLogic.artificialIntelligenceIllness!.Name!;
         if (illness == "Flu")
         {
             illness = "Influenza";
         }
-
-        foreach(char letter in illness.ToCharArray())
+        foreach(char letter in illness.ToCharArray()) // printing illness
         {
-            IllnessText.Text = $"{IllnessText.Text}{letter}";
+            IllnessName.Text = $"{IllnessName.Text}{letter}";
             await Task.Delay(typeDelay);
         }
-        IllnessText.Text = $"{IllnessText.Text}.";
+        return this.IsLoaded;
+    }
 
-        
-
-        int contagiousPeriod = MauiProgram.businessLogic.artificialIntelligenceIllness.ContagiousPeriod;
-        if (contagiousPeriod == -1)
+    /// <summary>
+    /// A function that draws the contagious period section of the page and
+    /// lets the page know if it should continue drawing after
+    /// </summary>
+    private async Task<bool> DrawContagiousPeriod()
+    {
+        ContagiousPeriod.IsVisible = true;
+        foreach(char letter in contagiousPeriod.ToCharArray()) // printing header
         {
-            foreach(char letter in altSecondLine.ToCharArray())
-            {
-                SecondRobotText.Text = $"{SecondRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousHeader.Text = $"{ContagiousHeader.Text}{letter}";
+            await Task.Delay(typeDelay);
         }
-        else
+        foreach(char letter in average.ToCharArray()) // printing average message
         {
-            foreach(char letter in secondLine.ToCharArray())
-            {
-                SecondRobotText.Text = $"{SecondRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in contagiousPeriod.ToString().ToCharArray())
-            {
-                ContagiousText.Text = $"{ContagiousText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in " hour(s) / ".ToCharArray())
-            {
-                ContagiousText.Text = $"{ContagiousText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in MauiProgram.businessLogic.artificialIntelligenceIllness.ContagiousDays.ToString().ToCharArray())
-            {
-                ContagiousText.Text = $"{ContagiousText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in " day(s).".ToCharArray())
-            {
-                ContagiousText.Text = $"{ContagiousText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousAverage.Text = $"{ContagiousAverage.Text}{letter}";
+            await Task.Delay(typeDelay);
         }
-
-        int recoveryPeriod = MauiProgram.businessLogic.artificialIntelligenceIllness.RecoveryPeriod;
-        if (recoveryPeriod == -1)
+        foreach(char letter in hours.ToCharArray()) // printing contagious hours text
         {
-            foreach(char letter in altThirdLine.ToCharArray())
-            {
-                ThirdRobotText.Text = $"{ThirdRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousHoursText.Text = $"{ContagiousHoursText.Text}{letter}";
+            await Task.Delay(typeDelay);
         }
-        else
+        int numHours = MauiProgram.businessLogic.artificialIntelligenceIllness!.ContagiousPeriod;
+        ContagiousHoursNumber.Text = "1";
+        for(int value = 1; value < numHours; value++) // printing contagious hours
         {
-            foreach(char letter in thirdLine.ToCharArray())
-            {
-                ThirdRobotText.Text = $"{ThirdRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in recoveryPeriod.ToString().ToCharArray())
-            {
-                RecoveryText.Text = $"{RecoveryText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in " hour(s) / ".ToCharArray())
-            {
-                RecoveryText.Text = $"{RecoveryText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in MauiProgram.businessLogic.artificialIntelligenceIllness.RecoveryDays.ToString().ToCharArray())
-            {
-                RecoveryText.Text = $"{RecoveryText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
-
-            foreach(char letter in " day(s).".ToCharArray())
-            {
-                RecoveryText.Text = $"{RecoveryText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousHoursNumber.Text = $"{int.Parse(ContagiousHoursNumber.Text) + 1}";
+            await Task.Delay(intTypeDelay);
         }
-
-        string[] symptoms = MauiProgram.businessLogic.artificialIntelligenceIllness.Symptoms!;
-        if (symptoms.Length == 0)
+        foreach(char letter in days.ToCharArray()) // printing contagious days text
         {
-            foreach(char letter in altFourthLine.ToCharArray())
-            {
-                FourthRobotText.Text = $"{FourthRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousDaysText.Text = $"{ContagiousDaysText.Text}{letter}";
+            await Task.Delay(typeDelay);
         }
-        else
+        foreach(char number in ContagiousHoursNumber.Text.ToCharArray()) // printing contagious days number
         {
-            foreach(char letter in fourthLine.ToCharArray())
-            {
-                FourthRobotText.Text = $"{FourthRobotText.Text}{letter}";
-                await Task.Delay(typeDelay);
-            }
+            ContagiousDaysNumber.Text = $"{ContagiousDaysNumber.Text}{number}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char letter in division.ToCharArray())
+        {
+            ContagiousDaysNumber.Text = $"{ContagiousDaysNumber.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char number in "24".ToCharArray())
+        {
+            ContagiousDaysNumber.Text = $"{ContagiousDaysNumber.Text}{number}";
+            await Task.Delay(typeDelay);
+        }
+        int time = MauiProgram.businessLogic.artificialIntelligenceIllness.ContagiousDays;
+        ContagiousDaysNumber.Text = "1";
+        for(int timeInDays = 1; timeInDays < time; timeInDays++)
+        {
+            ContagiousDaysNumber.Text = $"{double.Parse(ContagiousDaysNumber.Text) + 1}";
+            await Task.Delay(typeDelay);
+        }
+        return this.IsLoaded;
+    }
 
-            int rowsNeeded = (int)Math.Ceiling(symptoms.Length / 2.0);
-            for (int row = 0; row < rowsNeeded; row++)
-            {
-                SymptomGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            }
+    /// <summary>
+    /// A function that draws the recovery period section of the page and
+    /// lets the page know if it should continue drawing after
+    /// </summary>
+    private async Task<bool> DrawRecoveryPeriod()
+    {
+        RecoveryPeriod.IsVisible = true;
+        foreach(char letter in recoveryPeriod.ToCharArray()) // printing header
+        {
+            RecoveryHeader.Text = $"{RecoveryHeader.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char letter in average.ToCharArray()) // printing average message
+        {
+            RecoveryAverage.Text = $"{RecoveryAverage.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char letter in hours.ToCharArray()) // printing recovery hours text
+        {
+            RecoveryHoursText.Text = $"{RecoveryHoursText.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        int numHours = MauiProgram.businessLogic.artificialIntelligenceIllness!.RecoveryPeriod;
+        RecoveryHoursNumber.Text = "1";
+        for(int value = 1; value < numHours; value++) // printing recovery hours
+        {
+            RecoveryHoursNumber.Text = $"{int.Parse(RecoveryHoursNumber.Text) + 1}";
+            await Task.Delay(intTypeDelay);
+        }
+        foreach(char letter in days.ToCharArray()) // printing recovery days text
+        {
+            RecoveryDaysText.Text = $"{RecoveryDaysText.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char number in RecoveryHoursNumber.Text.ToCharArray()) // printing recovery days number
+        {
+            RecoveryDaysNumber.Text = $"{RecoveryDaysNumber.Text}{number}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char letter in division.ToCharArray())
+        {
+            RecoveryDaysNumber.Text = $"{RecoveryDaysNumber.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char number in "24".ToCharArray())
+        {
+            RecoveryDaysNumber.Text = $"{RecoveryDaysNumber.Text}{number}";
+            await Task.Delay(typeDelay);
+        }
+        int time = MauiProgram.businessLogic.artificialIntelligenceIllness.RecoveryDays;
+        RecoveryDaysNumber.Text = "1";
+        for(int timeInDays = 1; timeInDays < time; timeInDays++)
+        {
+            RecoveryDaysNumber.Text = $"{double.Parse(RecoveryDaysNumber.Text) + 1}";
+            await Task.Delay(typeDelay);
+        }
+        return this.IsLoaded;
+    }
 
-            int index = 0;
-            for (int row = 0; row < rowsNeeded; row++)
+    /// <summary>
+    /// A function that draws the symptom list section of the page
+    /// </summary>
+    private async Task<bool> DrawSymptomList()
+    {
+        Symptoms.IsVisible = true;
+        foreach(char letter in fullSymptomList.ToCharArray()) // printing header
+        {
+            SymptomHeader.Text = $"{SymptomHeader.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        foreach(char letter in cdc.ToCharArray()) // printing disclaimer message
+        {
+            Disclaimer.Text = $"{Disclaimer.Text}{letter}";
+            await Task.Delay(typeDelay);
+        }
+        string[] symptoms = MauiProgram.businessLogic.artificialIntelligenceIllness!.Symptoms!;
+        int rowsNeeded = (int)Math.Ceiling(symptoms.Length / 2.0);
+        for (int row = 0; row < rowsNeeded; row++) // building all the rows needed
+        {
+            SymptomGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        }
+        int index = 0;
+        for (int row = 0; row < rowsNeeded; row++) // adding each symptom
+        {
+            for (int column = 0; column < 2; column++)
             {
-                for (int column = 0; column < 2; column++)
+                if (index < symptoms.Length)
                 {
-                    if (index < symptoms.Length)
+                    Label label = new Label();
+                    label.FontAttributes = FontAttributes.Bold;
+                    label.HorizontalTextAlignment = TextAlignment.Center;
+                    label.VerticalTextAlignment = TextAlignment.Center; // providing appealing vertical spacing when a symptom expands several rows
+                    SymptomGrid.Add(label, column, row);
+                    foreach (char letter in symptoms[index])
                     {
-                        Label label = new Label();
-                        label.FontAttributes = FontAttributes.Bold;
-                        label.HorizontalTextAlignment = TextAlignment.Center;
-                        SymptomGrid.Add(label, column, row);
-                        foreach (char letter in symptoms[index])
-                        {
-                            label.Text = $"{label.Text}{letter}";
-                            await Task.Delay(typeDelay);
-                        }
-                        index++;
+                        label.Text = $"{label.Text}{letter}";
+                        await Task.Delay(typeDelay);
                     }
+                    index++;
                 }
             }
         }
+        return true;
     }
 }

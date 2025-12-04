@@ -3,15 +3,18 @@ using Mapidemic.Pages.Landing;
 namespace Mapidemic.Pages.FrontMatter;
 
 /// <summary>
-///  suppressing the warning caused by:
-/// [Application.Current!.MainPage = new HomePage();]
+/// Suppressing the warning caused by lines Application assignment statements.
+/// These statements are obsolete, but still valid 
 /// </summary>
 #pragma warning disable CS0618
 
+/// <summary>
+/// A class that provides a user interface for reconnecting to the app when network connection drops
+/// </summary>
 public partial class ReconnectPage : ContentPage
 {
     /// <summary>
-    /// The designated constructor for a ReconnectPage
+    /// The default constructor for a ReconnectPage
     /// </summary>
     public ReconnectPage()
     {
@@ -24,7 +27,7 @@ public partial class ReconnectPage : ContentPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
-    public async void TryAgain_Clicked(Object sender, EventArgs args)
+    public async void TryAgain_Clicked(object sender, EventArgs args)
     {
         Popup.IsOpen = true;
 		await Task.Yield();
@@ -44,7 +47,7 @@ public partial class ReconnectPage : ContentPage
         }
         else // alerting user when app cannot read data from database
         {
-            await DisplayAlert("Connection Error", "Connection attempt failed", "OK");
+            await HomePage.ShowPopup("Connection attempt failed");
         }
         Popup.IsOpen = false;
     }

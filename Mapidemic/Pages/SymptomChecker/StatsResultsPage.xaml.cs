@@ -1,5 +1,8 @@
 namespace Mapidemic.Pages.SymptomChecker;
 
+/// <summary>
+/// A class that provides a user interface for the statistical symptom analysis
+/// </summary>
 public partial class StatsResultsPage : ContentPage
 {
     public double GaugeValue { get; set; }
@@ -15,16 +18,18 @@ public partial class StatsResultsPage : ContentPage
         {
             GaugeLabels.TextColor = Colors.White;
         }
-        Loaded += OnLoaded!;
     }
 
-    public async void OnLoaded(object sender, EventArgs args)
+    /// <summary>
+    /// A function that updates the gauge based on the current app theme
+    /// </summary>
+    protected async override void OnAppearing()
     {
-        if (Application.Current!.UserAppTheme == AppTheme.Dark)
+        if (Application.Current!.UserAppTheme == AppTheme.Dark) // theme dark -> text white
         {
             GaugeLabels.TextColor = Colors.White;
         }
-        else
+        else // theme light -> text black
         {
             GaugeLabels.TextColor = Colors.Black;
         }

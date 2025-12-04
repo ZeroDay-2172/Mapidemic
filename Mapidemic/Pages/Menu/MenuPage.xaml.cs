@@ -1,20 +1,23 @@
-using Mapidemic.Pages.SymptomChecker;
+using System.Diagnostics;
 using Mapidemic.Pages.Landing;
+using Mapidemic.Pages.SymptomChecker;
 
 namespace Mapidemic.Pages.Menu;
 
+/// <summary>
+/// A class that provides a user interface for selecting menu options
+/// </summary>
 public partial class MenuPage : ContentPage
 {
 	private HomePage? homePage;
 	private const string cdcLink = "https://www.cdc.gov/";
 
 	/// <summary>
-	/// The designated constructor for a MenuPage
+	/// The default constructor for a MenuPage
 	/// </summary>
 	public MenuPage()
 	{
 		InitializeComponent();
-		Loaded += OnLoaded!;
 	}
 	
 	/// <summary>
@@ -22,11 +25,9 @@ public partial class MenuPage : ContentPage
 	/// that new pages can be pushed onto the
 	/// navigation stack
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-	public void OnLoaded(object sender, EventArgs args)
+	protected override void OnAppearing()
     {
-		homePage = (this.Parent as HomePage)!;
+        homePage = (this.Parent as HomePage)!;
     }
 
 	/// <summary>
@@ -46,9 +47,10 @@ public partial class MenuPage : ContentPage
 		}
 		catch (Exception error) // catching error if the database could not be reached
 		{
-			await DisplayAlert("Network Error", $"{error.Message}", "OK");
+			await HomePage.ShowPopup("Cannot open Symptom Checker");
+			Debug.WriteLine(error.Message);
 		}
-		finally
+		finally // closing activity indicator
         {
             Popup.IsOpen = false;
         }
@@ -94,7 +96,7 @@ public partial class MenuPage : ContentPage
 	/// <param name="args"></param>
 	public async void IwcButton_Clicked(object sender, EventArgs args)
 	{
-		await homePage!.GetViewport().PushAsync(new InformationWeCollect());
+		await homePage!.GetViewport().PushAsync(new InformationWeCollectPage());
 		homePage.IsPresented = false;
 	}
 
