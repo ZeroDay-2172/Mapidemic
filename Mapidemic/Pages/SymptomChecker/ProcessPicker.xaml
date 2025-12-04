@@ -39,20 +39,16 @@
 
                 <Grid>
 
-                        <Image Source="artificial_intelligence.png"
-                               Aspect="AspectFill"
-                               HeightRequest="250">
+                        <ImageButton Source="artificial_intelligence.png"
+                                     Aspect="AspectFill"
+                                     HeightRequest="300"
+                                     Clicked="OnAiImageTapped">
 
-                               <Image.Shadow>
-                                        <Shadow Brush="Black"
-                                                Opacity="1" />
-                               </Image.Shadow>
+                                <ImageButton.Shadow>
+                                        <Shadow Brush="Black" Opacity="1" />
+                                </ImageButton.Shadow>
 
-                               <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnAiImageTapped"/>
-                               </Image.GestureRecognizers>
-
-                        </Image>
+                        </ImageButton>
 
                         <Grid RowDefinitions="Auto, Auto">
                                 <Label Grid.Row="0"
@@ -72,20 +68,16 @@
 
                 <Grid>
 
-                        <Image Source="statistics.png"
-                               Aspect="AspectFill"
-                               HeightRequest="250">
+                        <ImageButton Source="statistics.png"
+                                     Aspect="AspectFill"
+                                     HeightRequest="300"
+                                     Clicked="OnStatsImageTapped">
 
-                               <Image.Shadow>
-                                        <Shadow Brush="Black"
-                                                Opacity="1" />
-                               </Image.Shadow>
+                                <ImageButton.Shadow>
+                                        <Shadow Brush="Black" Opacity="1" />
+                                </ImageButton.Shadow>
 
-                               <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnStatsImageTapped"/>
-                               </Image.GestureRecognizers>
-
-                        </Image>
+                        </ImageButton>
 
                         <Grid RowDefinitions="Auto, Auto">
                                 <Label Grid.Row="0"
