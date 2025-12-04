@@ -1,9 +1,17 @@
 using Mapidemic.Models;
+using System.Diagnostics;
+using Mapidemic.Pages.Landing;
 
 namespace Mapidemic.Pages.Menu;
 
+/// <summary>
+/// A class that provides a user interface for providing the development team with feedback
+/// </summary>
 public partial class FeedbackPage : ContentPage
 {
+    /// <summary>
+    /// The default constructor for the FeedbackPage
+    /// </summary>
     public FeedbackPage()
     {
         InitializeComponent();
@@ -15,17 +23,26 @@ public partial class FeedbackPage : ContentPage
     /// <param name="feedback"></param>
     private async void OnSubmitClicked(object sender, EventArgs e)
     {
+        // Gather category data
+        string category;
+        var option = CategoryPicker.SelectedItem;
+        if (option == null)
+        {
+            await HomePage.ShowPopup("Please enter a category");
+            return;
+        }
+        else
+        {
+            category = option.ToString()!;
+        }
+        
         // Gather feedback data
         var message = FeedbackEditor.Text?.Trim();
-        // Default to "General" if no category is selected
-        var category = CategoryPicker.SelectedItem as string ?? "General";
 
         // Validate input
         if (string.IsNullOrWhiteSpace(message))
         {
-            await DisplayAlert("Error! Missing feedback!",
-                               "Please enter a message before submitting.",
-                               "OK");
+            await HomePage.ShowPopup("Please enter a message");
             return;
         }
 
@@ -48,8 +65,7 @@ public partial class FeedbackPage : ContentPage
             if(success)
             {
                 // Provide user feedback
-                StatusLabel.Text = "Thanks! Your feedback has been submitted.";
-                StatusLabel.IsVisible = true;
+                await HomePage.ShowPopup("Feedback submitted");
                 // Clear input field
                 FeedbackEditor.Text = string.Empty; 
                 // Reset category picker
@@ -58,32 +74,19 @@ public partial class FeedbackPage : ContentPage
             else
             {
                 // Handle submission failure
-                StatusLabel.Text = "Could not submit feedback. Please try again.";
-                StatusLabel.IsVisible = true;
+                await HomePage.ShowPopup("Unable to submit feedback");
             }
         }
         catch (Exception ex)
         {
             // Handle submission failure
-            StatusLabel.Text = "Could not submit feedback. Please try again.";
-            StatusLabel.IsVisible = true;
-            await DisplayAlert("Error", ex.Message, "OK");
+            await HomePage.ShowPopup("Unable to submit feedback");
+            Debug.WriteLine(ex.Message);
         }
         finally
         {
             // Re-enable the submit button
             SubmitButton.IsEnabled = true;
         }
-    }
-
-    /// <summary>
-    /// Clears status message when the feedback editor gains focus
-    /// </summary>
-    private void FeedbackEditor_Focused(object sender, FocusEventArgs e)
-    {
-        // Clear status message
-        StatusLabel.Text = string.Empty;
-        // Hide status label
-        StatusLabel.IsVisible = false;
     }
 }

@@ -4,8 +4,13 @@ using System.Formats.Asn1;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using System.Diagnostics;
+
 namespace Mapidemic.Pages.Landing;
 
+/// <summary>
+/// A class that provides a user interface for tracking illness on a graph
+/// </summary>
 public partial class GraphPage : ContentPage
 {
     private string selectedIllness = "";
@@ -18,6 +23,9 @@ public partial class GraphPage : ContentPage
 
     public ObservableCollection<string> LocalityCollection { get; set; } = new();
 
+    /// <summary>
+    /// The designated constructor for a GraphPage
+    /// </summary>
     public GraphPage()
     {
         InitializeComponent();
@@ -83,7 +91,8 @@ public partial class GraphPage : ContentPage
         }
         catch (Exception error) // catching error if the database could not be reached
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            await HomePage.ShowPopup("Unable to load illness data");
+            Debug.WriteLine(error.Message);
         }
     }
 
@@ -180,7 +189,7 @@ public partial class GraphPage : ContentPage
                         SetGraphTitle();
                     }
                     else
-                        await ShowPopup("No reports found in last 7 days");
+                        await HomePage.ShowPopup("No reports found in last 7 days");
                 }
             }
         }

@@ -1,4 +1,6 @@
 using Mapidemic.Pages.Settings;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Alerts;
 
 namespace Mapidemic.Pages.Landing;
 
@@ -16,6 +18,15 @@ public partial class HomePage : FlyoutPage
 	{
 		InitializeComponent();
 	}
+
+	/// <summary>
+    /// A utility function that all other pages use to render toast notifications
+    /// </summary>
+    /// <param name="message">message to display in the toast</param>
+    public static async Task ShowPopup(string message)
+    {
+		await Toast.Make(message, ToastDuration.Short, 18).Show();
+    }
 
 	/// <summary>
 	/// A function that returns the viewport of

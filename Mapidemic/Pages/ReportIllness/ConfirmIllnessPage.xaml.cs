@@ -1,18 +1,26 @@
+using Mapidemic.Pages.Landing;
 using Microsoft.Maui.Maps;
 
 namespace Mapidemic.Pages.ReportIllness;
 
+/// <summary>
+/// A class that provides a user interface for confirming an illness report
+/// </summary>
 public partial class ConfirmIllnessPage : ContentPage
 {
     private readonly string _illness;
     private readonly string _zip;
 
+    /// <summary>
+    /// The designated constructor for a ConfirmIllnessPage
+    /// </summary>
+    /// <param name="illness"></param>
+    /// <param name="zip"></param>
     public ConfirmIllnessPage(string illness, string zip) // Constructor to initialize with illness and ZIP code
     {
         InitializeComponent();
         _illness = illness;
         _zip = zip; // Takes the previously given variables and stores them
-
         SummaryLabel.Text = $"You are reporting {_illness} in the area with ZIP code {_zip}."; // Update the summary label with the provided information
     }
 
@@ -62,17 +70,17 @@ public partial class ConfirmIllnessPage : ContentPage
     {
         if (!int.TryParse(_zip, out var zipInt))
         {
-            await DisplayAlert("Error", "Invalid ZIP code format.", "OK"); // Basic check for ZIP code validity
+            await HomePage.ShowPopup("Invalid ZIP code format"); // Basic check for ZIP code validity
             return;
         }
 
         var success = await MauiProgram.businessLogic.ReportIllness(Guid.NewGuid(), zipInt, _illness, DateTimeOffset.UtcNow); // Submit the report using the business logic layer
         if (!success)
         {
-            await DisplayAlert("Error", "Submit failed. Please try again later.", "OK"); // Show an error if submission fails
+            await HomePage.ShowPopup("Submit failed. Please try again"); // Show an error if submission fails
             return;
         }
-        await DisplayAlert("Success", "Your illness report has been submitted successfully.", "OK"); // Show a success message
+        await HomePage.ShowPopup("Report submitted successfully"); // Show a success message
         await Navigation.PopToRootAsync(); // Go back to the main map page
     }
 }

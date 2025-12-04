@@ -1,10 +1,14 @@
+using System.Diagnostics;
 using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
-using CommunityToolkit.Mvvm.Messaging;
 using Mapidemic.Pages.ReportIllness;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Mapidemic.Pages.Landing;
 
+/// <summary>
+/// A class that provides a user interface for tracking illness on a map
+/// </summary>
 public partial class MapPage : ContentPage
 {
     private readonly List<Circle> _heatmapCircles = new();
@@ -32,23 +36,30 @@ public partial class MapPage : ContentPage
     private const double UsMaxLongitude = -66.93457;
     private static readonly Location DefaultUsCenter = new Location(37.0902, -95.7129); // Approximate center of the contiguous United States
 
+    /// <summary>
+    /// The designated constructor for a MapPage
+    /// </summary>
     public MapPage()
     {
         InitializeComponent();
 
         WeakReferenceMessenger.Default.Register<object, string>(this, "IllnessReportedZip", async (sender, zip) =>
         {
-            try
+            try // attempting to throttle the refresh rate of the heat map
             {
                 await ThrottleRefreshRate(); // Throttle the refresh rate to avoid excessive updates
             }
-            catch (Exception ex)
+            catch (Exception ex) // error if the throttle does not work
             {
-                await DisplayAlert("Error", $"Unable to refresh heatmap: {ex.Message}", "OK"); // Display an alert if refreshing fails
+                await HomePage.ShowPopup("Unable to refresh heatmap"); // Display an alert if refreshing fails
+                Debug.WriteLine(ex.Message);
             }
         });
     }
 
+    /// <summary>
+    /// A function that centers the map and loads heat circles
+    /// </summary>
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -68,16 +79,28 @@ public partial class MapPage : ContentPage
     /// <summary>
     /// Handle the Report Illness button click to navigate to the report page.
     /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void OnReportIllnessClicked(object sender, EventArgs e)
     {
         Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
     }
 
+    /// <summary>
+    /// A function that shows the map legend
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void OnLegendToggleClicked(object sender, EventArgs e)
     {
         LegendFrame.IsVisible = !LegendFrame.IsVisible; // Toggles the visibility of the legend frame
     }
 
+    /// <summary>
+    /// A function that closes the map legend
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void OnLegendBackClicked(object sender, EventArgs e)
     {
         LegendFrame.IsVisible = false; // Hides the legend frame when the back button is clicked
@@ -90,9 +113,9 @@ public partial class MapPage : ContentPage
     {
         var settings = MauiProgram.businessLogic.ReadSettings();
         int? postalCode = settings.PostalCode;
-        try
+        try // attempting to get the centroid for the settings postal code
         {
-            if (postalCode != null)
+            if (postalCode != null) // getting the centroid if settings contains a postal code
             {
                 var location = await MauiProgram.businessLogic.GetPostalCodeCentroids(postalCode.Value);
                 if (location != null)
@@ -101,7 +124,7 @@ public partial class MapPage : ContentPage
                     MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(10)));
                 }
             }
-            else
+            else // if no postal code, centering on the last known location
             {
                 var location = await Geolocation.Default.GetLastKnownLocationAsync(); // If for some reason postal code isn't set, fall back to device location. Look into adding a default location for the most private of users.
                 if (location != null)
@@ -113,7 +136,8 @@ public partial class MapPage : ContentPage
         }
         catch (Exception error) // catching error if database could not be reached to get the list of centroids
         {
-            await DisplayAlert("Unable to center map", $"{error.Message}", "OK");
+            await HomePage.ShowPopup("Unable to center map");
+            Debug.WriteLine(error.Message);
         }
     }
 
@@ -123,7 +147,7 @@ public partial class MapPage : ContentPage
     /// </summary>
     private async Task RenderReportHeatmap()
     {
-        try
+        try // attempting to render the heat map circles
         {
             foreach (var c in _heatmapCircles)
             {
@@ -162,9 +186,10 @@ public partial class MapPage : ContentPage
                 await DrawHeatmapCircles(center, style.radiusMiles, style.color);
             }
         }
-        catch (Exception ex)
+        catch (Exception ex) // unable to render the heatmap
         {
-            await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK");
+            await HomePage.ShowPopup("Unable to render heatmap");
+            Debug.WriteLine(ex.Message);
         }
     }
 
@@ -175,7 +200,7 @@ public partial class MapPage : ContentPage
     {
         const double baseRadius = 2.5; // miles
 
-        if (population.HasValue && population.Value > 0)
+        if (population.HasValue && population.Value > 0) // coloring circles based on population size
         {
             int incidenceRate = DetermineRateThreshold(count, population.Value);
 
@@ -214,6 +239,9 @@ public partial class MapPage : ContentPage
     /// Determine the incidence rate threshold based on count and population.
     /// Thresholds: 0-5% = 1, 6-10% = 2, 11-15% = 3, 16-20% = 4, >20% = 5
     /// </summary>
+    /// <param name="count"></param>
+    /// <param name="population"></param>
+    /// <returns></returns>
     private int DetermineRateThreshold(int count, int population)
     {
         double percent = (double)count / population * percentageMultiplier; // Since GetStyleForCount relies on the population being non-null, we don't need to check for null here.
@@ -233,6 +261,10 @@ public partial class MapPage : ContentPage
     /// <summary>
     /// Draw heatmap circles on the map based on illness report data.
     /// </summary>
+    /// <param name="center"></param>
+    /// <param name="radius"></param>
+    /// <param name="color"></param>
+    /// <returns></returns>
     private async Task DrawHeatmapCircles(Location center, double radius, Color color)
     {
         var circle = new Circle

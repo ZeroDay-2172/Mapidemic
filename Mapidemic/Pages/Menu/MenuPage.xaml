@@ -7,7 +7,7 @@
              x:Class="Mapidemic.Pages.Menu.MenuPage">
 
     <Grid VerticalOptions="FillAndExpand"
-          RowDefinitions="2*, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
+          RowDefinitions="2*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*, Auto, 1*">
 
                 <Grid.Background>
                         <LinearGradientBrush EndPoint="1, 0"
@@ -18,14 +18,6 @@
 
                         </LinearGradientBrush>
                 </Grid.Background>
-
-        <Label Text="Menu"
-               Grid.Row="0"
-               FontSize="50"
-               TextColor="White"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               BackgroundColor="Transparent" />
 
         <popup:SfPopup Message=""
                        x:Name="Popup"
@@ -51,18 +43,15 @@
 
         </popup:SfPopup>
 
-        <buttons:SfButton Grid.Row="1"
-                          Padding="10"
-                          FontSize="20"
-                          CornerRadius="0"
-                          TextColor="White"
-                          Text="Symptom Checker"
-                          Background="Transparent"
-                          Clicked="ScButton_Clicked"/>
+        <ImageButton Grid.Row="0"
+                     Aspect="Fill"
+                     CornerRadius="0"
+                     Clicked="ScButton_Clicked"
+                     Source="symptom_checker.png" />
 
-        <BoxView Grid.Row="2" HeightRequest="1" BackgroundColor="Black"></BoxView>
+        <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="Transparent"></BoxView>
 
-        <buttons:SfButton Grid.Row="3"
+        <buttons:SfButton Grid.Row="2"
                           Padding="10"
                           FontSize="20"
                           Text="Feedback"
@@ -74,9 +63,9 @@
 
         </buttons:SfButton>
 
-        <BoxView Grid.Row="4" HeightRequest="1" BackgroundColor="Black"></BoxView>
+        <BoxView Grid.Row="3" HeightRequest="1" BackgroundColor="Transparent"></BoxView>
 
-        <buttons:SfButton Grid.Row="5"
+        <buttons:SfButton Grid.Row="4"
                           Padding="10"
                           FontSize="20"
                           CornerRadius="0"
@@ -86,9 +75,9 @@
                           Clicked="PpButton_Clicked"
                           HorizontalTextAlignment="Start"/>
 
-        <BoxView Grid.Row="6" HeightRequest="1" BackgroundColor="Black"></BoxView>
+        <BoxView Grid.Row="5" HeightRequest="1" BackgroundColor="Transparent"></BoxView>
 
-        <buttons:SfButton Grid.Row="7"
+        <buttons:SfButton Grid.Row="6"
                           Padding="10"
                           FontSize="20"
                           CornerRadius="0"
@@ -98,9 +87,9 @@
                           Clicked="MttButton_Clicked"
                           HorizontalTextAlignment="Start"/>
 
-        <BoxView Grid.Row="8" HeightRequest="1" BackgroundColor="Black"></BoxView>
+        <BoxView Grid.Row="7" HeightRequest="1" BackgroundColor="Transparent"></BoxView>
 
-        <buttons:SfButton Grid.Row="9"
+        <buttons:SfButton Grid.Row="8"
                           Padding="10"
                           FontSize="20"
                           CornerRadius="0"
@@ -110,10 +99,10 @@
                           Text="Information We Collect"
                           HorizontalTextAlignment="Start"/>
 
-        <BoxView Grid.Row="10" HeightRequest="1" BackgroundColor="Black"></BoxView>
+        <BoxView Grid.Row="9" HeightRequest="1" BackgroundColor="Transparent"></BoxView>
 
         <buttons:SfButton Padding="10"
-                          Grid.Row="11"
+                          Grid.Row="10"
                           FontSize="20"
                           CornerRadius="0"
                           TextColor="White"

@@ -1,7 +1,13 @@
 namespace Mapidemic.Pages.Landing;
 
+/// <summary>
+/// A class that provides a user interface for the different methods of illness tracking
+/// </summary>
 public partial class TrackingPage : TabbedPage
 {
+    /// <summary>
+    /// The default constructor for a TrackingPage
+    /// </summary>
     public TrackingPage()
     {
         InitializeComponent();

@@ -1,20 +1,29 @@
 using Mapidemic.Models;
+using System.Diagnostics;
 using System.Collections.ObjectModel;
 
 namespace Mapidemic.Pages.Landing;
 
+/// <summary>
+/// A class that provides a user interface for tracking illness on a statistics page
+/// </summary>
 public partial class StatsPage : ContentPage
 {
-
     private readonly Dictionary<string, int> _illnesses = new();
     public ObservableCollection<StatData> IllnessItems { get; } = new();
 
+    /// <summary>
+    /// The designated constructor for a StatsPage
+    /// </summary>
     public StatsPage()
     {
         InitializeComponent();
         BindingContext = this;
     }
 
+    /// <summary>
+    /// A function that gets the reports for the postal code in the settings file
+    /// </summary>
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -42,6 +51,8 @@ public partial class StatsPage : ContentPage
     /// reports for the postal code and adds them. Then the report
     /// is displayed to it's corresponding labels with the counts.
     /// </summary>
+    /// <param name="sourceEntry"></param>
+    /// <returns></returns>
     private async Task GetReports(Entry sourceEntry = null)
     {
         Popup.IsOpen = true;
@@ -51,7 +62,7 @@ public partial class StatsPage : ContentPage
         // Parse the user's ZIP entry
         if (!int.TryParse(zip, out var postalCode))
         {
-            await DisplayAlert("Invalid ZIP", "Please enter a 5-digit ZIP code (e.g., 54901)", "OK");
+            await HomePage.ShowPopup("Please enter a 5-digit ZIP code (e.g., 54901)");
             return;
         }
         try // attempting database queries
@@ -59,7 +70,7 @@ public partial class StatsPage : ContentPage
             // Validate if it is a postal code
             if (!await MauiProgram.businessLogic.ValidatePostalCode(zip)) // attempting to validate postal code
             {
-                await DisplayAlert("Invalid ZIP", "Please enter a 5-digit ZIP code (e.g., 54901)", "OK");
+                await HomePage.ShowPopup("Please enter a 5-digit ZIP code (e.g., 54901)");
                 return;
             }
             // Read the days picked from the picker. Default is set to 1 day.
@@ -93,19 +104,32 @@ public partial class StatsPage : ContentPage
             }
             catch(Exception reportError) // catching error if the database could not be reached
             {
-                await DisplayAlert("Network Error", $"{reportError.Message}", "OK");
+                await HomePage.ShowPopup("Unable to load illness statistics");
+                Debug.WriteLine(reportError.Message);
             }
         }
         catch(Exception postalCodeError) // catching error if the database could not be reached
         {
-            await DisplayAlert("Network Error", $"{postalCodeError.Message}", "OK");
+            await HomePage.ShowPopup("Unable to load illness statistics");
+            Debug.WriteLine(postalCodeError.Message);
         }
         finally
         {
             Popup.IsOpen = false;
         }
     }
-        
-    private async void Entered_Search(object sender, EventArgs e) => await GetReports(sender as Entry);
+    
+    /// <summary>
+    /// A function that gets the statistics for a given entry
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void Entered_Search(object sender, EventArgs e) => await GetReports((sender as Entry)!);
+
+    /// <summary>
+    /// A function that gets the statistics for a given postal code entered by the user
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void Clicked_Search(object sender, EventArgs e) => await GetReports();
 }
