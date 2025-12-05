@@ -14,6 +14,7 @@ public partial class ProcessPickerPage : ContentPage
     private const string disclaimer4 = "diagnosis, or treatment. If you are experiencing concerning symptoms or believe you ";
     private const string disclaimer5 = "may be ill, please consult a licensed healthcare professional.";
     private readonly SymptomsPage sibling; // holding sibling to pop off
+    private bool accepted;
 
     /// <summary>
     /// The designated constructor for a ProcessPickerPage
@@ -22,6 +23,7 @@ public partial class ProcessPickerPage : ContentPage
     {
         InitializeComponent();
         this.sibling = sibling;
+        accepted = false;
     }
 
     /// <summary>
@@ -30,7 +32,20 @@ public partial class ProcessPickerPage : ContentPage
     /// </summary>
     protected override async void OnAppearing()
     {
-        bool accepted = await DisplayAlert("Disclaimer", $"{disclaimer1}{disclaimer2}{disclaimer3}{disclaimer4}{disclaimer5}", "Accept", "Decline");
+        if (Application.Current!.UserAppTheme == AppTheme.Dark) // setting button shadow to white to clash with app theme
+        {
+            AiButton.Shadow.Brush = Colors.White;
+            StatsButton.Shadow.Brush = Colors.White;
+        }
+        else // setting button shadow to black to clash with app theme
+        {
+            AiButton.Shadow.Brush = Colors.Black;
+            StatsButton.Shadow.Brush = Colors.Black;
+        }
+        if (!accepted) // only showing the disclaimer once
+        {
+            accepted = await DisplayAlert("Disclaimer", $"{disclaimer1}{disclaimer2}{disclaimer3}{disclaimer4}{disclaimer5}", "Accept", "Decline");
+        }
         if (accepted) // continuing with symptom checking if accepted
         {
             Options.IsVisible = true;
