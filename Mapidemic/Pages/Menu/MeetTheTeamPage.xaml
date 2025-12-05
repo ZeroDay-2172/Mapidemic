@@ -59,14 +59,27 @@
 	<!-- Connor -->
 	<ContentPage Title="Connor McGuire">
 		<ScrollView>
-			<VerticalStackLayout Padding="10">
-				<Label FontSize="18">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
-					<Span Text="Major" />
-					</FormattedString>
-				</Label.FormattedText>
+			<VerticalStackLayout Padding="16" Spacing="16">
+
+				<!-- Optional Image if needed -->
+				<!-- <Image
+					Source="Image Source Goes here"
+					WidthRequest="100"
+					HeightRequest="100"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFill" /> -->
+
+				<!-- Name + Major + Short line -->
+				<Label 
+					FontSize="18"
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+						<Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
+						<Span Text="Major" />
+						</FormattedString>
+					</Label.FormattedText>
 				</Label>
 
 				<Label FontSize="18" LineBreakMode="WordWrap">
@@ -83,92 +96,76 @@
 	<!-- Neng -->
 	<ContentPage Title="Neng Yang">
 		<ScrollView>
-			<!-- Root grid: top section + bottom section -->
-			<Grid RowDefinitions="Auto,*">
+			<VerticalStackLayout Padding="16" Spacing="16">
 
-				<!-- Row 0: Avatar + Name + Major -->
-				<Grid Grid.Row="0"
-					RowDefinitions="Auto,Auto,Auto,Auto"
-					RowSpacing="8"
-					Padding="0,20,0,0">
+				<!-- Avatar as regular Image -->
+				<Image
+					Source="neng_yang.jpg"
+					WidthRequest="100"
+					HeightRequest="100"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFill" />
 
-					<!-- Avatar + Name + Major -->
-					<sfavatar:SfAvatarView
-						Grid.Row="0"
-						ContentType="Custom"
-						ImageSource="mapidemic_logo.png"
-						VerticalOptions="Center"
-						HorizontalOptions="Center"
-						HeightRequest="100"
-						WidthRequest="100"
-						CornerRadius="50"
-						Stroke="Black"
-						StrokeThickness="2"
-						Background="Transparent"
-						AvatarColorMode="Default" />
-					<Label Grid.Row="1"
-						Margin="0,8,0,0"
-						FontSize="24"
-						HorizontalTextAlignment="Center"
-						Padding="0,10,0,0">
-						<Label.FormattedText>
-							<FormattedString>
-								<Span Text="Neng Yang" FontAttributes="Bold" />
-								<Span Text="&#10;" />
-								<Span Text="Major: Computer Science" FontSize="16"/>
-								<Span Text="&#10;&#10;" />
-								<Span Text="Feel free to contact me!" FontSize="16"/>
-							</FormattedString>
-						</Label.FormattedText>
-					</Label>
+				<!-- Name + Major + Short line -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Neng Yang" FontAttributes="Bold" />
+							<Span Text="&#10;" />
+							<Span Text="Major: Computer Science" FontSize="16" />
+							<Span Text="&#10;&#10;" />
+							<Span Text="Feel free to contact me!" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
 
-					<!-- Email and Social Media Buttons -->
-					<HorizontalStackLayout Spacing="20"
-						HorizontalOptions="Center"
-						Grid.Row="3">
-						<ImageButton Source="email_icon.png"
-									WidthRequest="40" 
-									HeightRequest="40"
-									BorderWidth="1"
-									BorderColor="Black"
-									CornerRadius="2"
-									Clicked="NengEmailClicked" />
-						<ImageButton Source="linkedin_icon.png"
-									WidthRequest="40" 
-									HeightRequest="40"
-									BorderWidth="1"
-									BorderColor="Black"
-									CornerRadius="2"
-									Clicked="NengLinkedInClicked" />
-						<ImageButton Source="handshake_icon.png"
-									WidthRequest="40" 
-									HeightRequest="40"
-									BorderWidth="1"
-									BorderColor="Black"
-									CornerRadius="2"/>
-					</HorizontalStackLayout>
-				</Grid>
+				<!-- Email and Social Media Buttons -->
+				<HorizontalStackLayout
+					Spacing="20"
+					HorizontalOptions="Center">
+
+					<ImageButton Source="email_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="NengEmailClicked" />
+
+					<ImageButton Source="linkedin_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="NengLinkedInClicked" />
+
+					<ImageButton Source="handshake_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2" />
+				</HorizontalStackLayout>
 
 				<!-- About Neng -->
-				<Grid Grid.Row="1"
-					Margin="0,10,0,0"
-					Padding="16">
-					<ScrollView>
-						<Label FontSize="16"
-							LineBreakMode="WordWrap">
-							<Label.FormattedText>
-								<FormattedString>
-									<Span Text="About Me:&#10;&#10;" FontAttributes="Bold" FontSize="18"/>
-									<Span Text="I’m a junior at the University of Wisconsin–Oshkosh pursuing a degree in Computer Science. " />
-									<Span Text="This project has been a great opportunity to apply my skills and contribute to a meaningful learning curve. " />
-									<Span Text="My academic journey has allowed me to work with a variety of technologies—from algorithms and " />
-									<Span Text="Java to .NET MAUI mobile development—and I enjoy continuously learning new tools and improving my skills." />
-								</FormattedString>
-							</Label.FormattedText>
-						</Label>
-					</ScrollView>
-				</Grid>
-			</Grid>
+				<Label FontSize="16"
+					LineBreakMode="WordWrap">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="About Me:&#10;&#10;" FontAttributes="Bold" FontSize="18" />
+							<Span Text="I’m a junior at the University of Wisconsin–Oshkosh pursuing a degree in Computer Science. " />
+							<Span Text="This project has been a great opportunity to apply my skills and contribute to a meaningful learning curve. " />
+							<Span Text="My academic journey has allowed me to work with a variety of technologies—from algorithms and " />
+							<Span Text="Java to .NET MAUI mobile development—and I enjoy continuously learning new tools and improving my skills." />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+
+			</VerticalStackLayout>
 		</ScrollView>
 	</ContentPage>
 </TabbedPage>
