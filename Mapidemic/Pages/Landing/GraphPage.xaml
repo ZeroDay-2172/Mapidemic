@@ -103,7 +103,7 @@
                     BackgroundColor="#0074C0"
                     Clicked="RefreshButtonClicked"
                     Grid.Row="3"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Margin="0,20,20,20"/>
         </Grid>
 

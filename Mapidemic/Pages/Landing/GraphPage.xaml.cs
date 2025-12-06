@@ -49,6 +49,7 @@ public partial class GraphPage : ContentPage
 
         // Get list of localities -- Can be modified later
         string postalCode = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        LocalityCollection.Clear();
         LocalityCollection.Add("National");
 
         // Handle postalCodes with leading zeros
@@ -261,15 +262,5 @@ public partial class GraphPage : ContentPage
 
         // Update the actual title's text
         chartTitle.Text = newTitle;
-    }
-
-    private async Task ShowPopup(string message)
-    {
-        var popup = Toast.Make(
-            message, 
-            ToastDuration.Short,
-            textSize: 18
-        );
-        await popup.Show();
     }
 }
