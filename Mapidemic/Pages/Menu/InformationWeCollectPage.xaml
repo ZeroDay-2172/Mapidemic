@@ -25,7 +25,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -53,7 +55,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -94,7 +98,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -127,7 +133,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -158,7 +166,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -189,7 +199,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -220,7 +232,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>
@@ -253,7 +267,9 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label LineBreakMode="WordWrap" 
+                           Padding="5"
+                           FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="&#10;"/>

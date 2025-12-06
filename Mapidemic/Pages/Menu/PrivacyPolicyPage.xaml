@@ -6,7 +6,8 @@
              Title="Privacy Policy">
 
     <ScrollView>
-        <VerticalStackLayout Padding="15" Spacing="10">
+        <VerticalStackLayout Padding="15" 
+                             Spacing="10">
 
             <!-- 1. Introduction -->
             <syncfusion:SfExpander IsExpanded="False"
@@ -25,7 +26,10 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label 
+                        LineBreakMode="WordWrap" 
+                        Padding="5"
+                        FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Mapidemic empowers users with real-time awareness of local illness outbreaks " />
@@ -62,7 +66,10 @@
                 </syncfusion:SfExpander.Header>
 
                 <syncfusion:SfExpander.Content>
-                    <Label LineBreakMode="WordWrap" Padding="5">
+                    <Label 
+                        LineBreakMode="WordWrap" 
+                        Padding="5"
+                        FontSize="15">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="Mapidemic ensures the privacy of all its users. We strictly focus on keeping your identity safe and secure." />

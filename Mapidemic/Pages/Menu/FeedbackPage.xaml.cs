@@ -20,7 +20,8 @@ public partial class FeedbackPage : ContentPage
     /// <summary>
     /// A function that submits user feedback to the database
     /// </summary>
-    /// <param name="feedback"></param>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void OnSubmitClicked(object sender, EventArgs e)
     {
         // Gather category data

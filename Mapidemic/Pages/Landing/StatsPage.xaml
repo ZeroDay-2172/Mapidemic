@@ -24,8 +24,10 @@
                     Completed="Entered_Search" />
 
             <Picker x:Name="DaysPicked"
-                    Grid.Row="0" Grid.Column="1"
-                    Title="Past days" WidthRequest="80"
+                    Grid.Row="0" 
+                    Grid.Column="1"
+                    Title="Past day(s)" 
+                    WidthRequest="80"
                     SelectedIndex="0">
                 <Picker.Items>
                 <x:String>1</x:String>
@@ -57,7 +59,8 @@
                                     StrokeThickness="1"
                                     Stroke="#FFCFCFCF"
                                     StrokeShape="RoundRectangle 12">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <Grid ColumnDefinitions="*,Auto" 
+                                      ColumnSpacing="10">
                                     <VerticalStackLayout Grid.Column="0" Spacing="10">
                                         <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" HeightRequest="25" />
                                         <Label Text="{Binding ReportCount}" FontSize="11" FontAttributes="Bold" HeightRequest="25"/>
@@ -74,7 +77,9 @@
 
                     <!-- Empty view -->
                     <syncfusion:SfListView.EmptyView>
-                        <VerticalStackLayout Padding="24" Spacing="8" HorizontalOptions="Center">
+                        <VerticalStackLayout Padding="24" 
+                                             Spacing="8" 
+                                             HorizontalOptions="Center">
                             <Label Text="No reports found." FontAttributes="Bold" />
                         </VerticalStackLayout>
                     </syncfusion:SfListView.EmptyView>

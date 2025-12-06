@@ -2,127 +2,47 @@
 <TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			xmlns:sfavatar="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
-			xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
             x:Class="Mapidemic.Pages.Menu.MeetTheTeamPage"
-            Title="Meet the Team"
-			android:TabbedPage.ToolbarPlacement="Bottom"
-			android:TabbedPage.IsSwipePagingEnabled="False">
+            Title="Meet the Team">
 
 	<!-- Alex -->
-	<ContentPage Title="Alex Griep">
-		<ScrollView>
-			<VerticalStackLayout Padding="10">
-				<Label FontSize="18">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Alex Griep &#10;" FontAttributes="Bold" />
-					<Span Text="Major " />
-					</FormattedString>
-				</Label.FormattedText>
-				</Label>
-
-				<Label FontSize="18" LineBreakMode="WordWrap">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Place text here" />
-					</FormattedString>
-				</Label.FormattedText>
-				</Label>
-			</VerticalStackLayout>
-		</ScrollView>
-	</ContentPage>
-
-	<!-- Arthur -->
-	<ContentPage Title="Arthur Waldman">
-		<ScrollView>
-			<VerticalStackLayout Padding="10">
-				<Label FontSize="18">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Arthur Waldman &#10;" FontAttributes="Bold" />
-					<Span Text="Major" />
-					</FormattedString>
-				</Label.FormattedText>
-				</Label>
-
-				<Label FontSize="18" LineBreakMode="WordWrap">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Place text here" />
-					</FormattedString>
-				</Label.FormattedText>
-				</Label>
-			</VerticalStackLayout>
-		</ScrollView>
-	</ContentPage>
-
-	<!-- Connor -->
-	<ContentPage Title="Connor McGuire">
+	<ContentPage Title="Alex&#10;Griep">
 		<ScrollView>
 			<VerticalStackLayout Padding="16" Spacing="16">
 
 				<!-- Optional Image if needed -->
 				<!-- <Image
 					Source="Image Source Goes here"
-					WidthRequest="100"
-					HeightRequest="100"
+					HeightRequest="250"
 					HorizontalOptions="Center"
 					VerticalOptions="Center"
-					Aspect="AspectFill" /> -->
+					Aspect="AspectFit" /> -->
 
-				<!-- Name + Major + Short line -->
+				<!-- Name + Major -->
 				<Label 
 					FontSize="18"
 					HorizontalTextAlignment="Center">
 					<Label.FormattedText>
 						<FormattedString>
-						<Span Text="Connor McGuire &#10;" FontAttributes="Bold" />
-						<Span Text="Major" />
+							<Span Text="Alex Griep" FontAttributes="Bold" />
+							<Span Text="&#10;" />
+							<Span Text="Major: (Input Major Here)" FontSize="16" />
 						</FormattedString>
 					</Label.FormattedText>
 				</Label>
 
-				<Label FontSize="18" LineBreakMode="WordWrap">
-				<Label.FormattedText>
-					<FormattedString>
-					<Span Text="Place text here" />
-					</FormattedString>
-				</Label.FormattedText>
-				</Label>
-			</VerticalStackLayout>
-		</ScrollView>
-	</ContentPage>
-
-	<!-- Neng -->
-	<ContentPage Title="Neng Yang">
-		<ScrollView>
-			<VerticalStackLayout Padding="16" Spacing="16">
-
-				<!-- Avatar as regular Image -->
-				<Image
-					Source="neng_yang.jpg"
-					WidthRequest="100"
-					HeightRequest="100"
-					HorizontalOptions="Center"
-					VerticalOptions="Center"
-					Aspect="AspectFill" />
-
-				<!-- Name + Major + Short line -->
+				<!-- Optional -->
+				<!-- Email and Social Media Buttons -->
 				<Label
 					FontSize="24"
-					HorizontalTextAlignment="Center">
+					HorizontalTextAlignment="Center"
+					HeightRequest="25">
 					<Label.FormattedText>
 						<FormattedString>
-							<Span Text="Neng Yang" FontAttributes="Bold" />
-							<Span Text="&#10;" />
-							<Span Text="Major: Computer Science" FontSize="16" />
-							<Span Text="&#10;&#10;" />
 							<Span Text="Feel free to contact me!" FontSize="16" />
 						</FormattedString>
 					</Label.FormattedText>
 				</Label>
-
-				<!-- Email and Social Media Buttons -->
 				<HorizontalStackLayout
 					Spacing="20"
 					HorizontalOptions="Center">
@@ -133,7 +53,7 @@
 								BorderWidth="1"
 								BorderColor="Black"
 								CornerRadius="2"
-								Clicked="NengEmailClicked" />
+								Clicked="OnAlexEmailClicked" />
 
 					<ImageButton Source="linkedin_icon.png"
 								WidthRequest="40"
@@ -141,22 +61,303 @@
 								BorderWidth="1"
 								BorderColor="Black"
 								CornerRadius="2"
-								Clicked="NengLinkedInClicked" />
+								Clicked="OnAlexLinkedInClicked" />
+				</HorizontalStackLayout>
+
+				<!-- About Alex -->
+				<Label 
+					FontSize="18" 
+					HeightRequest="20" 
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="About Me:&#10;&#10;" FontAttributes="Bold"/>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<Label 
+					FontSize="16"
+					LineBreakMode="WordWrap">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+							<Span Text=" " />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
+
+	<!-- Arthur -->
+	<ContentPage Title="Arthur&#10;Waldman">
+		<ScrollView>
+			<VerticalStackLayout Padding="16" Spacing="16">
+
+				<!-- Image -->
+				<Image
+					Source="arthur_waldman.jpg"
+					HeightRequest="240"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFit" />
+
+				<!-- Name + Major -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Arthur Waldman" FontAttributes="Bold" />
+							<Span Text="&#10;" />
+							<Span Text="Major: Computer Science" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+
+				<!-- Email and Social Media Buttons -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center"
+					HeightRequest="25">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Feel free to contact me!" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<HorizontalStackLayout
+					Spacing="20"
+					HorizontalOptions="Center">
+
+					<ImageButton Source="email_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnArthurEmailClicked" />
+
+					<ImageButton Source="linkedin_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnArthurLinkedInClicked" />
+				</HorizontalStackLayout>
+
+				<!-- About Arthur -->
+				<Label 
+					FontSize="18" 
+					HeightRequest="20" 
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="About Me:&#10;" FontAttributes="Bold"/>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<Label 
+					FontSize="16"
+					LineBreakMode="WordWrap">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="I am a junior at the University of Wisconsin Oshkosh studying Computer Science and Mathematics. " />
+							<Span Text="I enjoy detail-oriented work that requires step by step analysis of a given problem. " />
+							<Span Text="During my time at UWO, I have been able to build mobile applications, web applications, and even a compiler. " />
+							<Span Text="My favorite way to experiment in my free time is not building new applications, but exploring and learning new languages. " />
+							<Span Text="After graduating from university, I look forward using what I have learned to develop software that improve the everyday lives of ordinary people." />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
+
+	<!-- Connor -->
+	<ContentPage Title="Connor&#10;McGuire">
+		<ScrollView>
+			<VerticalStackLayout Padding="16" Spacing="16">
+
+				<!-- Optional Image if needed -->
+				<!-- <Image
+					Source="Image Source Goes here"
+					HeightRequest="250"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFit" /> -->
+
+				<!-- Name + Major -->
+				<Label 
+					FontSize="18"
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Connor McGuire" FontAttributes="Bold" />
+							<Span Text="&#10;" />
+							<Span Text="Major: Computer Science" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+
+				<!-- Email and Social Media Buttons -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center"
+					HeightRequest="25">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Feel free to contact me!" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<HorizontalStackLayout
+					Spacing="20"
+					HorizontalOptions="Center">
+
+					<ImageButton Source="email_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnConnorEmailClicked" />
+
+					<ImageButton Source="linkedin_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnConnorLinkedInClicked" />
 
 					<ImageButton Source="handshake_icon.png"
 								WidthRequest="40"
 								HeightRequest="40"
 								BorderWidth="1"
 								BorderColor="Black"
-								CornerRadius="2" />
+								CornerRadius="2" 
+								Clicked="OnConnorHandshakeClicked"/>
 				</HorizontalStackLayout>
 
-				<!-- About Neng -->
-				<Label FontSize="16"
+				<!-- About Connor -->
+				<Label 
+					FontSize="18" 
+					HeightRequest="20" 
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="About Me:&#10;&#10;" FontAttributes="Bold"/>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<Label 
+					FontSize="16"
 					LineBreakMode="WordWrap">
 					<Label.FormattedText>
 						<FormattedString>
-							<Span Text="About Me:&#10;&#10;" FontAttributes="Bold" FontSize="18" />
+							<Span Text="I am a Computer Science student at University of Wisconsin-Oshkosh. " />
+							<Span Text="Throughout my time in college I have developed a passion for software development. " />
+							<Span Text="What I enjoyed most about working on Mapidemic was not only learning about cross platform app development, " />
+							<Span Text="but also contributing to something that will hopefully benefit public health. " />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+			</VerticalStackLayout>
+		</ScrollView>
+	</ContentPage>
+
+	<!-- Neng -->
+	<ContentPage Title="Neng&#10;Yang">
+		<ScrollView>
+			<VerticalStackLayout 
+				Padding="16" 
+				Spacing="16">
+
+				<!-- Image -->
+				<Image
+					Source="neng_yang.jpg"
+					HeightRequest="240"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFit" />
+
+				<!-- Name + Major -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Neng Yang" FontAttributes="Bold" />
+							<Span Text="&#10;" />
+							<Span Text="Major: Computer Science" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+
+				<!-- Email and Social Media Buttons -->
+				<Label
+					FontSize="24"
+					HorizontalTextAlignment="Center"
+					HeightRequest="25">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="Feel free to contact me!" FontSize="16" />
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<HorizontalStackLayout
+					Spacing="20"
+					HorizontalOptions="Center">
+
+					<ImageButton Source="email_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnNengEmailClicked" />
+
+					<ImageButton Source="linkedin_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2"
+								Clicked="OnNengLinkedInClicked" />
+
+					<ImageButton Source="handshake_icon.png"
+								WidthRequest="40"
+								HeightRequest="40"
+								BorderWidth="1"
+								BorderColor="Black"
+								CornerRadius="2" 
+								Clicked="OnNengHandshakeClicked"/>
+				</HorizontalStackLayout>
+
+				<!-- About Neng -->
+				<Label 
+					FontSize="18" 
+					HeightRequest="20" 
+					HorizontalTextAlignment="Center">
+					<Label.FormattedText>
+						<FormattedString>
+							<Span Text="About Me:&#10;&#10;" FontAttributes="Bold"/>
+						</FormattedString>
+					</Label.FormattedText>
+				</Label>
+				<Label 
+					FontSize="16"
+					LineBreakMode="WordWrap">
+					<Label.FormattedText>
+						<FormattedString>
 							<Span Text="I’m a junior at the University of Wisconsin–Oshkosh pursuing a degree in Computer Science. " />
 							<Span Text="This project has been a great opportunity to apply my skills and contribute to a meaningful learning curve. " />
 							<Span Text="My academic journey has allowed me to work with a variety of technologies—from algorithms and " />
