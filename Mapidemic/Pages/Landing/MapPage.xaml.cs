@@ -26,11 +26,6 @@ public partial class MapPage : ContentPage
     private const int defaultModerateThreshold = 5;
     private const int defaultMoreThreshold = 10;
     private const int defaultSevereThreshold = 15;
-    private const double UsMinLatitude = 24.396308;
-    private const double UsMaxLatitude = 49.384358;
-    private const double UsMinLongitude = -125.0;
-    private const double UsMaxLongitude = -66.93457;
-    private static readonly Location DefaultUsCenter = new Location(37.0902, -95.7129); // Approximate center of the contiguous United States
 
     public MapPage()
     {
@@ -68,9 +63,16 @@ public partial class MapPage : ContentPage
     /// <summary>
     /// Handle the Report Illness button click to navigate to the report page.
     /// </summary>
-    void OnReportIllnessClicked(object sender, EventArgs e)
+    async void OnReportIllnessClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
+        try
+        {
+            await Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Navigation Error", $"Unable to open report page: {ex.Message}", "OK");
+        }
     }
 
     void OnLegendToggleClicked(object sender, EventArgs e)
@@ -119,7 +121,7 @@ public partial class MapPage : ContentPage
 
     /// <summary>
     /// Render color-coded circles by ZIP code, based on count of illness reports.
-    /// Yellow = minimal, Red = more, Black = severe. Fixed radius to preserve privacy.
+    /// Color scheme: Yellow → Gold → Orange → OrangeRed → Red, with Red indicating the highest severity. Fixed radius to preserve privacy.
     /// </summary>
     private async Task RenderReportHeatmap()
     {
@@ -271,28 +273,5 @@ public partial class MapPage : ContentPage
             _refreshScheduled = false;
             _renderLock.Release();
         }
-    }
-
-    /// <summary>
-    /// Check if a location is within the bounds of the United States.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    private static bool IsWithinUsBounds(Location location)
-    {
-        return location.Latitude >= UsMinLatitude && location.Latitude <= UsMaxLatitude &&
-               location.Longitude >= UsMinLongitude && location.Longitude <= UsMaxLongitude;
-    }
-
-    /// <summary>
-    /// Clamp a location to the bounds of the United States.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    private static Location ClampToUsBounds(Location location)
-    {
-        double clampedLatitude = Math.Max(UsMinLatitude, Math.Min(UsMaxLatitude, location.Latitude));
-        double clampedLongitude = Math.Max(UsMinLongitude, Math.Min(UsMaxLongitude, location.Longitude));
-        return new Location(clampedLatitude, clampedLongitude);
     }
 }
