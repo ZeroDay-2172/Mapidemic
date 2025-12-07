@@ -55,13 +55,13 @@
 								CornerRadius="2"
 								Clicked="OnAlexEmailClicked" />
 
-					<ImageButton Source="linkedin_icon.png"
+					<!-- <ImageButton Source="linkedin_icon.png"
 								WidthRequest="40"
 								HeightRequest="40"
 								BorderWidth="1"
 								BorderColor="Black"
 								CornerRadius="2"
-								Clicked="OnAlexLinkedInClicked" />
+								Clicked="OnAlexLinkedInClicked" /> -->
 				</HorizontalStackLayout>
 
 				<!-- About Alex -->

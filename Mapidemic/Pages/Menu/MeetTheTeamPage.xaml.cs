@@ -20,7 +20,7 @@ public partial class MeetTheTeamPage : TabbedPage
     private const string nengEmail = "yangne53@uwosh.edu";
     private const string nengLinkedIn = "https://www.linkedin.com/in/nengyang93/";
     private const string nengHandshake = "https://uwosh.joinhandshake.com/profiles/s6zdka";
-    
+
     /// <summary>
     /// The default constructor for a MeetTheTeamPage
     /// </summary>
@@ -53,19 +53,19 @@ public partial class MeetTheTeamPage : TabbedPage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private async void OnAlexLinkedInClicked(object sender, EventArgs e)
-    {
-        try // Open the default web browser
-        {
-            // Attempt to open the LinkedIn profile
-            // await Launcher.Default.OpenAsync(new Uri(alexLinkedIn));
-        }
-        catch (Exception)
-        {
-            // Show an error popup if unable to open the LinkedIn profile
-            await HomePage.ShowPopup("Unable to open LinkedIn profile.");
-        }
-    }
+    // private async void OnAlexLinkedInClicked(object sender, EventArgs e)
+    // {
+    //     try // Open the default web browser
+    //     {
+    //         // Attempt to open the LinkedIn profile
+    //         // await Launcher.Default.OpenAsync(new Uri(alexLinkedIn));
+    //     }
+    //     catch (Exception)
+    //     {
+    //         // Show an error popup if unable to open the LinkedIn profile
+    //         await HomePage.ShowPopup("Unable to open LinkedIn profile.");
+    //     }
+    // }
 
     /// <summary>
     /// Opens the default email client to contact Arthur Waldman
