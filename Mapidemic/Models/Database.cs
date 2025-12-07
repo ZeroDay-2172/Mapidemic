@@ -1,5 +1,6 @@
 
 
+using System.Formats.Asn1;
 using Mapidemic.Pages.SymptomChecker;
 
 namespace Mapidemic.Models;
@@ -297,6 +298,18 @@ public class Database
     {
         try {
             return (await IssueQuery(supabaseClient.From<Feedback>().Insert(feedback))).Models.Count == 1;
+        }
+        catch (Exception error)
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    public async Task<List<IllnessReport>> GetIllnessReportsSince(DateTimeOffset cutoff)
+    {
+        try
+        {
+            return (await IssueQuery(supabaseClient.From<IllnessReport>().Where(x => x.ReportDate >= cutoff).Get())).Models;
         }
         catch (Exception error)
         {

@@ -527,4 +527,16 @@ public class BusinessLogic
             throw new Exception(error.Message);
         }
     }
+
+    public async Task<List<IllnessReport>> GetIllnessReportsSince(DateTimeOffset cutoff)
+    {
+        try
+        {
+            return await database.GetIllnessReportsSince(cutoff);
+        }
+        catch (Exception error)
+        {
+            throw new Exception(error.Message);
+        }
+    }
 }

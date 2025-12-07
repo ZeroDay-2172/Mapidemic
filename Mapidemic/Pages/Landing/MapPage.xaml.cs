@@ -2,6 +2,10 @@ using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
 using CommunityToolkit.Mvvm.Messaging;
 using Mapidemic.Pages.ReportIllness;
+using Mapidemic.Models;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace Mapidemic.Pages.Landing;
 
@@ -26,6 +30,8 @@ public partial class MapPage : ContentPage
     private const int defaultModerateThreshold = 5;
     private const int defaultMoreThreshold = 10;
     private const int defaultSevereThreshold = 15;
+    private const double viewportPaddingFactor = 1.2; // Factor to slightly expand the viewport for better visibility
+    private readonly Dictionary<Circle, (int Count, int? Population)> _circleMeta = new();
 
     public MapPage()
     {
@@ -47,8 +53,10 @@ public partial class MapPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        MapControl.PropertyChanged += OnMapPropertyChanged; // refresh when the user interacts with the map
         await CenterOnUserPostalCode();
         await RenderReportHeatmap();
+        await RenderVisibleCircles();
     }
 
     /// <summary>
@@ -57,6 +65,7 @@ public partial class MapPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        MapControl.PropertyChanged -= OnMapPropertyChanged;
         WeakReferenceMessenger.Default.UnregisterAll(this); // If this isn't here, the app will crash because we can't re-register messengers
     }
 
@@ -134,6 +143,7 @@ public partial class MapPage : ContentPage
             _heatmapCircles.Clear();
 
             var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
+            counts = await GetActiveZipIllnessCounts(); // Filters to only active illness reports
             if (counts == null || counts.Count == 0)
             {
                 return; // No data to render
@@ -147,7 +157,8 @@ public partial class MapPage : ContentPage
             var zipCodes = grouped.Select(g => g.Zip).ToList();
             var centroidDict = await MauiProgram.businessLogic.GetPostalCodeCentroidsBulk(zipCodes); // Bulk fetch centroids for all relevant ZIP codes
             var populationDict = await MauiProgram.businessLogic.GetPopulationCountsBulk(zipCodes); // Bulk fetch populations for all relevant ZIP codes
-
+            var visibleRegion = MapControl.VisibleRegion;
+            
             foreach (var item in grouped)
             {
                 if (!centroidDict.TryGetValue(item.Zip, out var centroid))
@@ -160,13 +171,130 @@ public partial class MapPage : ContentPage
                 populationDict.TryGetValue(item.Zip, out var population); // Try to get population, may be null
                 _populationCache[item.Zip] = population?.PopulationCount; // Cache population count if available
 
+                if (visibleRegion != null && !IsInVisibleRegion(center, visibleRegion)) // Only draw if in visible region
+                {
+                    _heatmapCircles.Add(new Circle // Still create the circle for caching, but don't add it to the map yet
+                    {
+                        Center = center,
+                        Radius = Distance.FromMiles(GetStyleForCount(item.Count, population?.PopulationCount).radiusMiles),
+                        StrokeWidth = 2,
+                        StrokeColor = GetStyleForCount(item.Count, population?.PopulationCount).color.WithAlpha(0.9f),
+                        FillColor = GetStyleForCount(item.Count, population?.PopulationCount).color.WithAlpha(0.35f),
+                    });
+                    _circleMeta[_heatmapCircles.Last()] = (item.Count, population?.PopulationCount);
+                    continue; // Skip if not in visible region
+                }
+
                 var style = GetStyleForCount(item.Count, population?.PopulationCount);
-                await DrawHeatmapCircles(center, style.radiusMiles, style.color);
+                await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
             }
+
+            await RenderVisibleCircles(); // Ensure only visible circles are rendered
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Unable to render heatmap: {ex.Message}", "OK");
+        }
+    }
+
+    /// <summary>
+    /// Get active illness report counts by ZIP code, filtering out recovered cases based on illness recovery periods.
+    /// </summary>
+    /// <returns></returns>
+    private async Task<List<ZipIllnessCounts>> GetActiveZipIllnessCounts()
+    {
+        var illnesses = await MauiProgram.businessLogic.GetIllnessesList(); // Get the list of illnesses with their recovery periods
+        var recoveryLookup = illnesses.Where(illnesses => !string.IsNullOrWhiteSpace(illnesses.Name)).ToDictionary(illness => illness.Name!, illness => TimeSpan.FromHours(illness.RecoveryPeriod)); // Create a lookup for recovery periods
+
+        if (recoveryLookup.Count == 0)
+        {
+            return new List<ZipIllnessCounts>(); // No illnesses found, return empty list
+        }
+
+        var maxRecovery = recoveryLookup.Values.Max(); // Determine the maximum recovery period to limit the query range
+        var cutOff = DateTimeOffset.UtcNow.Subtract(maxRecovery);
+        var reports = await MauiProgram.businessLogic.GetIllnessReportsSince(cutOff); // Fetch reports since the cutoff date
+        var now = DateTimeOffset.UtcNow;
+
+        var activeReports = reports.Where(reports => !string.IsNullOrWhiteSpace(reports.IllnessType) && recoveryLookup.TryGetValue(reports.IllnessType!, out var span) && reports.ReportDate.Add(span) >= now);
+        return activeReports
+            .GroupBy(reports => reports.PostalCode) // Group active reports by postal code
+            .Select(g => new ZipIllnessCounts
+            {
+                PostalCode = g.Key,
+                IllnessType = null,
+                TotalCount = g.Count(),
+                UpdatedAt = g.Max(x => (DateTimeOffset?)x.ReportDate)
+            }).ToList();
+    }
+
+    /// <summary>
+    /// Render only the circles that are within the current visible region of the map.
+    /// </summary>
+    /// <returns></returns>
+    private async Task RenderVisibleCircles()
+    {
+        try
+        {
+            var visibleRegion = MapControl.VisibleRegion;
+            if (visibleRegion == null)
+            {
+                return;
+            }
+
+            foreach (var circle in _heatmapCircles)
+            {
+                bool inside = IsInVisibleRegion(circle.Center, visibleRegion); // Check if circle center is in visible region
+                if (inside)
+                {
+                    if (!MapControl.MapElements.Contains(circle)) // Add circles that are inside the visible region
+                    {
+                        MapControl.MapElements.Add(circle);
+                    }
+                }
+                else
+                {
+                    if (MapControl.MapElements.Contains(circle)) // Remove circles that are outside the visible region
+                    {
+                        MapControl.MapElements.Remove(circle);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Unable to render visible circles: {ex.Message}", "OK");
+        }
+    }
+
+    /// <summary>
+    /// Check if a location is within the visible region of the map.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="visibleRegion"></param>
+    /// <returns></returns>
+    private static bool IsInVisibleRegion(Location location, MapSpan visibleRegion)
+    {
+        double halfLat = visibleRegion.LatitudeDegrees / 2 * viewportPaddingFactor;
+        double halfLon = visibleRegion.LongitudeDegrees / 2 * viewportPaddingFactor;
+        double north = visibleRegion.Center.Latitude + halfLat;
+        double south = visibleRegion.Center.Latitude - halfLat;
+        double east = visibleRegion.Center.Longitude + halfLon;
+        double west = visibleRegion.Center.Longitude - halfLon;
+        return location.Latitude <= north && location.Latitude >= south &&
+               location.Longitude <= east && location.Longitude >= west;
+    }
+
+    /// <summary>
+    /// Handle map property changes to refresh visible circles when the visible region changes.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void OnMapPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MapControl.VisibleRegion))
+        {
+            await RenderVisibleCircles();
         }
     }
 
