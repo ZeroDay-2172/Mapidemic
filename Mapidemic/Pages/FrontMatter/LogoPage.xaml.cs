@@ -3,28 +3,28 @@ using Mapidemic.Pages.Landing;
 namespace Mapidemic.Pages.FrontMatter;
 
 /// <summary>
-///  suppressing the warning caused by lines: 
+/// Suppressing the warning caused by lines Application assignment statements.
+/// These statements are obsolete, but still valid 
 /// </summary>
 #pragma warning disable CS0618
 
+/// <summary>
+/// A class that provides a user interface for the Mapidemic logo
+/// </summary>
 public partial class LogoPage : ContentPage
 {
     /// <summary>
-    /// The designated constructor for a LogoPage
+    /// The default constructor for a LogoPage
     /// </summary>
     public LogoPage()
     {
         InitializeComponent();
-        Loaded += OnPageLoaded!;
     }
 
     /// <summary>
-    /// A function that determines where the user will be
-    /// directed as the app loads
+    /// A function that determines where the user will be directed as the app loads
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    public async void OnPageLoaded(object sender, EventArgs e)
+    protected async override void OnAppearing()
     {
         await Logo.FadeTo(1, 1500); // loading in the logo
         if (await MauiProgram.businessLogic.TestDatabaseConnection()) // testing the database connection

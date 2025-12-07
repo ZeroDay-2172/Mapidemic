@@ -1,34 +1,34 @@
+using System.Diagnostics;
 using Mapidemic.Pages.Landing;
 
 namespace Mapidemic.Pages.FrontMatter;
 
 /// <summary>
-///  suppressing the warning caused by:
-/// [Application.Current!.MainPage = new HomePage();]
+/// Suppressing the warning caused by lines Application assignment statements.
+/// These statements are obsolete, but still valid 
 /// </summary>
 #pragma warning disable CS0618
 
+/// <summary>
+/// A class that provides a user interface for a new user to configure their app settings
+/// </summary>
 public partial class NewUserPage : ContentPage
 {
     private const int waitingSpeed = 1000;
     private const int transitionSpeed = 750;
     
     /// <summary>
-    /// The designated constructor for a ThemePage
+    /// The default constructor for a ThemePage
     /// </summary>
     public NewUserPage()
     {
         InitializeComponent();
-        Loaded += OnPageLoaded!;
     }
 
     /// <summary>
-    /// An EH function that controls the first
-    /// time user experience
+    /// An EH function that controls the first time user experience
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private async void OnPageLoaded(object sender, EventArgs e)
+    protected async override void OnAppearing()
     {
         Welcome.IsEnabled = true;
         await Welcome.FadeTo(1, transitionSpeed);
@@ -54,8 +54,7 @@ public partial class NewUserPage : ContentPage
     }
 
     /// <summary>
-    /// An EH function changes the app theme when
-    /// the user toggles the switch
+    /// An EH function changes the app theme when the user toggles the switch
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -97,15 +96,15 @@ public partial class NewUserPage : ContentPage
     /// <param name="e"></param>
     public async void OnEnterClicked(object sender, EventArgs e)
     {
+        Popup.IsOpen = true;
         string entryText = PostalCodeEntry.Text;
         try
         {
             if (await MauiProgram.businessLogic!.ValidatePostalCode(entryText)) // attempting to validate postal code
             {
-                EnterButton.IsEnabled = false;
-                PostalCodeEntry.IsEnabled = false;
                 if (await MauiProgram.businessLogic.SaveSettings(ThemeToggle.IsToggled, int.Parse(entryText))) // attempting to parse settings to JSON
                 {
+                    Popup.IsOpen = false;
                     Tracking.IsEnabled = true;
                     await PostalCode.FadeTo(0, transitionSpeed);
                     Grid.Remove(PostalCode);
@@ -116,17 +115,21 @@ public partial class NewUserPage : ContentPage
                 }
                 else // error if JSON parse failed
                 {
-                    await DisplayAlert("Saving Error", "Unable to save to settings. Please try again shortly.", "OK");
+                    Popup.IsOpen = false;
+                    await HomePage.ShowPopup("Unable to save to settings. Please try again");
                 }
             }
             else // error if the postal code entered was invalid
             {
-                await DisplayAlert("Invalid Postal/Zip Code", "We were not able to locate the entered postal/zip code", "OK");
+                Popup.IsOpen = false;
+                await HomePage.ShowPopup("Unable to validate postal code. Please try again");
             }
         }
         catch(Exception error) // error if the user lost connection during this step
         {
-            await DisplayAlert("Network Error", $"{error.Message}", "OK");
+            Popup.IsOpen = false;
+            await HomePage.ShowPopup("Unable to validate postal code. Please try again");
+            Debug.WriteLine(error.Message);
         }
     }
 }

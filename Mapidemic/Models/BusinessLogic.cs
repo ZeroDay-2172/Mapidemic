@@ -102,8 +102,8 @@ public class BusinessLogic
 	public void CreateSettingsFile()
     {
         string destinationPath = Path.Combine(FileSystem.Current.AppDataDirectory, uiSettingsPath);
-        var input = FileSystem.OpenAppPackageFileAsync(uiSettingsPath);
-        var output = File.Create(destinationPath);
+        using var input = FileSystem.OpenAppPackageFileAsync(uiSettingsPath);
+        using var output = File.Create(destinationPath);
         input.Result.CopyToAsync(output);
     }
 
@@ -354,6 +354,18 @@ public class BusinessLogic
         }
     }
 
+    public async Task<List<ActiveZipIllnessCounts>> GetActiveZipIllnessCounts()
+    {
+        try // attempting to read the postal code and illness reports counts list
+        {
+            return await database.GetActiveZipIllnessCounts();
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
     /// <summary>
     /// A function that gets the centroid values on the map
     /// for each postal code in the United States
@@ -523,18 +535,6 @@ public class BusinessLogic
             return await database.SubmitFeedbackAsync(feedback); // Insert the feedback into the database 
         }
         catch (Exception error) // catching error if the database could not be reached
-        {
-            throw new Exception(error.Message);
-        }
-    }
-
-    public async Task<List<IllnessReport>> GetIllnessReportsSince(DateTimeOffset cutoff)
-    {
-        try
-        {
-            return await database.GetIllnessReportsSince(cutoff);
-        }
-        catch (Exception error)
         {
             throw new Exception(error.Message);
         }

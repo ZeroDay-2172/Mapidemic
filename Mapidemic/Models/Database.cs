@@ -131,6 +131,18 @@ public class Database
         }
     }
 
+    public async Task<List<ActiveZipIllnessCounts>> GetActiveZipIllnessCounts()
+    {
+        try // querying the database for the postal code and illness reports count list
+        {
+            return (await IssueQuery(supabaseClient.From<ActiveZipIllnessCounts>().Select("*").Get())).Models;
+        }
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
     /// <summary>
     /// A function that gets the centroid values on the map
     /// for each postal code in the United States
@@ -298,18 +310,6 @@ public class Database
     {
         try {
             return (await IssueQuery(supabaseClient.From<Feedback>().Insert(feedback))).Models.Count == 1;
-        }
-        catch (Exception error)
-        {
-            throw new Exception(error.Message);
-        }
-    }
-
-    public async Task<List<IllnessReport>> GetIllnessReportsSince(DateTimeOffset cutoff)
-    {
-        try
-        {
-            return (await IssueQuery(supabaseClient.From<IllnessReport>().Where(x => x.ReportDate >= cutoff).Get())).Models;
         }
         catch (Exception error)
         {
