@@ -2,10 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Mapidemic"
+             xmlns:models="clr-namespace:Mapidemic.Models"
+             xmlns:landing="clr-namespace:Mapidemic.Pages.Landing"
              x:Class="Mapidemic.Pages.Landing.StatsPage"
              Title="Stats Page"
              xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
-             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             x:DataType="landing:StatsPage">
 
 
         <VerticalStackLayout Padding="15" Spacing="12">
@@ -53,7 +56,7 @@
                                         AutoFitMode="DynamicHeight"
                                         HeightRequest="580">
                     <syncfusion:SfListView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:StatData">
                             <Border Margin="0,6"
                                     Padding="10"
                                     StrokeThickness="1"

@@ -10,6 +10,17 @@ namespace Mapidemic.Pages.Menu;
 /// </summary>
 public partial class MeetTheTeamPage : TabbedPage
 {
+    private const string alexEmail = "griepal92@uwosh.edu";
+    // private const string alexLinkedIn = "INSERT_HTTPS_LINK_HERE";
+    private const string arthurEmail = "waldma51@uwosh.edu";
+    private const string arthurLinkedIn = "https://www.linkedin.com/in/arthurwaldman40/";
+    private const string connorEmail = "mcguireco30@uwosh.edu";
+    private const string connorLinkedIn = "https://www.linkedin.com/in/connor-mcguire-7b946b2a0/";
+    private const string connorHandshake = "https://app.joinhandshake.com/profiles/ckrk55";
+    private const string nengEmail = "yangne53@uwosh.edu";
+    private const string nengLinkedIn = "https://www.linkedin.com/in/nengyang93/";
+    private const string nengHandshake = "https://uwosh.joinhandshake.com/profiles/s6zdka";
+    
     /// <summary>
     /// The default constructor for a MeetTheTeamPage
     /// </summary>
@@ -28,7 +39,7 @@ public partial class MeetTheTeamPage : TabbedPage
         try // Open the default email client
         {
             // Attempt to open the email client with Alex's email address
-            //await Launcher.OpenAsync("mailto:INSERT_EMAIL_HERE");
+            await Launcher.Default.OpenAsync($"mailto:{alexEmail}");
         }
         catch (Exception)
         {
@@ -46,10 +57,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Alex's LinkedIn profile
-            //var uri = new Uri("INSERT_HTTPS_LINK_HERE");
             // Attempt to open the LinkedIn profile
-            //await Launcher.OpenAsync(uri);
+            // await Launcher.Default.OpenAsync(new Uri(alexLinkedIn));
         }
         catch (Exception)
         {
@@ -68,7 +77,7 @@ public partial class MeetTheTeamPage : TabbedPage
         try // Open the default email client
         {
             // Attempt to open the email client with Arthur's email address
-            await Launcher.OpenAsync("mailto:Waldma51@uwosh.edu");
+            await Launcher.Default.OpenAsync($"mailto:{arthurEmail}");
         }
         catch (Exception)
         {
@@ -86,10 +95,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Arthur's LinkedIn profile
-            var uri = new Uri("https://www.linkedin.com/in/arthurwaldman40/");
             // Attempt to open the LinkedIn profile
-            await Launcher.OpenAsync(uri);
+            await Launcher.Default.OpenAsync(new Uri(arthurLinkedIn));
         }
         catch (Exception)
         {
@@ -108,7 +115,7 @@ public partial class MeetTheTeamPage : TabbedPage
         try // Open the default email client
         {
             // Attempt to open the email client with Connor's email address
-            await Launcher.OpenAsync("mailto:mcguireco30@uwosh.edu");
+            await Launcher.Default.OpenAsync($"mailto:{connorEmail}");
         }
         catch (Exception)
         {
@@ -126,10 +133,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Connor's LinkedIn profile
-            var uri = new Uri("https://www.linkedin.com/in/connor-mcguire-7b946b2a0/");
             // Attempt to open the LinkedIn profile
-            await Launcher.OpenAsync(uri);
+            await Launcher.Default.OpenAsync(new Uri(connorLinkedIn));
         }
         catch (Exception)
         {
@@ -147,10 +152,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Connor's Handshake profile
-            var uri = new Uri("https://app.joinhandshake.com/profiles/ckrk55");
             // Attempt to open the Handshake profile
-            await Launcher.OpenAsync(uri);
+            await Launcher.Default.OpenAsync(new Uri(connorHandshake));
         }
         catch (Exception)
         {
@@ -169,7 +172,7 @@ public partial class MeetTheTeamPage : TabbedPage
         try // Open the default email client
         {
             // Attempt to open the email client with Neng's email address
-            await Launcher.OpenAsync("mailto:yangne53@uwosh.edu");
+            await Launcher.Default.OpenAsync($"mailto:{nengEmail}");
         }
         catch (Exception)
         {
@@ -187,10 +190,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Neng's LinkedIn profile
-            var uri = new Uri("https://www.linkedin.com/in/nengyang93/");
             // Attempt to open the LinkedIn profile
-            await Launcher.OpenAsync(uri);
+            await Launcher.Default.OpenAsync(new Uri(nengLinkedIn));
         }
         catch (Exception)
         {
@@ -208,10 +209,8 @@ public partial class MeetTheTeamPage : TabbedPage
     {
         try // Open the default web browser
         {
-            // Create a URI for Neng's Handshake profile
-            var uri = new Uri("https://uwosh.joinhandshake.com/profiles/s6zdka");
             // Attempt to open the Handshake profile
-            await Launcher.OpenAsync(uri);
+            await Launcher.Default.OpenAsync(new Uri(nengHandshake));
         }
         catch (Exception)
         {
