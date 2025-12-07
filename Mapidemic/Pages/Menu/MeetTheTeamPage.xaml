@@ -12,26 +12,25 @@
 
 				<!-- Optional Image if needed -->
 				<!-- <Image
-					Source="Image Source Goes here"
+					Source="no_user_image.png"
 					HeightRequest="250"
 					HorizontalOptions="Center"
 					VerticalOptions="Center"
 					Aspect="AspectFit" /> -->
 
-				<!-- Name + Major -->
+				<!-- Name and Major -->
 				<Label 
-					FontSize="18"
+					FontSize="24"
 					HorizontalTextAlignment="Center">
 					<Label.FormattedText>
 						<FormattedString>
 							<Span Text="Alex Griep" FontAttributes="Bold" />
 							<Span Text="&#10;" />
-							<Span Text="Major: (Input Major Here)" FontSize="16" />
+							<Span Text="Major: Computer Science" FontSize="16" />
 						</FormattedString>
 					</Label.FormattedText>
 				</Label>
 
-				<!-- Optional -->
 				<!-- Email and Social Media Buttons -->
 				<Label
 					FontSize="24"
@@ -55,13 +54,6 @@
 								CornerRadius="2"
 								Clicked="OnAlexEmailClicked" />
 
-					<!-- <ImageButton Source="linkedin_icon.png"
-								WidthRequest="40"
-								HeightRequest="40"
-								BorderWidth="1"
-								BorderColor="Black"
-								CornerRadius="2"
-								Clicked="OnAlexLinkedInClicked" /> -->
 				</HorizontalStackLayout>
 
 				<!-- About Alex -->
@@ -80,14 +72,11 @@
 					LineBreakMode="WordWrap">
 					<Label.FormattedText>
 						<FormattedString>
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
-							<Span Text=" " />
+							<Span Text="Computer Science student with a strong focus on building reliable, user-focused software. " />
+							<Span Text="I enjoy turning complex problems into clean, efficient systems and paying close attention "/>
+							<Span Text="to performance, architecture, and real-world usability. " />
+							<Span Text="This project reflects my interest in thoughtful design, collaboration, " />
+							<Span Text="and writing code that actually holds up outside the classroom. " />
 						</FormattedString>
 					</Label.FormattedText>
 				</Label>
@@ -108,7 +97,7 @@
 					VerticalOptions="Center"
 					Aspect="AspectFit" />
 
-				<!-- Name + Major -->
+				<!-- Name and Major -->
 				<Label
 					FontSize="24"
 					HorizontalTextAlignment="Center">
@@ -173,7 +162,8 @@
 							<Span Text="I enjoy detail-oriented work that requires step by step analysis of a given problem. " />
 							<Span Text="During my time at UWO, I have been able to build mobile applications, web applications, and even a compiler. " />
 							<Span Text="My favorite way to experiment in my free time is not building new applications, but exploring and learning new languages. " />
-							<Span Text="After graduating from university, I look forward using what I have learned to develop software that improve the everyday lives of ordinary people." />
+							<Span Text="After graduating from university, I look forward using what I have learned to develop software that improve " />
+							<Span Text="the everyday lives of ordinary people. " />
 						</FormattedString>
 					</Label.FormattedText>
 				</Label>
@@ -188,15 +178,15 @@
 
 				<!-- Optional Image if needed -->
 				<!-- <Image
-					Source="Image Source Goes here"
+					Source="no_user_image.png"
 					HeightRequest="250"
 					HorizontalOptions="Center"
 					VerticalOptions="Center"
 					Aspect="AspectFit" /> -->
 
-				<!-- Name + Major -->
+				<!-- Name and Major -->
 				<Label 
-					FontSize="18"
+					FontSize="24"
 					HorizontalTextAlignment="Center">
 					<Label.FormattedText>
 						<FormattedString>
@@ -289,7 +279,7 @@
 					VerticalOptions="Center"
 					Aspect="AspectFit" />
 
-				<!-- Name + Major -->
+				<!-- Name and Major -->
 				<Label
 					FontSize="24"
 					HorizontalTextAlignment="Center">
@@ -358,7 +348,7 @@
 					LineBreakMode="WordWrap">
 					<Label.FormattedText>
 						<FormattedString>
-							<Span Text="I’m a junior at the University of Wisconsin–Oshkosh pursuing a degree in Computer Science. " />
+							<Span Text="I am a junior at the University of Wisconsin–Oshkosh pursuing a bachelor degree in Computer Science. " />
 							<Span Text="This project has been a great opportunity to apply my skills and contribute to a meaningful learning curve. " />
 							<Span Text="My academic journey has allowed me to work with a variety of technologies—from algorithms and " />
 							<Span Text="Java to .NET MAUI mobile development—and I enjoy continuously learning new tools and improving my skills." />

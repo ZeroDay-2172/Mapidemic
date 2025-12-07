@@ -10,8 +10,7 @@ namespace Mapidemic.Pages.Menu;
 /// </summary>
 public partial class MeetTheTeamPage : TabbedPage
 {
-    private const string alexEmail = "griepal92@uwosh.edu";
-    // private const string alexLinkedIn = "INSERT_HTTPS_LINK_HERE";
+    private const string alexEmail = "AlexGriep@outlook.com";
     private const string arthurEmail = "waldma51@uwosh.edu";
     private const string arthurLinkedIn = "https://www.linkedin.com/in/arthurwaldman40/";
     private const string connorEmail = "mcguireco30@uwosh.edu";
@@ -47,25 +46,6 @@ public partial class MeetTheTeamPage : TabbedPage
             await HomePage.ShowPopup("Unable to open email client.");
         }
     }
-
-    /// <summary>
-    /// Opens Alex Griep's LinkedIn profile in the default web browser
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    // private async void OnAlexLinkedInClicked(object sender, EventArgs e)
-    // {
-    //     try // Open the default web browser
-    //     {
-    //         // Attempt to open the LinkedIn profile
-    //         // await Launcher.Default.OpenAsync(new Uri(alexLinkedIn));
-    //     }
-    //     catch (Exception)
-    //     {
-    //         // Show an error popup if unable to open the LinkedIn profile
-    //         await HomePage.ShowPopup("Unable to open LinkedIn profile.");
-    //     }
-    // }
 
     /// <summary>
     /// Opens the default email client to contact Arthur Waldman
