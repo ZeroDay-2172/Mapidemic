@@ -1,5 +1,8 @@
 namespace Mapidemic.Models;
 
+/// <summary>
+/// A class that represents a ChartModel object for displaying chart data
+/// </summary>
 public class ChartModel
 {
 
