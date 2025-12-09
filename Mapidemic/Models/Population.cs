@@ -4,6 +4,9 @@ namespace Mapidemic.Models;
 
 [Table("population")]
 
+/// <summary>
+/// Represents population data with its properties.
+/// </summary>
 public class Population : BaseModel
 {
     [PrimaryKey("name", false)]

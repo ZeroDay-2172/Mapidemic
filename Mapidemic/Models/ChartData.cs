@@ -1,5 +1,8 @@
 namespace Mapidemic.Models;
 
+/// <summary>
+/// Represents chart data with value and date.
+/// </summary>
 public class ChartData
 {
 

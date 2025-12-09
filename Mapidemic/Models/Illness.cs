@@ -4,6 +4,10 @@ using Supabase.Postgrest.Attributes;
 namespace Mapidemic.Models
 {
     [Table("illnesses")]
+    
+    /// <summary>
+    /// Represents an illness with its properties and behaviors.
+    /// </summary>
     public class Illness : BaseModel
     {
         private const double HoursInDay = 24.0;

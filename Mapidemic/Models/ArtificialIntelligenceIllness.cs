@@ -1,5 +1,8 @@
 namespace Mapidemic.Models;
 
+/// <summary>
+/// Represents an artificial intelligence illness with its properties and behaviors.
+/// </summary>
 public class ArtificialIntelligenceIllness
 {
     private const double HoursInDay = 24.0;

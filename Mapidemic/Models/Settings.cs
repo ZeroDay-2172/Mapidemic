@@ -1,5 +1,8 @@
 namespace Mapidemic.Models;
 
+/// <summary>
+/// Represents application settings with theme and postal code.
+/// </summary>
 public class Settings
 {
     public AppTheme Theme { get; set; }
