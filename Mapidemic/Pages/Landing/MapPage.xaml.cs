@@ -3,6 +3,11 @@ using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
 using Mapidemic.Pages.ReportIllness;
 using CommunityToolkit.Mvvm.Messaging;
+using Mapidemic.Pages.ReportIllness;
+using Mapidemic.Models;
+using System.ComponentModel;
+using System.Text.RegularExpressions;
+using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace Mapidemic.Pages.Landing;
 
@@ -30,11 +35,11 @@ public partial class MapPage : ContentPage
     private const int defaultModerateThreshold = 5;
     private const int defaultMoreThreshold = 10;
     private const int defaultSevereThreshold = 15;
-    private const double UsMinLatitude = 24.396308;
-    private const double UsMaxLatitude = 49.384358;
-    private const double UsMinLongitude = -125.0;
-    private const double UsMaxLongitude = -66.93457;
-    private static readonly Location DefaultUsCenter = new Location(37.0902, -95.7129); // Approximate center of the contiguous United States
+    private const double viewportPaddingFactor = 1.2; // Factor to slightly expand the viewport for better visibility
+    private const double maxZoomOutMiles = 50.0; // Maximum zoom out distance in miles
+    private const double zoomNudgeFactor = .5; // Nudge factor to slightly zoom in when exceeding max zoom out
+    private bool _isAdjustingZoom;
+    private readonly Dictionary<Circle, (int Count, int? Population)> _circleMeta = new();
 
     /// <summary>
     /// The designated constructor for a MapPage
@@ -63,8 +68,10 @@ public partial class MapPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        MapControl.PropertyChanged += OnMapPropertyChanged; // refresh when the user interacts with the map
         await CenterOnUserPostalCode();
         await RenderReportHeatmap();
+        await RenderVisibleCircles();
     }
 
     /// <summary>
@@ -73,17 +80,23 @@ public partial class MapPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        MapControl.PropertyChanged -= OnMapPropertyChanged;
         WeakReferenceMessenger.Default.UnregisterAll(this); // If this isn't here, the app will crash because we can't re-register messengers
     }
 
     /// <summary>
     /// Handle the Report Illness button click to navigate to the report page.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    void OnReportIllnessClicked(object sender, EventArgs e)
+    async void OnReportIllnessClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
+        try
+        {
+            await Navigation.PushAsync(new ReportIllnessPage()); // Navigates to the report illness page
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Navigation Error", $"Unable to open report page: {ex.Message}", "OK");
+        }
     }
 
     /// <summary>
@@ -104,6 +117,33 @@ public partial class MapPage : ContentPage
     void OnLegendBackClicked(object sender, EventArgs e)
     {
         LegendFrame.IsVisible = false; // Hides the legend frame when the back button is clicked
+    }
+
+    /// <summary>
+    /// Handle map property changes to enforce maximum zoom level and refresh visible circles.
+    /// </summary>
+    private async void OnMapPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MapControl.VisibleRegion))
+        {
+            var visibleRegion = MapControl.VisibleRegion;
+            if (visibleRegion?.Radius != null && !_isAdjustingZoom && visibleRegion.Radius.Miles > maxZoomOutMiles)
+            {
+                try
+                {
+                    _isAdjustingZoom = true;
+                    var center = visibleRegion.Center;
+                    var targetMiles = Math.Max(1.0, maxZoomOutMiles * zoomNudgeFactor); // small inward nudge
+                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(targetMiles)));
+                }
+                finally
+                {
+                    _isAdjustingZoom = false;
+                }
+                return;
+            }
+        }
+        await RenderVisibleCircles();
     }
 
     /// <summary>
@@ -143,7 +183,7 @@ public partial class MapPage : ContentPage
 
     /// <summary>
     /// Render color-coded circles by ZIP code, based on count of illness reports.
-    /// Yellow = minimal, Red = more, Black = severe. Fixed radius to preserve privacy.
+    /// Color scheme: Yellow → Gold → Orange → OrangeRed → Red, with Red indicating the highest severity. Fixed radius to preserve privacy.
     /// </summary>
     private async Task RenderReportHeatmap()
     {
@@ -155,7 +195,8 @@ public partial class MapPage : ContentPage
             }
             _heatmapCircles.Clear();
 
-            var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
+            // var counts = await MauiProgram.businessLogic.GetZipIllnessCounts(); // Gets all the zip illness counts from the database, might be poorly optimized
+            var counts = await MauiProgram.businessLogic.GetActiveZipIllnessCounts(); // Filters to only active illness reports
             if (counts == null || counts.Count == 0)
             {
                 return; // No data to render
@@ -169,6 +210,7 @@ public partial class MapPage : ContentPage
             var zipCodes = grouped.Select(g => g.Zip).ToList();
             var centroidDict = await MauiProgram.businessLogic.GetPostalCodeCentroidsBulk(zipCodes); // Bulk fetch centroids for all relevant ZIP codes
             var populationDict = await MauiProgram.businessLogic.GetPopulationCountsBulk(zipCodes); // Bulk fetch populations for all relevant ZIP codes
+            var visibleRegion = MapControl.VisibleRegion;
 
             foreach (var item in grouped)
             {
@@ -182,15 +224,88 @@ public partial class MapPage : ContentPage
                 populationDict.TryGetValue(item.Zip, out var population); // Try to get population, may be null
                 _populationCache[item.Zip] = population?.PopulationCount; // Cache population count if available
 
+                if (visibleRegion != null && !IsInVisibleRegion(center, visibleRegion)) // Only draw if in visible region
+                {
+                    _heatmapCircles.Add(new Circle // Still create the circle for caching, but don't add it to the map yet
+                    {
+                        Center = center,
+                        Radius = Distance.FromMiles(GetStyleForCount(item.Count, population?.PopulationCount).radiusMiles),
+                        StrokeWidth = 2,
+                        StrokeColor = GetStyleForCount(item.Count, population?.PopulationCount).color.WithAlpha(0.9f),
+                        FillColor = GetStyleForCount(item.Count, population?.PopulationCount).color.WithAlpha(0.35f),
+                    });
+                    _circleMeta[_heatmapCircles.Last()] = (item.Count, population?.PopulationCount);
+                    continue; // Skip if not in visible region
+                }
+
                 var style = GetStyleForCount(item.Count, population?.PopulationCount);
-                await DrawHeatmapCircles(center, style.radiusMiles, style.color);
+                await DrawHeatmapCircles(center, style.radiusMiles, style.color); // Draw the circle on the map
             }
+
+            await RenderVisibleCircles(); // Ensure only visible circles are rendered
         }
         catch (Exception ex) // unable to render the heatmap
         {
             await HomePage.ShowPopup("Unable to render heatmap");
             Debug.WriteLine(ex.Message);
         }
+    }
+
+    /// <summary>
+    /// Render only the circles that are within the current visible region of the map.
+    /// </summary>
+    /// <returns></returns>
+    private async Task RenderVisibleCircles()
+    {
+        try
+        {
+            var visibleRegion = MapControl.VisibleRegion;
+            if (visibleRegion == null)
+            {
+                return;
+            }
+
+            foreach (var circle in _heatmapCircles)
+            {
+                bool inside = IsInVisibleRegion(circle.Center, visibleRegion); // Check if circle center is in visible region
+                if (inside)
+                {
+                    if (!MapControl.MapElements.Contains(circle)) // Add circles that are inside the visible region
+                    {
+                        MapControl.MapElements.Add(circle);
+                    }
+                }
+                else
+                {
+                    if (MapControl.MapElements.Contains(circle)) // Remove circles that are outside the visible region
+                    {
+                        MapControl.MapElements.Remove(circle);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Unable to render visible circles: {ex.Message}", "OK");
+        }
+    }
+
+    /// <summary>
+    /// Check if a location is within the visible region of the map.
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="visibleRegion"></param>
+    /// <returns></returns>
+    private static bool IsInVisibleRegion(Location location, MapSpan visibleRegion)
+    {
+        double halfLat = visibleRegion.LatitudeDegrees / 2 * viewportPaddingFactor;
+        double halfLon = visibleRegion.LongitudeDegrees / 2 * viewportPaddingFactor;
+        double north = visibleRegion.Center.Latitude + halfLat;
+        double south = visibleRegion.Center.Latitude - halfLat;
+        double east = visibleRegion.Center.Longitude + halfLon;
+        double west = visibleRegion.Center.Longitude - halfLon;
+        return location.Latitude <= north && location.Latitude >= south &&
+               location.Longitude <= east && location.Longitude >= west;
     }
 
     /// <summary>
@@ -303,28 +418,5 @@ public partial class MapPage : ContentPage
             _refreshScheduled = false;
             _renderLock.Release();
         }
-    }
-
-    /// <summary>
-    /// Check if a location is within the bounds of the United States.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    private static bool IsWithinUsBounds(Location location)
-    {
-        return location.Latitude >= UsMinLatitude && location.Latitude <= UsMaxLatitude &&
-               location.Longitude >= UsMinLongitude && location.Longitude <= UsMaxLongitude;
-    }
-
-    /// <summary>
-    /// Clamp a location to the bounds of the United States.
-    /// </summary>
-    /// <param name="location"></param>
-    /// <returns></returns>
-    private static Location ClampToUsBounds(Location location)
-    {
-        double clampedLatitude = Math.Max(UsMinLatitude, Math.Min(UsMaxLatitude, location.Latitude));
-        double clampedLongitude = Math.Max(UsMinLongitude, Math.Min(UsMaxLongitude, location.Longitude));
-        return new Location(clampedLatitude, clampedLongitude);
     }
 }

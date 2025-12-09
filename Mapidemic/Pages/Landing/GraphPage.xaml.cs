@@ -1,5 +1,9 @@
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
+using System.Formats.Asn1;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using System.Diagnostics;
 
 namespace Mapidemic.Pages.Landing;
@@ -17,6 +21,8 @@ public partial class GraphPage : ContentPage
     private int numDays = 0;
     public ObservableCollection<Illness> IllnessCollection { get; set; } = new();
 
+    public ObservableCollection<string> LocalityCollection { get; set; } = new();
+
     /// <summary>
     /// The designated constructor for a GraphPage
     /// </summary>
@@ -24,6 +30,7 @@ public partial class GraphPage : ContentPage
     {
         InitializeComponent();
         illnessPicker.BindingContext = this;
+        localityPicker.BindingContext = this;
     }
 
     /// <summary>
@@ -39,6 +46,27 @@ public partial class GraphPage : ContentPage
         selectedIllness = "";
         chartTitle.Text = "No Data Loaded";
         column.ItemsSource = null;
+
+        // Get list of localities -- Can be modified later
+        string postalCode = MauiProgram.businessLogic.ReadSettings().PostalCode.ToString();
+        LocalityCollection.Clear();
+        LocalityCollection.Add("National");
+
+        // Handle postalCodes with leading zeros
+        switch (postalCode.Length)
+        {
+            case 3:
+            LocalityCollection.Add("00" + postalCode);
+            break;
+
+            case 4:
+            LocalityCollection.Add("0" + postalCode);
+            break;
+
+            default:
+            LocalityCollection.Add(postalCode);
+            break;
+        }
 
         // Set default to zip code, and 7 days
         localTrends = true;
@@ -165,14 +193,6 @@ public partial class GraphPage : ContentPage
                         await HomePage.ShowPopup("No reports found in last 7 days");
                 }
             }
-            else
-            {
-                await HomePage.ShowPopup("Please specify a time range");
-            }
-        }
-        else
-        {
-            await HomePage.ShowPopup("Please specify a locality");
         }
         Popup.IsOpen = false;
     }

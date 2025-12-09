@@ -354,6 +354,18 @@ public class BusinessLogic
         }
     }
 
+    public async Task<List<ActiveZipIllnessCounts>> GetActiveZipIllnessCounts()
+    {
+        try // attempting to read the postal code and illness reports counts list
+        {
+            return await database.GetActiveZipIllnessCounts();
+        }
+        catch(Exception error) // throwing an error for ui if the database could not be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
     /// <summary>
     /// A function that gets the centroid values on the map
     /// for each postal code in the United States

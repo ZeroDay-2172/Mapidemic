@@ -21,14 +21,14 @@
             <chart:SfCartesianChart.XAxes>
                 <chart:CategoryAxis>
                     <chart:CategoryAxis.Title>
-                        <chart:ChartAxisTitle Text="Date"/>
+                        <chart:ChartAxisTitle Text="Dates"/>
                     </chart:CategoryAxis.Title>
                 </chart:CategoryAxis>
             </chart:SfCartesianChart.XAxes>
             <chart:SfCartesianChart.YAxes>
                 <chart:NumericalAxis Interval="1" x:Name="numericalAxis">
                     <chart:NumericalAxis.Title>
-                        <chart:ChartAxisTitle Text="# of cases"/>
+                        <chart:ChartAxisTitle Text="Number of cases"/>
                     </chart:NumericalAxis.Title>
                 </chart:NumericalAxis>
             </chart:SfCartesianChart.YAxes>
@@ -75,11 +75,12 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="0,10,0,0"/>
-            <Picker Grid.Row="1" Grid.Column="1" x:Name="localityPicker" SelectedIndexChanged="LocalityPicked_handler" Title="National or Zip Code?">
-                <Picker.Items>
-                    <x:String>National</x:String>
-                    <x:String>Zip Code</x:String>
-                </Picker.Items>
+            <Picker Grid.Row="1" 
+                    Grid.Column="1" 
+                    x:Name="localityPicker" 
+                    SelectedIndexChanged="LocalityPicked_handler" 
+                    Title="National or at Default Zip Code?"
+                    ItemsSource="{Binding LocalityCollection}">
             </Picker>
 
             <!-- View a time range -->
@@ -88,7 +89,7 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Margin="0,10,0,0"/>
-            <Picker Grid.Row="2" Grid.Column="1" x:Name="timeRangePicker" SelectedIndexChanged="TimeRangePicked_handler" Title="# of days">
+            <Picker Grid.Row="2" Grid.Column="1" x:Name="timeRangePicker" SelectedIndexChanged="TimeRangePicked_handler" Title="Number of days">
                 <Picker.Items>
                     <x:String>7 days</x:String>
                     <x:String>14 days</x:String>
@@ -102,7 +103,7 @@
                     BackgroundColor="#0074C0"
                     Clicked="RefreshButtonClicked"
                     Grid.Row="3"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Margin="0,20,20,20"/>
         </Grid>
 
