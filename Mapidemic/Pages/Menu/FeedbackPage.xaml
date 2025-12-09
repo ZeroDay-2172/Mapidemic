@@ -24,6 +24,7 @@
                     Title="Select category">
                 <Picker.Items>
                     <x:String>General</x:String>
+                    <x:String>Suggestion</x:String>
                     <x:String>Bug Report</x:String>
                 </Picker.Items>
             </Picker>
