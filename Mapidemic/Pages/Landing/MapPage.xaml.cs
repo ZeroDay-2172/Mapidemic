@@ -36,6 +36,8 @@ public partial class MapPage : ContentPage
     private const int defaultMoreThreshold = 10;
     private const int defaultSevereThreshold = 15;
     private const double viewportPaddingFactor = 1.2; // Factor to slightly expand the viewport for better visibility
+    private const double maxZoomOutMiles = 50.0; // Maximum zoom out distance in miles
+    private bool _isAdjustingZoom;
     private readonly Dictionary<Circle, (int Count, int? Population)> _circleMeta = new();
 
     /// <summary>
@@ -117,6 +119,32 @@ public partial class MapPage : ContentPage
     }
 
     /// <summary>
+    /// Handle map property changes to enforce maximum zoom level and refresh visible circles.
+    /// </summary>
+    private async void OnMapPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MapControl.VisibleRegion))
+        {
+            var visibleRegion = MapControl.VisibleRegion;
+            if (visibleRegion?.Radius != null && !_isAdjustingZoom && visibleRegion.Radius.Miles > maxZoomOutMiles)
+            {
+                try
+                {
+                    _isAdjustingZoom = true;
+                    var center = visibleRegion.Center;
+                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(maxZoomOutMiles)));
+                }
+                finally
+                {
+                    _isAdjustingZoom = false;
+                }
+                return;
+            }
+        }
+        await RenderVisibleCircles();
+    }
+
+    /// <summary>
     /// Center the map on the user's postal code.
     /// </summary>
     async Task CenterOnUserPostalCode()
@@ -181,7 +209,7 @@ public partial class MapPage : ContentPage
             var centroidDict = await MauiProgram.businessLogic.GetPostalCodeCentroidsBulk(zipCodes); // Bulk fetch centroids for all relevant ZIP codes
             var populationDict = await MauiProgram.businessLogic.GetPopulationCountsBulk(zipCodes); // Bulk fetch populations for all relevant ZIP codes
             var visibleRegion = MapControl.VisibleRegion;
-            
+
             foreach (var item in grouped)
             {
                 if (!centroidDict.TryGetValue(item.Zip, out var centroid))
