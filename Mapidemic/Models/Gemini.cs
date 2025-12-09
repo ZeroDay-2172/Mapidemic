@@ -4,7 +4,7 @@ namespace Mapidemic.Models;
 
 public class Gemini
 {
-    private readonly string apiKey = "AIzaSyAY1K4JAEzU3b2uiQtQUX33oo5h2gqsgLE";
+    private readonly string apiKey = "AIzaSyBsfuRLdO993SW5v_fT-kJA5Ug-pkuQ3eg";
     private readonly string queryHeader = "I have the following symptoms: ";
     private readonly string firstRequest = "In ONE word, tell me the illness most closely represented by these symptoms.";
     private readonly string secondRequest = "In ONE number, one a new line tell me the average contagious period from the CDC for this illness in hours.";
