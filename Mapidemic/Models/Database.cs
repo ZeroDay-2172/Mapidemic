@@ -1,5 +1,6 @@
 
 
+using System.Formats.Asn1;
 using Mapidemic.Pages.SymptomChecker;
 
 namespace Mapidemic.Models;
@@ -123,6 +124,18 @@ public class Database
         try // querying the database for the postal code and illness reports count list
         {
             return (await IssueQuery(supabaseClient.From<ZipIllnessCounts>().Select("*").Get())).Models;
+        }
+        catch (Exception error) // exception if the database cannot be reached
+        {
+            throw new Exception(error.Message);
+        }
+    }
+
+    public async Task<List<ActiveZipIllnessCounts>> GetActiveZipIllnessCounts()
+    {
+        try // querying the database for the postal code and illness reports count list
+        {
+            return (await IssueQuery(supabaseClient.From<ActiveZipIllnessCounts>().Select("*").Get())).Models;
         }
         catch (Exception error) // exception if the database cannot be reached
         {
