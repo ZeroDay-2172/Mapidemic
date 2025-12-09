@@ -8,144 +8,145 @@
 
 
 
-        <Grid Padding="0"
-              RowSpacing="0"
-              ColumnSpacing="0">
+       <Grid Padding="0"
+             RowSpacing="0"
+             ColumnSpacing="0">
 
-                <maps:Map x:Name="MapControl"
-                          Grid.Row="0"
-                          MapType="Street"
-                          IsShowingUser="false"/>
+              <maps:Map x:Name="MapControl"
+                        Grid.Row="0"
+                        MapType="Street"
+                        IsShowingUser="false"/>
 
-                <Button Text="Report"
-                        Clicked="OnReportIllnessClicked"
-                        Padding="14,8"
-                        CornerRadius="8"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        Margin="16,16,0,0"
-                        BackgroundColor="#FF4136"
-                        TextColor="White"/>
+              <Button Text="Report"
+                      Clicked="OnReportIllnessClicked"
+                      Padding="14,8"
+                      CornerRadius="8"
+                      HorizontalOptions="Start"
+                      VerticalOptions="Start"
+                      Margin="16,16,0,0"
+                      BackgroundColor="#FF4136"
+                      TextColor="White"/>
 
-                <Button x:Name="LegendToggle"
-                        Text="Legend"
-                        Clicked="OnLegendToggleClicked"
-                        CornerRadius="8"
-                        Padding="14,8"
-                        BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"
-                        TextColor="{AppThemeBinding Light=White, Dark=White}"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Margin="0,16,16,0"/>
+              <Button x:Name="LegendToggle"
+                      Text="Legend"
+                      Clicked="OnLegendToggleClicked"
+                      CornerRadius="8"
+                      Padding="14,8"
+                      BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"
+                      TextColor="{AppThemeBinding Light=White, Dark=White}"
+                      HorizontalOptions="End"
+                      VerticalOptions="Start"
+                      Margin="0,16,16,0"/>
 
-                <Frame x:Name="LegendFrame"
-                       Padding="12"
-                       Margin="12"
-                       CornerRadius="8"
-                       BackgroundColor="{AppThemeBinding Light=#F9FAFB, Dark=#111827}"
-                       HasShadow="True"
-                       IsVisible="False">
-                        <ScrollView>
-                                <VerticalStackLayout Spacing="8">
-                                        <Label Text="Illness Heatmap Legend"
-                                               FontSize="Medium"
-                                               FontAttributes="Bold"/>
+              <Frame x:Name="LegendFrame"
+                     Padding="12"
+                     Margin="12"
+                     CornerRadius="8"
+                     BackgroundColor="{AppThemeBinding Light=#F9FAFB, Dark=#111827}"
+                     HasShadow="True"
+                     IsVisible="False">
+                     <ScrollView>
+                            <VerticalStackLayout Spacing="8">
+                                   <Label Text="Illness Heatmap Legend"
+                                          FontSize="Medium"
+                                          FontAttributes="Bold"/>
+                                   <Button Grid.Column="1"
+                                           Text="X"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="Start"
+                                           Padding="8,4"
+                                           Clicked="OnLegendBackClicked"
+                                           BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"/>
 
-                                        <Label Text="Each circle represents reports in a single ZIP code, drawn at the ZIP code's geographic center, not any person's exact address. Circle size is fixed to help protect privacy."
-                                               FontSize="Small"/>
+                                   <Label Text="Each circle represents reports in a single ZIP code, drawn at the ZIP code's geographic center, not any person's exact address. Circle size is fixed to help protect privacy."
+                                          FontSize="Small"/>
 
-                                        <Label Text="When population data is available, colors reflect the approximate percent of the ZIP reporting this illness:"
-                                               FontSize="Small"
-                                               Margin="0,4,0,0"/>
+                                   <Label Text="When population data is available, colors reflect the approximate percent of the ZIP reporting this illness:"
+                                          FontSize="Small"
+                                          Margin="0,4,0,0"/>
 
-                                        <Grid ColumnDefinitions="Auto,*"
-                                              RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                              ColumnSpacing="8"
-                                              RowSpacing="4">
-                                                <!-- 0–5% -->
-                                                <BoxView Grid.Row="0"
-                                                         Grid.Column="0"
-                                                         HeightRequest="14"
-                                                         WidthRequest="24"
-                                                         Color="Yellow"/>
-                                                <Label Grid.Row="0"
-                                                       Grid.Column="1"
-                                                       Text="Yellow – Minimal activity (0–5% of ZIP population in the current reporting window)."
-                                                       FontSize="Small"/>
+                                   <Grid ColumnDefinitions="Auto,*"
+                                         RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                         ColumnSpacing="8"
+                                         RowSpacing="4">
+                                          <!-- 0–5% -->
+                                          <BoxView Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   HeightRequest="14"
+                                                   WidthRequest="24"
+                                                   Color="Yellow"/>
+                                          <Label Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 Text="Yellow – Minimal activity (0–5% of ZIP population in the current reporting window)."
+                                                 FontSize="Small"/>
 
-                                                <!-- 6–10% -->
-                                                <BoxView Grid.Row="1"
-                                                         Grid.Column="0"
-                                                         HeightRequest="14"
-                                                         WidthRequest="24"
-                                                         Color="Gold"/>
-                                                <Label Grid.Row="1"
-                                                       Grid.Column="1"
-                                                       Text="Gold – Elevated activity (6–10% of ZIP population)."
-                                                       FontSize="Small"/>
+                                          <!-- 6–10% -->
+                                          <BoxView Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   HeightRequest="14"
+                                                   WidthRequest="24"
+                                                   Color="Gold"/>
+                                          <Label Grid.Row="1"
+                                                 Grid.Column="1"
+                                                 Text="Gold – Elevated activity (6–10% of ZIP population)."
+                                                 FontSize="Small"/>
 
-                                                <!-- 11–15% -->
-                                                <BoxView Grid.Row="2"
-                                                         Grid.Column="0"
-                                                         HeightRequest="14"
-                                                         WidthRequest="24"
-                                                         Color="Orange"/>
-                                                <Label Grid.Row="2"
-                                                       Grid.Column="1"
-                                                       Text="Orange – Higher activity (11–15% of ZIP population)."
-                                                       FontSize="Small"/>
+                                          <!-- 11–15% -->
+                                          <BoxView Grid.Row="2"
+                                                   Grid.Column="0"
+                                                   HeightRequest="14"
+                                                   WidthRequest="24"
+                                                   Color="Orange"/>
+                                          <Label Grid.Row="2"
+                                                 Grid.Column="1"
+                                                 Text="Orange – Higher activity (11–15% of ZIP population)."
+                                                 FontSize="Small"/>
 
-                                                <!-- 16–20% -->
-                                                <BoxView Grid.Row="3"
-                                                         Grid.Column="0"
-                                                         HeightRequest="14"
-                                                         WidthRequest="24"
-                                                         Color="OrangeRed"/>
-                                                <Label Grid.Row="3"
-                                                       Grid.Column="1"
-                                                       Text="Orange-Red – Severe activity (16–20% of ZIP population)."
-                                                       FontSize="Small"/>
+                                          <!-- 16–20% -->
+                                          <BoxView Grid.Row="3"
+                                                   Grid.Column="0"
+                                                   HeightRequest="14"
+                                                   WidthRequest="24"
+                                                   Color="OrangeRed"/>
+                                          <Label Grid.Row="3"
+                                                 Grid.Column="1"
+                                                 Text="Orange-Red – Severe activity (16–20% of ZIP population)."
+                                                 FontSize="Small"/>
 
-                                                <!-- >20% -->
-                                                <BoxView Grid.Row="4"
-                                                         Grid.Column="0"
-                                                         HeightRequest="14"
-                                                         WidthRequest="24"
-                                                         Color="Red"/>
-                                                <Label Grid.Row="4"
-                                                       Grid.Column="1"
-                                                       Text="Red – Critical activity (more than 20% of ZIP population)."
-                                                       FontSize="Small"/>
-                                        </Grid>
+                                          <!-- >20% -->
+                                          <BoxView Grid.Row="4"
+                                                   Grid.Column="0"
+                                                   HeightRequest="14"
+                                                   WidthRequest="24"
+                                                   Color="Red"/>
+                                          <Label Grid.Row="4"
+                                                 Grid.Column="1"
+                                                 Text="Red – Critical activity (more than 20% of ZIP population)."
+                                                 FontSize="Small"/>
+                                   </Grid>
 
-                                        <Label Text="When population data is missing for a ZIP code, color is based on the number of reports in that ZIP:"
-                                               FontSize="Small"
-                                               Margin="0,8,0,0"/>
+                                   <Label Text="When population data is missing for a ZIP code, color is based on the number of reports in that ZIP:"
+                                          FontSize="Small"
+                                          Margin="0,8,0,0"/>
 
-                                        <Label Text="• 1–2 reports – Yellow (minimal)"
-                                               FontSize="Small"/>
-                                        <Label Text="• 3–5 reports – Gold (elevated)"
-                                               FontSize="Small"/>
-                                        <Label Text="• 6–10 reports – Orange (higher)"
-                                               FontSize="Small"/>
-                                        <Label Text="• 11–15 reports – Orange-Red (severe)"
-                                               FontSize="Small"/>
-                                        <Label Text="• 16+ reports – Red (critical)"
-                                               FontSize="Small"/>
+                                   <Label Text="• 1–2 reports – Yellow (minimal)"
+                                          FontSize="Small"/>
+                                   <Label Text="• 3–5 reports – Gold (elevated)"
+                                          FontSize="Small"/>
+                                   <Label Text="• 6–10 reports – Orange (higher)"
+                                          FontSize="Small"/>
+                                   <Label Text="• 11–15 reports – Orange-Red (severe)"
+                                          FontSize="Small"/>
+                                   <Label Text="• 16+ reports – Red (critical)"
+                                          FontSize="Small"/>
 
-                                        <Label Text="Map coverage is limited to ZIP codes within the United States. Reports are aggregated and shown only as approximate locations to preserve user privacy."
-                                               FontSize="Small"
-                                               Margin="0,8,0,0"/>
+                                   <Label Text="Map coverage is limited to ZIP codes within the United States. Reports are aggregated and shown only as approximate locations to preserve user privacy."
+                                          FontSize="Small"
+                                          Margin="0,8,0,0"/>
+                            </VerticalStackLayout>
+                     </ScrollView>
+              </Frame>
 
-                                        <Button Text="Back"
-                                                HorizontalOptions="End"
-                                                Padding="12,4"
-                                                Clicked="OnLegendBackClicked"
-                                                BackgroundColor="{AppThemeBinding Light=#0074C0, Dark=#0074C0}"/>
-                                </VerticalStackLayout>
-                        </ScrollView>
-                </Frame>
-
-        </Grid>
+       </Grid>
 
 </ContentPage>
