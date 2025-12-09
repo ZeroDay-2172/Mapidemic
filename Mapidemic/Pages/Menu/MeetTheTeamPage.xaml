@@ -168,6 +168,14 @@
 		<ScrollView>
 			<VerticalStackLayout Padding="16" Spacing="16">
 
+				<!-- Image -->
+				<Image
+					Source="connor_mcguire.jpg"
+					HeightRequest="240"
+					HorizontalOptions="Center"
+					VerticalOptions="Center"
+					Aspect="AspectFit" />
+
 				<!-- Name and Major -->
 				<Label 
 					FontSize="24"
