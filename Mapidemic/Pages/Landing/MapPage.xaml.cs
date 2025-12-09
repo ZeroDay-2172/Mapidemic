@@ -37,6 +37,7 @@ public partial class MapPage : ContentPage
     private const int defaultSevereThreshold = 15;
     private const double viewportPaddingFactor = 1.2; // Factor to slightly expand the viewport for better visibility
     private const double maxZoomOutMiles = 50.0; // Maximum zoom out distance in miles
+    private const double zoomNudgeFactor = .5; // Nudge factor to slightly zoom in when exceeding max zoom out
     private bool _isAdjustingZoom;
     private readonly Dictionary<Circle, (int Count, int? Population)> _circleMeta = new();
 
@@ -132,7 +133,8 @@ public partial class MapPage : ContentPage
                 {
                     _isAdjustingZoom = true;
                     var center = visibleRegion.Center;
-                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(maxZoomOutMiles)));
+                    var targetMiles = Math.Max(1.0, maxZoomOutMiles * zoomNudgeFactor); // small inward nudge
+                    MapControl.MoveToRegion(MapSpan.FromCenterAndRadius(center, Distance.FromMiles(targetMiles)));
                 }
                 finally
                 {
@@ -304,19 +306,6 @@ public partial class MapPage : ContentPage
         double west = visibleRegion.Center.Longitude - halfLon;
         return location.Latitude <= north && location.Latitude >= south &&
                location.Longitude <= east && location.Longitude >= west;
-    }
-
-    /// <summary>
-    /// Handle map property changes to refresh visible circles when the visible region changes.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private async void OnMapPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(MapControl.VisibleRegion))
-        {
-            await RenderVisibleCircles();
-        }
     }
 
     /// <summary>
