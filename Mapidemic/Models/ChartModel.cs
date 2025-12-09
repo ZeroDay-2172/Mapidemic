@@ -1,7 +1,3 @@
-using System.Collections.ObjectModel;
-using Mapidemic.Models;
-using Microcharts;
-
 namespace Mapidemic.Models;
 
 public class ChartModel

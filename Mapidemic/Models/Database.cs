@@ -1,8 +1,3 @@
-
-
-using System.Formats.Asn1;
-using Mapidemic.Pages.SymptomChecker;
-
 namespace Mapidemic.Models;
 
 public class Database

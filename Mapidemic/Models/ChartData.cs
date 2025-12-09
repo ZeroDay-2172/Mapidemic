@@ -1,6 +1,3 @@
-
-using System.Security.Cryptography.X509Certificates;
-
 namespace Mapidemic.Models;
 
 public class ChartData

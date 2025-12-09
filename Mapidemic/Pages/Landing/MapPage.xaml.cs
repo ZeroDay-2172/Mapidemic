@@ -3,11 +3,7 @@ using Microsoft.Maui.Maps;
 using Microsoft.Maui.Controls.Maps;
 using Mapidemic.Pages.ReportIllness;
 using CommunityToolkit.Mvvm.Messaging;
-using Mapidemic.Pages.ReportIllness;
-using Mapidemic.Models;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
 
 namespace Mapidemic.Pages.Landing;
 
