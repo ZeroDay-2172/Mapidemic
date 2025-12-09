@@ -10,14 +10,6 @@
 		<ScrollView>
 			<VerticalStackLayout Padding="16" Spacing="16">
 
-				<!-- Optional Image if needed -->
-				<!-- <Image
-					Source="no_user_image.png"
-					HeightRequest="250"
-					HorizontalOptions="Center"
-					VerticalOptions="Center"
-					Aspect="AspectFit" /> -->
-
 				<!-- Name and Major -->
 				<Label 
 					FontSize="24"
@@ -175,14 +167,6 @@
 	<ContentPage Title="Connor&#10;McGuire">
 		<ScrollView>
 			<VerticalStackLayout Padding="16" Spacing="16">
-
-				<!-- Optional Image if needed -->
-				<!-- <Image
-					Source="no_user_image.png"
-					HeightRequest="250"
-					HorizontalOptions="Center"
-					VerticalOptions="Center"
-					Aspect="AspectFit" /> -->
 
 				<!-- Name and Major -->
 				<Label 

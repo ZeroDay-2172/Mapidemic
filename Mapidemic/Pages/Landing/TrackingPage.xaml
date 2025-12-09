@@ -9,6 +9,6 @@
 
     <local:MapPage Title="Map" />
     <local:GraphPage Title="Graph"/>
-    <local:StatsPage Title="Stats" IconImageSource="stats_icon.png" />
+    <local:StatsPage Title="Stats" />
 
 </TabbedPage>
