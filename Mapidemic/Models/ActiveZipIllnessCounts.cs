@@ -3,6 +3,10 @@ using Supabase.Postgrest.Attributes;
 namespace Mapidemic.Models;
 
 [Table("active_zip_illness_counts")]
+
+/// <summary>
+/// Represents the count of active illnesses by zip code.
+/// </summary>
 public class ActiveZipIllnessCounts : BaseModel
 {
     [PrimaryKey("postal_code")]

@@ -2,6 +2,9 @@
 
 namespace Mapidemic;
 
+/// <summary>
+/// A class that runs the Mapidemic app on startup
+/// </summary>
 public partial class App : Application
 {
 	/// <summary>

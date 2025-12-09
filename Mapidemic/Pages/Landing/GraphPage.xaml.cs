@@ -1,9 +1,5 @@
 using Mapidemic.Models;
 using System.Collections.ObjectModel;
-using System.Formats.Asn1;
-using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using System.Diagnostics;
 
 namespace Mapidemic.Pages.Landing;

@@ -1,8 +1,8 @@
-
-using System.Security.Cryptography.X509Certificates;
-
 namespace Mapidemic.Models;
 
+/// <summary>
+/// Represents chart data with value and date.
+/// </summary>
 public class ChartData
 {
 

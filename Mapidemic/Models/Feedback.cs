@@ -4,6 +4,10 @@ using Supabase.Postgrest.Models;
 namespace Mapidemic.Models;
 
 [Table("feedback")]
+
+/// <summary>
+/// Represents user feedback with its properties.
+/// </summary>
 public class Feedback : BaseModel
 {
     [PrimaryKey("id", false)]

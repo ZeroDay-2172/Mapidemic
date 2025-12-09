@@ -3,6 +3,10 @@ using Supabase.Postgrest.Attributes;
 namespace Mapidemic.Models;
 
 [Table("illness_reports")]
+
+/// <summary>
+/// Represents an illness report with its properties.
+/// </summary>
 public class IllnessReport : BaseModel
 {
     [PrimaryKey("uuid", false)]

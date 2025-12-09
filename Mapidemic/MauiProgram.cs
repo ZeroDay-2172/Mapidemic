@@ -9,6 +9,9 @@ using CommunityToolkit.Maui;
 
 namespace Mapidemic;
 
+/// <summary>
+/// A class that represents the Mapidemic program
+/// </summary>
 public static class MauiProgram
 {
 	private const string sfKey = "Ngo9BigBOggjGyl/Vkd+XU9FcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3tSdkRiWH9dcHFRT2ZbVU91Xg==";

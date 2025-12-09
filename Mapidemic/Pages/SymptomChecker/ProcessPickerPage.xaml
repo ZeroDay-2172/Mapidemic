@@ -40,6 +40,7 @@
                 <ImageButton x:Name="AiButton"
                              Aspect="AspectFill"
                              HeightRequest="300"
+                             IsEnabled="False"
                              Source="ai_analysis.png"
                              Clicked="OnAiImageTapped">
 
