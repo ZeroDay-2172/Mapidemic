@@ -1,28 +1,3 @@
-Sprint 4 Changes:
-- Added Google Gemini AI integration for symptom checker :smile: :smile: :smile:
-- Updated UI on symptoms page :smile:
-- Updated UI on graph page :smile: :smile: :smile:
-- Improved popup on settings page :smile:
-- Updated legend on the map to provide users with additional information about what the colors mean :smile: :smile: :smile:
-- Reduced the overall number of database calls down to two on the map screen when appearing :smile: :smile: :smile:
-- Improved stats page to display current default ZIP code's reported illness when going to it :smile: :smile: :smile:
-- Added a feedback page for users to submit feedback regarding Mapidemic :smile: :smile: :smile:
-- Added feedback database table to house user feedback :smile: :smile: :smile:
-
-Sprint 3 Changes:
-- Added proper logic when rendering circles and corresponding color-severity. Colors and severity are determined by a percentage of reports against the population :smile: :smile: :smile:
-- Added try-catch blocks around every database call to ensure a network error does not crash the app if the database cannot be reached :smile: :smile: :smile:
-- Added building blocks for OpenAI to be used for symptom checking, if Dr. Rogers can get us the funding to make the api calls :smile:
-- Added syncfusion ListView to display stats report to the users instead of button clicks. Updated Meet the Team page to a tab view to display team information better instead of button clicks also. :smile: :smile: :smile:
-- Improved graph page functionality by adding a time range picker, as well as a locality picker to reduce confusion, as well as resolving a bug where switching app themes would not apply it to the graph. :smile: :smile: :smile:
-
-Sprint 2 changes:
-- Added color coded circles to the map showing illness density in each postal code :smile: :smile: :smile:
-- Graphing functionality added to display histogram of illness data, both locally and nationally :smile: :smile: :smile:
-- Report functionality added to display illness data in plain English :smile: :smile: :smile:
-- Updated menu pages that conform to the users requested app theme :smile:
-- Updated settings page to display the correct postal code as the entry default text :smile:
-
 # Mapidemic
 Mapidemic is a .NET MAUI mobile application that helps communities understand how illness is spreading in their area — in real time, anonymously, and without creepy tracking.
 
